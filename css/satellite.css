@@ -1,0 +1,336 @@
+/* ========================================================
+   AgriSense & AgriMarket AI - Satellite & Crop AI Styles
+   Matches PRD Section 17-22, 71
+   ======================================================== */
+
+.satellite-viewer-card {
+  display: flex;
+  flex-direction: column;
+}
+
+.sat-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 14px;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.sat-layer-selectors {
+  display: flex;
+  background-color: var(--surface-subtle);
+  padding: 3px;
+  border-radius: var(--radius-md);
+  gap: 4px;
+}
+
+.btn-layer {
+  padding: 7px 14px;
+  font-size: 12px;
+  font-weight: 600;
+  border-radius: var(--radius-sm);
+  color: var(--text-muted);
+  transition: all 0.15s ease;
+}
+
+.btn-layer.active {
+  background-color: var(--primary-800);
+  color: #ffffff;
+  box-shadow: var(--shadow-sm);
+}
+
+.sat-zoom-controls {
+  display: flex;
+  gap: 6px;
+}
+
+.btn-icon {
+  width: 32px;
+  height: 32px;
+  border-radius: var(--radius-sm);
+  background-color: var(--surface-subtle);
+  border: 1px solid var(--border-subtle);
+  font-size: 16px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.15s ease;
+}
+
+.btn-icon:hover {
+  background-color: var(--surface-card);
+}
+
+.sat-viewport {
+  width: 100%;
+  height: 440px;
+  background-color: #0b1329;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  position: relative;
+  cursor: grab;
+  border: 1px solid var(--border-subtle);
+}
+
+.sat-image-wrapper {
+  width: 100%;
+  height: 100%;
+  transform-origin: center center;
+  transition: transform 0.1s ease-out;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.sat-image-wrapper img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  user-select: none;
+}
+
+.sat-hud-overlay {
+  position: absolute;
+  top: 14px;
+  left: 14px;
+  display: flex;
+  gap: 8px;
+  pointer-events: none;
+}
+
+.hud-tag {
+  background-color: rgba(15, 23, 42, 0.85);
+  backdrop-filter: blur(4px);
+  color: #f8fafc;
+  font-size: 11px;
+  font-family: var(--font-mono);
+  padding: 4px 10px;
+  border-radius: var(--radius-sm);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+.hud-layer-tag {
+  color: #52b788;
+}
+
+.sat-inference-panel {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px;
+  background-color: var(--surface-subtle);
+  border-radius: var(--radius-md);
+  margin-top: 16px;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.sat-model-select-group {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.sat-model-select-group label {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-main);
+}
+
+/* Results Box */
+.model-result-card {
+  margin-top: 16px;
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  padding: 18px;
+  background-color: #ffffff;
+  animation: fadeIn 0.25s ease;
+}
+
+.model-result-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 14px;
+}
+
+.model-title-badge {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.model-arch {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--primary-900);
+}
+
+.latency-pill {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--text-muted);
+  background: var(--surface-subtle);
+  padding: 2px 8px;
+  border-radius: var(--radius-sm);
+}
+
+.model-kpi-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 14px;
+  margin-bottom: 16px;
+}
+
+.kpi-item {
+  display: flex;
+  flex-direction: column;
+}
+
+.kpi-label {
+  font-size: 11px;
+  color: var(--text-muted);
+  margin-bottom: 2px;
+}
+
+.kpi-val {
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.confidence-bar-bg {
+  width: 100%;
+  height: 6px;
+  background-color: var(--surface-subtle);
+  border-radius: var(--radius-full);
+  margin-top: 4px;
+  overflow: hidden;
+}
+
+.confidence-bar-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #40916c, #16a34a);
+  border-radius: var(--radius-full);
+}
+
+.ai-disclaimer-box {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  background-color: #f8fafc;
+  padding: 10px 14px;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border-subtle);
+  font-size: 11px;
+  color: var(--text-muted);
+  line-height: 1.5;
+}
+
+.disclaimer-icon {
+  font-size: 14px;
+  color: var(--status-info);
+}
+
+/* Crop Cycle Timeline Styles (PRD Section 71) */
+.crop-timeline-steps {
+  display: flex;
+  position: relative;
+  justify-content: space-between;
+  padding: 20px 10px;
+}
+
+.timeline-step {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex: 1;
+  text-align: center;
+  position: relative;
+}
+
+.step-indicator {
+  position: relative;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 12px;
+}
+
+.step-icon {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background-color: var(--surface-subtle);
+  border: 2px solid var(--border-strong);
+  color: var(--text-muted);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 13px;
+  z-index: 2;
+  transition: all 0.2s ease;
+}
+
+.step-line {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 100%;
+  height: 3px;
+  background-color: var(--border-subtle);
+  z-index: 1;
+  transform: translateY(-50%);
+}
+
+.timeline-step:last-child .step-line {
+  display: none;
+}
+
+.timeline-step.completed .step-icon {
+  background-color: var(--primary-700);
+  border-color: var(--primary-700);
+  color: #ffffff;
+}
+
+.timeline-step.completed .step-line {
+  background-color: var(--primary-600);
+}
+
+.timeline-step.current .step-icon {
+  background-color: #06d6a0;
+  border-color: var(--primary-800);
+  color: #081c15;
+  box-shadow: 0 0 0 4px rgba(6, 214, 160, 0.3);
+}
+
+.step-name {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--text-main);
+  display: block;
+}
+
+.step-range {
+  font-size: 11px;
+  color: var(--text-muted);
+  font-family: var(--font-mono);
+  display: block;
+  margin-bottom: 4px;
+}
+
+.step-desc {
+  font-size: 11px;
+  color: var(--text-muted);
+  max-width: 130px;
+  line-height: 1.4;
+}
+
+.badge-ai-current {
+  background-color: #dcfce7;
+  color: #15803d;
+  margin-top: 6px;
+}

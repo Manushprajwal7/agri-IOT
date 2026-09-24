@@ -1,0 +1,60 @@
+[
+  {
+    "id": "farmer-001",
+    "role": "farmer",
+    "name": "Ramesh Kumar (Demo Farmer)",
+    "phone": "+91 98450 12345",
+    "location": "Plot 4B, Mandya, Karnataka, India",
+    "farmSize": "12.4 Hectares (30.6 Acres)",
+    "primaryCrops": ["Rice (Paddy)", "Hybrid Tomato", "Sugarcane"],
+    "language": "kn",
+    "connectedDevice": "AGRI-ESP32-001",
+    "deviceStatus": "online",
+    "avatar": "user",
+    "soilType": "Red Sandy Loam with Clay Subsoil",
+    "irrigationType": "Canal + Drip Micro-Irrigation",
+    "kccCardNo": "KCC-KAR-2024-8841",
+    "recentOrdersCount": 3,
+    "savedListings": ["prod-001", "prod-002"]
+  },
+  {
+    "id": "seller-101",
+    "role": "supplier",
+    "name": "Rajesh Farm Supplies",
+    "contactPerson": "Rajesh Gowda",
+    "phone": "+91 98452 77889",
+    "location": "Mandya APMC Yard, Karnataka",
+    "category": "Seeds & Fertilizers",
+    "rating": 4.9,
+    "activeListings": 12,
+    "verifiedSupplier": true,
+    "avatar": "store",
+    "revenueTotal": 84500,
+    "joinedDate": "January 2024"
+  },
+  {
+    "id": "seller-102",
+    "role": "equipment_owner",
+    "name": "GreenField Agro Equipment Rentals",
+    "contactPerson": "Suresh Patil",
+    "phone": "+91 94480 33445",
+    "location": "Mandya Rural & Mysuru Road",
+    "category": "Machinery & Tractor Rentals",
+    "rating": 4.8,
+    "fleetSize": 5,
+    "verifiedSupplier": true,
+    "avatar": "tractor",
+    "revenueTotal": 142000,
+    "joinedDate": "March 2024"
+  },
+  {
+    "id": "admin-001",
+    "role": "admin",
+    "name": "Platform Administrator",
+    "email": "admin@agrisense.farm",
+    "avatar": "shield",
+    "permissions": ["all"],
+    "monitoredDevices": 17,
+    "systemHealth": "Optimal"
+  }
+]

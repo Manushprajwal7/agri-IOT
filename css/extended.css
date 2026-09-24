@@ -1,0 +1,172 @@
+/* ========================================================
+   AgriSense & AgriMarket AI - Extended Page Components
+   Alerts Center, Assistant Page, Profile Settings, Sustainability
+   ======================================================== */
+
+/* Alerts Detailed Center */
+.alerts-detailed-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-top: 16px;
+}
+
+.alert-card-detailed {
+  display: flex;
+  gap: 16px;
+  padding: 18px 20px;
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--border-subtle);
+  border-left: 6px solid var(--primary-700);
+  background-color: #ffffff;
+  box-shadow: var(--shadow-sm);
+}
+
+.alert-card-detailed.alert-danger {
+  border-left-color: var(--status-critical);
+  background-color: #fffafb;
+}
+
+.alert-card-detailed.alert-warning {
+  border-left-color: var(--status-warning);
+  background-color: #fffdfa;
+}
+
+.alert-card-detailed.alert-info {
+  border-left-color: var(--status-info);
+  background-color: #f8fafc;
+}
+
+.alert-card-detailed.alert-success {
+  border-left-color: var(--status-normal);
+  background-color: #f0fdf4;
+}
+
+.alert-icon-col {
+  font-size: 24px;
+  line-height: 1;
+}
+
+.alert-content-col {
+  flex: 1;
+}
+
+.alert-title-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 6px;
+  flex-wrap: wrap;
+}
+
+.alert-title-row h4 {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--text-main);
+}
+
+.alert-action-box {
+  background-color: rgba(0, 0, 0, 0.03);
+  border-radius: var(--radius-md);
+  padding: 10px 14px;
+  margin-top: 10px;
+  font-size: 12px;
+  color: var(--text-main);
+  border-left: 3px solid var(--primary-600);
+}
+
+/* Full-Screen AI Assistant Page Layout */
+.assistant-page-layout {
+  padding: 24px;
+}
+
+.assistant-page-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--border-subtle);
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.assistant-page-content-grid {
+  display: grid;
+  grid-template-columns: 1fr 340px;
+  gap: 24px;
+}
+
+.assistant-main-chat-pane {
+  background-color: #ffffff;
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.assistant-side-pane {
+  background-color: var(--surface-subtle);
+  padding: 20px;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border-subtle);
+  display: flex;
+  flex-direction: column;
+}
+
+.agent-architecture-cards {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 12px;
+}
+
+.arch-card {
+  background-color: #ffffff;
+  padding: 12px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border-subtle);
+  display: flex;
+  flex-direction: column;
+}
+
+.safety-info-card {
+  background-color: #f0fdf4;
+  border: 1px solid #bbf7d0;
+  padding: 12px;
+  border-radius: var(--radius-sm);
+  margin-top: 10px;
+}
+
+/* Profile and Settings Layout */
+.profile-info-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  margin-top: 14px;
+}
+
+.role-select-btn {
+  text-align: left;
+  padding: 14px 16px;
+  font-size: 14px;
+  border-radius: var(--radius-md);
+  background-color: #ffffff;
+  border: 1px solid var(--border-strong);
+  transition: all 0.15s ease;
+}
+
+.role-select-btn:hover {
+  background-color: var(--primary-50);
+  border-color: var(--primary-600);
+}
+
+@media (max-width: 900px) {
+  .assistant-page-content-grid {
+    grid-template-columns: 1fr;
+  }
+  .profile-info-grid {
+    grid-template-columns: 1fr;
+  }
+}

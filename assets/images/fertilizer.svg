@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300" width="100%" height="100%">
+  <defs><linearGradient id="fertBg" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#0077b6"/><stop offset="100%" stop-color="#023e8a"/></linearGradient></defs>
+  <rect width="400" height="300" fill="url(#fertBg)" rx="16"/>
+  <path d="M 125 65 L 275 65 L 295 245 L 105 245 Z" fill="#caf0f8" stroke="#90e0ef" stroke-width="3"/>
+  <rect x="135" y="55" width="130" height="15" rx="5" fill="#0077b6"/>
+  <rect x="130" y="105" width="140" height="105" rx="8" fill="#ffffff"/>
+  <text x="200" y="145" font-family="system-ui, sans-serif" font-size="22" font-weight="900" fill="#03045e" text-anchor="middle">NPK</text>
+  <text x="200" y="170" font-family="system-ui, sans-serif" font-size="14" font-weight="bold" fill="#0077b6" text-anchor="middle">19 : 19 : 19</text>
+  <text x="200" y="195" font-family="system-ui, sans-serif" font-size="9" fill="#6c757d" text-anchor="middle">100% Water Soluble</text>
+  <text x="200" y="235" font-family="system-ui, sans-serif" font-size="12" font-weight="bold" fill="#03045e" text-anchor="middle">25 KG NET</text>
+</svg>

@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300" width="100%" height="100%">
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#2d6a4f"/>
+      <stop offset="100%" stop-color="#1b4332"/>
+    </linearGradient>
+    <radialGradient id="sun" cx="80%" cy="20%" r="50%">
+      <stop offset="0%" stop-color="#ffb703" stop-opacity="0.6"/>
+      <stop offset="100%" stop-color="#2d6a4f" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <rect width="400" height="300" fill="url(#bgGrad)" rx="16"/>
+  <rect width="400" height="300" fill="url(#sun)" rx="16"/>
+  
+  <!-- Packet Outline -->
+  <rect x="90" y="35" width="220" height="230" rx="12" fill="#f8f9fa" stroke="#e9ecef" stroke-width="2" filter="drop-shadow(0 8px 16px rgba(0,0,0,0.25))"/>
+  <!-- Header Bar -->
+  <path d="M 90 47 Q 90 35 102 35 L 298 35 Q 310 35 310 47 L 310 75 L 90 75 Z" fill="#d90429"/>
+  <text x="200" y="60" font-family="system-ui, sans-serif" font-size="13" font-weight="bold" fill="#ffffff" text-anchor="middle" letter-spacing="1">HYBRID F1 SEEDS</text>
+  
+  <!-- Tomato Art -->
+  <g transform="translate(200, 150)">
+    <!-- Leaves -->
+    <path d="M 0 -35 C -15 -50 -30 -35 -20 -20 C -5 -20 0 -30 0 -35 Z" fill="#2d6a4f"/>
+    <path d="M 0 -35 C 15 -50 30 -35 20 -20 C 5 -20 0 -30 0 -35 Z" fill="#40916c"/>
+    <path d="M 0 -35 C 0 -55 10 -55 5 -40 Z" fill="#1b4332"/>
+    <!-- Tomato Body -->
+    <ellipse cx="-16" cy="5" rx="35" ry="36" fill="#e63946"/>
+    <ellipse cx="16" cy="5" rx="35" ry="36" fill="#d90429"/>
+    <ellipse cx="0" cy="8" rx="32" ry="34" fill="#ef233c"/>
+    <!-- Specular Highlight -->
+    <ellipse cx="-18" cy="-8" rx="10" ry="5" fill="#ff758f" opacity="0.6" transform="rotate(-30, -18, -8)"/>
+  </g>
+  
+  <!-- Packet Labels -->
+  <text x="200" y="215" font-family="system-ui, sans-serif" font-size="16" font-weight="bold" fill="#1b4332" text-anchor="middle">ARKA RAKSHAK</text>
+  <text x="200" y="235" font-family="system-ui, sans-serif" font-size="11" fill="#6c757d" text-anchor="middle">Triple Disease Resistant • High Yield</text>
+  <rect x="150" y="244" width="100" height="15" rx="7" fill="#e8f5e9"/>
+  <text x="200" y="255" font-family="system-ui, sans-serif" font-size="9" font-weight="600" fill="#2e7d32" text-anchor="middle">Net Wt: 50 Grams</text>
+</svg>

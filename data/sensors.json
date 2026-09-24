@@ -1,0 +1,82 @@
+{
+  "deviceInfo": {
+    "deviceId": "AGRI-ESP32-001",
+    "firmwareVersion": "v2.4.1-release",
+    "hardware": "ESP-WROOM-32",
+    "macAddress": "24:6F:28:AB:D1:4E",
+    "status": "online",
+    "batteryLevel": 92,
+    "signalStrengthDbm": -62,
+    "lastSeen": "Just now",
+    "location": "Plot 4B - Paddy Fields, Mandya, Karnataka"
+  },
+  "thresholds": {
+    "soilMoistureMin": 30,
+    "soilMoistureMax": 85,
+    "soilMoistureTarget": 65,
+    "tempMin": 15.0,
+    "tempMax": 38.0,
+    "humidityMax": 85.0,
+    "buzzerEnabled": true,
+    "buzzerFrequencyHz": 2400
+  },
+  "current": {
+    "soilMoisture": 68,
+    "temperature": 28.4,
+    "humidity": 74,
+    "moistureStatus": "normal",
+    "environmentStatus": "Conditions Normal",
+    "buzzerActive": false,
+    "displayMode": "NORMAL",
+    "timestamp": "2026-09-24T00:40:00Z"
+  },
+  "history24h": [
+    { "timestamp": "00:00", "soilMoisture": 64, "temperature": 23.2, "humidity": 82 },
+    { "timestamp": "02:00", "soilMoisture": 64, "temperature": 22.8, "humidity": 84 },
+    { "timestamp": "04:00", "soilMoisture": 63, "temperature": 22.1, "humidity": 86 },
+    { "timestamp": "06:00", "soilMoisture": 63, "temperature": 23.0, "humidity": 83 },
+    { "timestamp": "08:00", "soilMoisture": 65, "temperature": 25.4, "humidity": 78 },
+    { "timestamp": "10:00", "soilMoisture": 68, "temperature": 28.4, "humidity": 74 },
+    { "timestamp": "12:00", "soilMoisture": 66, "temperature": 31.2, "humidity": 68 },
+    { "timestamp": "14:00", "soilMoisture": 62, "temperature": 32.8, "humidity": 64 },
+    { "timestamp": "16:00", "soilMoisture": 60, "temperature": 30.5, "humidity": 69 },
+    { "timestamp": "18:00", "soilMoisture": 72, "temperature": 27.6, "humidity": 76 },
+    { "timestamp": "20:00", "soilMoisture": 70, "temperature": 25.8, "humidity": 79 },
+    { "timestamp": "22:00", "soilMoisture": 68, "temperature": 24.5, "humidity": 81 }
+  ],
+  "recentAlerts": [
+    {
+      "id": "alt-01",
+      "type": "moisture_high",
+      "severity": "warning",
+      "title": "High Soil Moisture Spike",
+      "sensor": "Soil Moisture",
+      "value": "86%",
+      "message": "Soil moisture reached 86% following canal irrigation. Recommended: pause micro-sprinklers.",
+      "time": "18 minutes ago",
+      "status": "resolved"
+    },
+    {
+      "id": "alt-02",
+      "type": "humidity_high",
+      "severity": "info",
+      "title": "High Ambient Humidity",
+      "sensor": "Humidity",
+      "value": "88%",
+      "message": "Early morning humidity above 85%. Monitor for fungal blast in paddy nursery.",
+      "time": "3 hours ago",
+      "status": "resolved"
+    },
+    {
+      "id": "alt-03",
+      "type": "normal",
+      "severity": "success",
+      "title": "Environmental Telemetry Normalized",
+      "sensor": "All Sensors",
+      "value": "Nominal",
+      "message": "All sensor parameters within optimal agronomical thresholds.",
+      "time": "Just now",
+      "status": "active"
+    }
+  ]
+}

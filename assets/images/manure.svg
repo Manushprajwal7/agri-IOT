@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300" width="100%" height="100%">
+  <defs>
+    <linearGradient id="manureBg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#7f5539"/>
+      <stop offset="100%" stop-color="#4a3525"/>
+    </linearGradient>
+  </defs>
+  <rect width="400" height="300" fill="url(#manureBg)" rx="16"/>
+  <!-- Bag Shape -->
+  <path d="M 120 70 L 280 70 L 300 240 L 100 240 Z" fill="#ddb892" stroke="#b08968" stroke-width="4" filter="drop-shadow(0 10px 15px rgba(0,0,0,0.3))"/>
+  <rect x="130" y="60" width="140" height="15" rx="6" fill="#7f5539"/>
+  <!-- Bag Label -->
+  <rect x="130" y="105" width="140" height="105" rx="8" fill="#ffffff"/>
+  <circle cx="200" cy="140" r="22" fill="#2d6a4f"/>
+  <path d="M 200 128 C 190 140 200 152 200 152 C 200 152 210 140 200 128 Z" fill="#a7c957"/>
+  <text x="200" y="180" font-family="system-ui, sans-serif" font-size="12" font-weight="bold" fill="#2d6a4f" text-anchor="middle">VERMICOMPOST</text>
+  <text x="200" y="196" font-family="system-ui, sans-serif" font-size="9" fill="#6c757d" text-anchor="middle">100% Organic Manure</text>
+  <text x="200" y="230" font-family="system-ui, sans-serif" font-size="13" font-weight="bold" fill="#7f5539" text-anchor="middle">50 KG PACK</text>
+</svg>

@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300" width="100%" height="100%">
+  <defs><linearGradient id="wBg" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#dda15e"/><stop offset="100%" stop-color="#bc6c25"/></linearGradient></defs>
+  <rect width="400" height="300" fill="url(#wBg)" rx="16"/>
+  <rect x="110" y="45" width="180" height="210" rx="10" fill="#fefae0" stroke="#faedcd" stroke-width="2"/>
+  <rect x="110" y="45" width="180" height="35" rx="6" fill="#bc6c25"/>
+  <text x="200" y="68" font-family="system-ui, sans-serif" font-size="12" font-weight="bold" fill="#ffffff" text-anchor="middle">HERITAGE INDIGENOUS</text>
+  <g transform="translate(200, 140)">
+    <ellipse cx="0" cy="-20" rx="8" ry="14" fill="#d4a373"/>
+    <ellipse cx="-12" cy="-5" rx="8" ry="14" fill="#dda15e" transform="rotate(-30, -12, -5)"/>
+    <ellipse cx="12" cy="-5" rx="8" ry="14" fill="#dda15e" transform="rotate(30, 12, -5)"/>
+    <ellipse cx="-12" cy="18" rx="8" ry="14" fill="#d4a373" transform="rotate(-30, -12, 18)"/>
+    <ellipse cx="12" cy="18" rx="8" ry="14" fill="#d4a373" transform="rotate(30, 12, 18)"/>
+    <line x1="0" y1="-30" x2="0" y2="45" stroke="#bc6c25" stroke-width="3"/>
+  </g>
+  <text x="200" y="215" font-family="system-ui, sans-serif" font-size="14" font-weight="bold" fill="#283618" text-anchor="middle">SONAMOTI WHEAT</text>
+  <text x="200" y="235" font-family="system-ui, sans-serif" font-size="10" fill="#606c38" text-anchor="middle">100% Heirloom Non-GMO</text>
+</svg>

@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" width="100%" height="100%">
+  <defs>
+    <linearGradient id="ndviGrad1" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#007f5f"/>
+      <stop offset="60%" stop-color="#2b9348"/>
+      <stop offset="100%" stop-color="#55a630"/>
+    </linearGradient>
+    <linearGradient id="ndviGrad2" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#80b918"/>
+      <stop offset="50%" stop-color="#aacc00"/>
+      <stop offset="100%" stop-color="#d4d700"/>
+    </linearGradient>
+  </defs>
+  <rect width="800" height="600" fill="#2b2d42"/>
+  
+  <!-- High NDVI Parcels (Vigorous Vegetation) -->
+  <polygon points="40,30 320,40 300,260 50,230" fill="url(#ndviGrad1)" stroke="#80b918" stroke-width="3"/>
+  <polygon points="340,50 580,70 560,280 320,270" fill="url(#ndviGrad1)" stroke="#80b918" stroke-width="3"/>
+  <polygon points="600,60 760,80 750,290 580,290" fill="url(#ndviGrad2)" stroke="#ee9b00" stroke-width="3"/>
+  
+  <polygon points="60,260 280,280 270,540 40,520" fill="url(#ndviGrad1)" stroke="#80b918" stroke-width="3"/>
+  <polygon points="300,290 540,300 520,560 280,550" fill="url(#ndviGrad1)" stroke="#80b918" stroke-width="3"/>
+  <polygon points="560,310 770,310 760,570 540,570" fill="url(#ndviGrad2)" stroke="#ee9b00" stroke-width="3"/>
+  
+  <!-- Water Body (Low/Negative NDVI) -->
+  <path d="M 0,245 Q 290,265 550,295 T 800,305" fill="none" stroke="#d90429" stroke-width="12" stroke-linecap="round"/>
+  
+  <rect x="20" y="540" width="310" height="42" rx="6" fill="#1b4332" opacity="0.92"/>
+  <text x="35" y="565" font-family="monospace" font-size="12" fill="#70e000">NDVI: 0.78 (Vigorous Vegetative Canopy)</text>
+</svg>

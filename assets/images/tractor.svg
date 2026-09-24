@@ -1,0 +1,48 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300" width="100%" height="100%">
+  <defs>
+    <linearGradient id="skyGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#bde0fe"/>
+      <stop offset="60%" stop-color="#e2ece9"/>
+      <stop offset="60%" stop-color="#588157"/>
+      <stop offset="100%" stop-color="#3a5a40"/>
+    </linearGradient>
+  </defs>
+  <rect width="400" height="300" fill="url(#skyGrad)" rx="16"/>
+  <!-- Distant Trees -->
+  <circle cx="60" cy="180" r="30" fill="#344e41" opacity="0.4"/>
+  <circle cx="120" cy="178" r="35" fill="#344e41" opacity="0.3"/>
+  <circle cx="340" cy="180" r="40" fill="#344e41" opacity="0.4"/>
+  
+  <!-- Tractor Body -->
+  <g transform="translate(40, 50)">
+    <!-- Cabin Frame -->
+    <path d="M 120 70 L 175 70 L 165 120 L 105 120 Z" fill="none" stroke="#212529" stroke-width="4"/>
+    <rect x="110" y="65" width="70" height="8" rx="3" fill="#c1121f"/>
+    <!-- Exhaust Pipe -->
+    <rect x="235" y="70" width="6" height="40" fill="#495057"/>
+    <path d="M 235 70 L 243 65 L 243 70 Z" fill="#212529"/>
+    <!-- Engine Hood -->
+    <path d="M 165 105 L 265 105 L 275 145 L 165 145 Z" fill="#c1121f"/>
+    <rect x="250" y="112" width="20" height="25" rx="3" fill="#212529"/>
+    <!-- Headlight -->
+    <circle cx="272" cy="115" r="5" fill="#ffea00"/>
+    
+    <!-- Rear Big Wheel -->
+    <circle cx="120" cy="165" r="45" fill="#212529"/>
+    <circle cx="120" cy="165" r="33" fill="#ffb703"/>
+    <circle cx="120" cy="165" r="14" fill="#212529"/>
+    <!-- Tire Treads -->
+    <line x1="120" y1="120" x2="120" y2="132" stroke="#495057" stroke-width="6"/>
+    <line x1="120" y1="198" x2="120" y2="210" stroke="#495057" stroke-width="6"/>
+    <line x1="75" y1="165" x2="87" y2="165" stroke="#495057" stroke-width="6"/>
+    <line x1="153" y1="165" x2="165" y2="165" stroke="#495057" stroke-width="6"/>
+    
+    <!-- Front Small Wheel -->
+    <circle cx="245" cy="175" r="28" fill="#212529"/>
+    <circle cx="245" cy="175" r="19" fill="#ffb703"/>
+    <circle cx="245" cy="175" r="8" fill="#212529"/>
+  </g>
+  <rect x="20" y="240" width="360" height="45" rx="8" fill="#ffffff" opacity="0.95"/>
+  <text x="40" y="268" font-family="system-ui, sans-serif" font-size="15" font-weight="bold" fill="#1b4332">Mahindra 575 DI (45 HP)</text>
+  <text x="360" y="268" font-family="system-ui, sans-serif" font-size="14" font-weight="bold" fill="#c1121f" text-anchor="end">₹1,200/hr</text>
+</svg>

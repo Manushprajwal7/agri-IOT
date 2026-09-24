@@ -1,0 +1,454 @@
+/* ========================================================
+   AgriSense & AgriMarket AI - Dashboard & Sensor Styles
+   Matches PRD Section 8, 9, 12, 15, 16, 70
+   ======================================================== */
+
+.dashboard-header-banner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 24px;
+}
+
+.header-left h2 {
+  font-size: 24px;
+  font-weight: 800;
+  color: var(--primary-900);
+  letter-spacing: -0.5px;
+}
+
+.header-meta-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 6px;
+}
+
+.meta-tag {
+  font-size: 12px;
+  color: var(--text-muted);
+  background: var(--surface-subtle);
+  padding: 3px 10px;
+  border-radius: var(--radius-full);
+}
+
+.demo-controls-pill {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background-color: var(--surface-card);
+  padding: 8px 14px;
+  border-radius: var(--radius-full);
+  border: 1px solid var(--border-subtle);
+  box-shadow: var(--shadow-sm);
+}
+
+.pill-label {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-muted);
+}
+
+/* Sensor Cards Grid (PRD Section 9, 70) */
+.sensor-cards-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 18px;
+  margin-bottom: 24px;
+}
+
+.sensor-kpi-card {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  border-top: 4px solid var(--primary-600);
+}
+
+#cardMoisture { border-top-color: #2d6a4f; }
+#cardTemp { border-top-color: #ea580c; }
+#cardHumidity { border-top-color: #0284c7; }
+#cardEnv { border-top-color: #6366f1; }
+
+.kpi-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+}
+
+.kpi-title-wrap {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.kpi-icon {
+  font-size: 20px;
+}
+
+.kpi-title {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-muted);
+}
+
+.kpi-value-row {
+  display: flex;
+  align-items: baseline;
+  gap: 4px;
+  margin-bottom: 12px;
+}
+
+.kpi-big-num {
+  font-size: 38px;
+  font-weight: 800;
+  color: var(--text-main);
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+}
+
+.kpi-unit {
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--text-muted);
+}
+
+.gauge-bar-bg {
+  width: 100%;
+  height: 8px;
+  background-color: var(--surface-subtle);
+  border-radius: var(--radius-full);
+  overflow: hidden;
+  margin-bottom: 10px;
+}
+
+.gauge-bar-fill {
+  height: 100%;
+  border-radius: var(--radius-full);
+  transition: width 0.4s var(--ease-spring);
+}
+
+.fill-moisture { background: linear-gradient(90deg, #52b788, #1b4332); }
+.fill-temp { background: linear-gradient(90deg, #fb923c, #ea580c); }
+.fill-humidity { background: linear-gradient(90deg, #38bdf8, #0284c7); }
+
+.kpi-footer-meta {
+  display: flex;
+  justify-content: space-between;
+  font-size: 11px;
+  color: var(--text-muted);
+}
+
+.env-status-badge {
+  padding: 10px 14px;
+  border-radius: var(--radius-md);
+  font-weight: 700;
+  font-size: 13px;
+  text-align: center;
+  margin-bottom: 12px;
+  transition: all 0.3s ease;
+}
+
+.alert-normal {
+  background-color: var(--status-normal-bg);
+  color: var(--status-normal);
+}
+
+.alert-active {
+  background-color: var(--status-critical-bg);
+  color: var(--status-critical);
+  animation: pulseAlert 1.2s infinite;
+}
+
+@keyframes pulseAlert {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.02); box-shadow: 0 0 12px rgba(220, 38, 38, 0.4); }
+  100% { transform: scale(1); }
+}
+
+.hardware-status-row {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-size: 11px;
+  color: var(--text-muted);
+}
+
+/* Mid Section: Chart + 2.3" LCD Canvas (PRD Section 12, 15) */
+.dashboard-mid-grid {
+  display: grid;
+  grid-template-columns: 1fr 360px;
+  gap: 20px;
+  margin-bottom: 24px;
+}
+
+.chart-card-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.chart-header-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.chart-tabs {
+  display: flex;
+  background-color: var(--surface-subtle);
+  padding: 3px;
+  border-radius: var(--radius-md);
+  gap: 4px;
+}
+
+.btn-chart-tab {
+  padding: 6px 14px;
+  font-size: 12px;
+  font-weight: 600;
+  border-radius: var(--radius-sm);
+  color: var(--text-muted);
+  transition: all 0.15s ease;
+}
+
+.btn-chart-tab.active {
+  background-color: #ffffff;
+  color: var(--text-main);
+  box-shadow: var(--shadow-sm);
+}
+
+.chart-time-filters {
+  display: flex;
+  gap: 4px;
+}
+
+.btn-time-filter {
+  padding: 4px 10px;
+  font-size: 11px;
+  font-weight: 600;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border-subtle);
+  color: var(--text-muted);
+}
+
+.btn-time-filter.active {
+  background-color: var(--primary-700);
+  color: #ffffff;
+  border-color: var(--primary-700);
+}
+
+.svg-chart-wrapper {
+  flex: 1;
+  min-height: 220px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* 2.3" LCD TFT Canvas Emulator (PRD Section 12) */
+.lcd-emulator-card {
+  display: flex;
+  flex-direction: column;
+  background-color: #1e293b;
+  color: #ffffff;
+  border-color: #334155;
+}
+
+.lcd-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 6px;
+}
+
+.lcd-header h4 {
+  font-size: 14px;
+  font-weight: 700;
+  color: #f8fafc;
+}
+
+.lcd-canvas-wrapper {
+  margin: 12px auto;
+  padding: 8px;
+  background-color: #020617;
+  border-radius: var(--radius-md);
+  box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.8), 0 4px 12px rgba(0, 0, 0, 0.4);
+  border: 2px solid #475569;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#esp32LcdCanvas {
+  display: block;
+  border-radius: 4px;
+  image-rendering: pixelated;
+}
+
+.lcd-controls-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 4px;
+}
+
+/* Bottom Section: Alerts & Farm Map */
+.dashboard-bottom-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+.alerts-feed-items {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  max-height: 280px;
+  overflow-y: auto;
+}
+
+.alert-item {
+  display: flex;
+  gap: 12px;
+  padding: 12px 14px;
+  border-radius: var(--radius-md);
+  border-left: 4px solid var(--border-strong);
+  background-color: var(--surface-subtle);
+  animation: fadeIn 0.2s ease;
+}
+
+.alert-item-icon {
+  font-size: 18px;
+}
+
+.alert-item-body {
+  flex: 1;
+}
+
+.alert-item-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 3px;
+}
+
+.alert-item-header strong {
+  font-size: 13px;
+}
+
+.alert-time {
+  font-size: 11px;
+  color: var(--text-muted);
+}
+
+.alert-item-body p {
+  font-size: 12px;
+  color: var(--text-muted);
+}
+
+.alert-danger {
+  border-left-color: var(--status-critical);
+  background-color: var(--status-critical-bg);
+}
+
+.alert-info {
+  border-left-color: var(--status-info);
+  background-color: var(--status-info-bg);
+}
+
+.alert-success {
+  border-left-color: var(--status-normal);
+  background-color: var(--status-normal-bg);
+}
+
+/* Farm Overview Map Card (PRD Section 72) */
+.farm-map-illustration {
+  background-color: #2d6a4f;
+  border-radius: var(--radius-md);
+  height: 180px;
+  position: relative;
+  overflow: hidden;
+  margin-bottom: 14px;
+  border: 1px solid var(--border-subtle);
+}
+
+.map-grid-bg {
+  width: 100%;
+  height: 100%;
+  display: grid;
+  grid-template-columns: 1.2fr 0.8fr;
+  grid-template-rows: 1fr 40px;
+  gap: 4px;
+  padding: 8px;
+  background-color: #1b4332;
+}
+
+.farm-parcel {
+  padding: 10px;
+  border-radius: 4px;
+  color: #ffffff;
+  font-size: 11px;
+  font-weight: 700;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.parcel-paddy {
+  background-color: #40916c;
+  position: relative;
+}
+
+.parcel-tomato {
+  background-color: #52b788;
+}
+
+.parcel-canal {
+  grid-column: span 2;
+  background-color: #0284c7;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.node-blip {
+  width: 12px;
+  height: 12px;
+  background-color: #ef4444;
+  border-radius: 50%;
+  border: 2px solid #ffffff;
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  box-shadow: 0 0 10px #ef4444;
+  animation: radarBlip 1.5s infinite;
+}
+
+@keyframes radarBlip {
+  0% { transform: scale(0.9); opacity: 1; }
+  100% { transform: scale(2.4); opacity: 0; }
+}
+
+.map-footer-metrics {
+  display: flex;
+  justify-content: space-between;
+  padding-top: 10px;
+  border-top: 1px solid var(--border-subtle);
+}
+
+.map-stat {
+  display: flex;
+  flex-direction: column;
+}
+
+.stat-label {
+  font-size: 11px;
+  color: var(--text-muted);
+}
+
+.stat-val {
+  font-size: 13px;
+  font-weight: 700;
+}
