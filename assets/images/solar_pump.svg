@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300" width="100%" height="100%">
+  <defs><linearGradient id="solBg" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#1e293b"/><stop offset="100%" stop-color="#0369a1"/></linearGradient></defs>
+  <rect width="400" height="300" fill="url(#solBg)" rx="16"/>
+  <polygon points="100,60 210,60 190,130 80,130" fill="#1e3a8a" stroke="#93c5fd" stroke-width="3"/>
+  <line x1="136" y1="60" x2="116" y2="130" stroke="#93c5fd" stroke-width="2"/>
+  <line x1="173" y1="60" x2="153" y2="130" stroke="#93c5fd" stroke-width="2"/>
+  <line x1="90" y1="95" x2="200" y2="95" stroke="#93c5fd" stroke-width="2"/>
+  <line x1="145" y1="130" x2="145" y2="180" stroke="#94a3b8" stroke-width="6"/>
+  <rect x="240" y="100" width="65" height="95" rx="10" fill="#0284c7" stroke="#38bdf8" stroke-width="3"/>
+  <rect x="255" y="80" width="35" height="20" fill="#0369a1"/>
+  <circle cx="272" cy="145" r="16" fill="#bae6fd"/>
+  <text x="200" y="260" font-family="system-ui, sans-serif" font-size="14" font-weight="bold" fill="#f0fdf4" text-anchor="middle">5HP SOLAR SUBMERSIBLE PUMP</text>
+</svg>

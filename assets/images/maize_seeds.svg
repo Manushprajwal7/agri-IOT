@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300" width="100%" height="100%">
+  <defs><linearGradient id="maizeBg" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#854d0e"/><stop offset="100%" stop-color="#422006"/></linearGradient></defs>
+  <rect width="400" height="300" fill="url(#maizeBg)" rx="16"/>
+  <rect x="125" y="70" width="150" height="175" rx="12" fill="#fde047" stroke="#eab308" stroke-width="4"/>
+  <rect x="140" y="105" width="120" height="85" rx="8" fill="#ffffff"/>
+  <text x="200" y="136" font-family="system-ui, sans-serif" font-size="18" font-weight="900" fill="#713f12" text-anchor="middle">NK-6240</text>
+  <text x="200" y="158" font-family="system-ui, sans-serif" font-size="13" font-weight="bold" fill="#ca8a04" text-anchor="middle">GOLDEN MAIZE</text>
+  <text x="200" y="178" font-family="system-ui, sans-serif" font-size="9" fill="#64748b" text-anchor="middle">Syngenta F1 Hybrid</text>
+  <circle cx="200" cy="215" r="14" fill="#16a34a"/>
+  <text x="200" y="219" font-family="system-ui, sans-serif" font-size="10" font-weight="bold" fill="#fff" text-anchor="middle">F1</text>
+  <text x="200" y="270" font-family="system-ui, sans-serif" font-size="12" font-weight="bold" fill="#fef08a" text-anchor="middle">4 KG PACKET</text>
+</svg>

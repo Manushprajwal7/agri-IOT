@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300" width="100%" height="100%">
+  <defs><linearGradient id="jdBg" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#14532d"/><stop offset="100%" stop-color="#052e16"/></linearGradient></defs>
+  <rect width="400" height="300" fill="url(#jdBg)" rx="16"/>
+  <g transform="translate(50, 70)">
+    <rect x="80" y="45" width="135" height="65" rx="8" fill="#367c2b"/>
+    <rect x="145" y="15" width="70" height="55" rx="6" fill="#1e293b" stroke="#ffd100" stroke-width="3"/>
+    <rect x="152" y="22" width="56" height="32" rx="4" fill="#93c5fd" opacity="0.6"/>
+    <circle cx="75" cy="125" r="34" fill="#1e293b" stroke="#ffd100" stroke-width="8"/>
+    <circle cx="220" cy="120" r="44" fill="#1e293b" stroke="#ffd100" stroke-width="10"/>
+    <circle cx="75" cy="125" r="16" fill="#ffd100"/>
+    <circle cx="220" cy="120" r="22" fill="#ffd100"/>
+    <rect x="60" y="20" width="8" height="35" fill="#ffd100"/>
+  </g>
+  <text x="200" y="265" font-family="system-ui, sans-serif" font-size="14" font-weight="900" fill="#ffd100" text-anchor="middle">JOHN DEERE 5050D 4WD (50 HP)</text>
+</svg>

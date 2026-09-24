@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300" width="100%" height="100%">
+  <defs><linearGradient id="trapBg" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#78350f"/><stop offset="100%" stop-color="#451a03"/></linearGradient></defs>
+  <rect width="400" height="300" fill="url(#trapBg)" rx="16"/>
+  <rect x="100" y="70" width="80" height="130" rx="6" fill="#facc15" stroke="#ca8a04" stroke-width="3"/>
+  <rect x="210" y="70" width="80" height="130" rx="6" fill="#38bdf8" stroke="#0284c7" stroke-width="3"/>
+  <line x1="140" y1="40" x2="140" y2="70" stroke="#cbd5e1" stroke-width="3"/>
+  <line x1="250" y1="40" x2="250" y2="70" stroke="#cbd5e1" stroke-width="3"/>
+  <text x="140" y="140" font-family="system-ui, sans-serif" font-size="11" font-weight="bold" fill="#854d0e" text-anchor="middle">YELLOW</text>
+  <text x="250" y="140" font-family="system-ui, sans-serif" font-size="11" font-weight="bold" fill="#0369a1" text-anchor="middle">BLUE</text>
+  <text x="200" y="260" font-family="system-ui, sans-serif" font-size="13" font-weight="bold" fill="#fef08a" text-anchor="middle">STICKY & PHEROMONE TRAP KIT (20x)</text>
+</svg>

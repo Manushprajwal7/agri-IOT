@@ -40,18 +40,98 @@ class SensorEngine {
       { time: '10:15', moisture: 68, temp: 28.4, humidity: 74 }
     ];
 
+    this.isHardwareLive = false;
+    this.hardwareSource = 'INITIALIZING';
     this.timer = null;
     this.init();
   }
 
   init() {
     this.startSimulation();
+    this.startHardwareStreaming();
+  }
+
+  startHardwareStreaming() {
+    const handlePacket = (data) => {
+      if (!data) return;
+      if (data.isLive) {
+        this.isHardwareLive = true;
+        this.hardwareSource = data.source || 'ESP32-HARDWARE';
+        this.simulationRunning = false; // Turn off synthetic random simulation
+
+        this.reading.soilMoisture = Number(data.soilMoisture);
+        this.reading.soilRaw = data.soilRaw || 0;
+        this.reading.temperature = Number(data.temperature);
+        this.reading.humidity = Number(data.humidity);
+        this.reading.buzzerActive = Boolean(data.buzzerActive);
+        this.reading.timestamp = data.timestamp || new Date().toLocaleTimeString();
+
+        this.evaluateStatus();
+
+        this.liveHistory.push({
+          time: this.reading.timestamp,
+          moisture: this.reading.soilMoisture,
+          temp: this.reading.temperature,
+          humidity: this.reading.humidity
+        });
+        if (this.liveHistory.length > 25) this.liveHistory.shift();
+
+        this.updateHardwareUiBadges();
+        window.dispatchEvent(new CustomEvent('agri:sensor-update', { detail: this.reading }));
+        this.renderLcdDisplay();
+      }
+    };
+
+    // 1. SSE Stream for zero-latency real-time updates
+    if (window.EventSource) {
+      try {
+        const sse = new EventSource('/api/v1/sensors/stream');
+        sse.onmessage = (evt) => {
+          try {
+            const parsed = JSON.parse(evt.data);
+            handlePacket(parsed);
+          } catch (e) {}
+        };
+      } catch (e) {}
+    }
+
+    // 2. Continuous 1-second fallback poll
+    const poll = async () => {
+      try {
+        const res = await fetch('/api/v1/sensors/telemetry?t=' + Date.now());
+        if (res.ok) {
+          const data = await res.json();
+          handlePacket(data);
+        } else {
+          // Direct fallback to data/live_telemetry.json
+          const res2 = await fetch('/data/live_telemetry.json?t=' + Date.now());
+          if (res2.ok) {
+            const data2 = await res2.json();
+            handlePacket(data2);
+          }
+        }
+      } catch (err) {}
+    };
+
+    setInterval(poll, 1000);
+    poll();
+  }
+
+  updateHardwareUiBadges() {
+    const badges = document.querySelectorAll('.device-telemetry-badge span.badge, #deviceStatusPill, .badge-telemetry-live');
+    badges.forEach(b => {
+      if (this.isHardwareLive) {
+        b.className = 'badge badge-success';
+        b.innerHTML = '● ESP32: LIVE HARDWARE (COM3)';
+        b.style.boxShadow = '0 0 10px rgba(46, 204, 113, 0.5)';
+      }
+    });
   }
 
   startSimulation() {
     if (this.timer) clearInterval(this.timer);
     this.timer = setInterval(() => {
-      if (this.simulationRunning && this.isOnline) {
+      if (this.simulationRunning && this.isOnline && !this.isHardwareLive) {
         this.tick();
       }
     }, 3000);
@@ -310,8 +390,10 @@ class SensorEngine {
   getRawTelemetryJson() {
     return JSON.stringify({
       deviceId: this.deviceId,
+      source: this.isHardwareLive ? 'ESP32 (COM3 / Hardware)' : 'SIMULATOR',
       timestamp: new Date().toISOString(),
       soilMoisture: this.reading.soilMoisture,
+      soilRawADC: this.reading.soilRaw || 0,
       temperature: this.reading.temperature,
       humidity: this.reading.humidity,
       moistureStatus: this.reading.moistureStatus.toLowerCase(),

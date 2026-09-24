@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300" width="100%" height="100%">
+  <defs><linearGradient id="paddyBg" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#134e4a"/><stop offset="100%" stop-color="#042f2e"/></linearGradient></defs>
+  <rect width="400" height="300" fill="url(#paddyBg)" rx="16"/>
+  <path d="M 120 70 L 280 70 L 295 240 L 105 240 Z" fill="#fef08a" stroke="#ca8a04" stroke-width="4"/>
+  <rect x="135" y="60" width="130" height="16" rx="6" fill="#15803d"/>
+  <rect x="130" y="110" width="140" height="95" rx="8" fill="#ffffff"/>
+  <text x="200" y="142" font-family="system-ui, sans-serif" font-size="20" font-weight="900" fill="#166534" text-anchor="middle">JAYA / IR-64</text>
+  <text x="200" y="166" font-family="system-ui, sans-serif" font-size="13" font-weight="bold" fill="#b45309" text-anchor="middle">PADDY SEEDS</text>
+  <text x="200" y="188" font-family="system-ui, sans-serif" font-size="10" fill="#475569" text-anchor="middle">Certified High Yield (120 Days)</text>
+  <circle cx="200" cy="225" r="10" fill="#16a34a"/>
+  <text x="200" y="228" font-family="system-ui, sans-serif" font-size="8" font-weight="bold" fill="#fff" text-anchor="middle">100%</text>
+  <text x="200" y="268" font-family="system-ui, sans-serif" font-size="12" font-weight="bold" fill="#fef08a" text-anchor="middle">10 KG CERTIFIED PACK</text>
+</svg>

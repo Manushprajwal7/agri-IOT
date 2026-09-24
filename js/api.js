@@ -179,22 +179,42 @@ class ApiService {
     return await res.json();
   }
 
-  async searchProducts(query = '', category = 'All', filterType = 'all') {
+  async searchProducts(query = '', category = 'All', filterType = 'all', sortBy = 'popular', priceRange = 'all', verifiedOnly = false) {
     const products = await this.getProducts();
     const q = query.toLowerCase().trim();
 
-    return products.filter(p => {
+    let filtered = products.filter(p => {
       const matchesQ = !q || 
         p.name.toLowerCase().includes(q) || 
         p.description.toLowerCase().includes(q) || 
         p.category.toLowerCase().includes(q) ||
-        p.location.toLowerCase().includes(q);
+        p.location.toLowerCase().includes(q) ||
+        (p.specs && p.specs.some(s => s.toLowerCase().includes(q)));
       
       const matchesCat = category === 'All' || p.category.toLowerCase() === category.toLowerCase();
       const matchesType = filterType === 'all' || p.type === filterType;
+      const matchesVerified = !verifiedOnly || p.verifiedSeller === true;
 
-      return matchesQ && matchesCat && matchesType;
+      let matchesPrice = true;
+      if (priceRange === 'under1000') matchesPrice = p.price < 1000;
+      else if (priceRange === '1000-5000') matchesPrice = p.price >= 1000 && p.price <= 5000;
+      else if (priceRange === '5000-20000') matchesPrice = p.price > 5000 && p.price <= 20000;
+      else if (priceRange === 'above20000') matchesPrice = p.price > 20000;
+
+      return matchesQ && matchesCat && matchesType && matchesVerified && matchesPrice;
     });
+
+    if (sortBy === 'price-asc') {
+      filtered.sort((a, b) => a.price - b.price);
+    } else if (sortBy === 'price-desc') {
+      filtered.sort((a, b) => b.price - a.price);
+    } else if (sortBy === 'rating') {
+      filtered.sort((a, b) => (b.sellerRating || 0) - (a.sellerRating || 0));
+    } else if (sortBy === 'popular') {
+      filtered.sort((a, b) => (b.likes || 0) - (a.likes || 0));
+    }
+
+    return filtered;
   }
 
   async createProductListing(listing) {

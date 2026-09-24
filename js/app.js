@@ -124,9 +124,12 @@ class AgriApp {
         break;
 
       case 'satellite':
-        if (window.satelliteViewer && !targetView.dataset.initialized) {
-          window.satelliteViewer.init('satViewerContainer');
-          targetView.dataset.initialized = 'true';
+        if (window.satelliteViewer) {
+          const satBox = document.getElementById('satViewerContainer');
+          if (!satBox || !satBox.children.length || !targetView.dataset.initialized) {
+            window.satelliteViewer.init('satViewerContainer');
+            targetView.dataset.initialized = 'true';
+          }
         }
         break;
 
@@ -138,6 +141,9 @@ class AgriApp {
         if (window.agriMarket && !targetView.dataset.initialized) {
           window.agriMarket.init('marketplaceContainer');
           targetView.dataset.initialized = 'true';
+        } else if (window.agriMarket) {
+          window.agriMarket.refreshProducts();
+          window.agriMarket.updateCartBadge();
         }
         break;
 

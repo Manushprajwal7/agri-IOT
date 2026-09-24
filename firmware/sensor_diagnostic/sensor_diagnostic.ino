@@ -306,20 +306,31 @@ void updateDynamicMetrics(int soil, int rawSoil, float temp, float hum, bool ale
 
 void setup() {
   Serial.begin(115200);
+  delay(500);
+  Serial.println("[BOOT] Power on, Serial started.");
+  Serial.flush();
+
   pinMode(BUZZER_PIN, OUTPUT);
   digitalWrite(BUZZER_PIN, LOW);
 
   // Initialize Sensors
+  Serial.println("[BOOT] Initializing DHT11 & ADC...");
+  Serial.flush();
   dht.begin();
   analogReadResolution(12);
   analogSetAttenuation(ADC_11db);
 
   // Initialize Display (ILI9341 320x240)
+  Serial.println("[BOOT] Initializing TFT display...");
+  Serial.flush();
   tft.begin();
   tft.setRotation(1); // Landscape 320x240
 
-  // Draw Initial Sleek Cockpit Dashboard
+  Serial.println("[BOOT] Drawing static UI dashboard...");
+  Serial.flush();
   drawStaticDashboard();
+  Serial.println("[BOOT] UI dashboard rendered.");
+  Serial.flush();
 
   // Startup beep
   digitalWrite(BUZZER_PIN, HIGH);
