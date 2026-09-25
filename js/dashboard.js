@@ -326,16 +326,31 @@ class DashboardEngine {
     const badgeBuzzer = document.getElementById('badgeBuzzer');
     const hwBuzzerText = document.getElementById('hwBuzzerText');
     if (valEnv) {
-      valEnv.textContent = r.buzzerActive ? `WARNING: ${r.environmentStatus.toUpperCase()}` : `STATUS: ${r.environmentStatus.toUpperCase()}`;
-      valEnv.className = `env-status-badge ${r.buzzerActive ? 'alert-active' : 'alert-normal'}`;
+      if (r.soilMoisture > 85) {
+        valEnv.textContent = 'HIGH WATER CONTENT AT FIELD - CONSIDER TURNING OFF WATER SUPPLY';
+        valEnv.className = 'env-status-badge alert-active';
+      } else {
+        valEnv.textContent = r.buzzerActive ? `WARNING: ${r.environmentStatus.toUpperCase()}` : `STATUS: ${r.environmentStatus.toUpperCase()}`;
+        valEnv.className = `env-status-badge ${r.buzzerActive ? 'alert-active' : 'alert-normal'}`;
+      }
     }
     if (badgeBuzzer) {
-      badgeBuzzer.textContent = r.buzzerActive ? 'BUZZER BEEPING' : 'BUZZER IDLE';
-      badgeBuzzer.className = `badge ${r.buzzerActive ? 'badge-danger' : 'badge-success'}`;
+      if (r.soilMoisture > 85) {
+        badgeBuzzer.textContent = window.sensorEngine?.isAlternatingBuzzerPlaying ? 'BUZZER ALTERNATING (10s)' : (r.buzzerActive ? 'HIGH WATER ALERT' : 'BUZZER IDLE');
+        badgeBuzzer.className = 'badge badge-danger';
+      } else {
+        badgeBuzzer.textContent = r.buzzerActive ? 'BUZZER BEEPING' : 'BUZZER IDLE';
+        badgeBuzzer.className = `badge ${r.buzzerActive ? 'badge-danger' : 'badge-success'}`;
+      }
     }
     if (hwBuzzerText) {
-      hwBuzzerText.textContent = r.buzzerActive ? 'Active BEEP (2.4kHz)' : 'Standby';
-      hwBuzzerText.className = r.buzzerActive ? 'text-danger' : '';
+      if (r.soilMoisture > 85) {
+        hwBuzzerText.textContent = window.sensorEngine?.isAlternatingBuzzerPlaying ? 'Alternating Sound (10s)' : '10s Alarm Completed';
+        hwBuzzerText.className = window.sensorEngine?.isAlternatingBuzzerPlaying ? 'text-danger' : 'text-muted';
+      } else {
+        hwBuzzerText.textContent = r.buzzerActive ? 'Active BEEP (2.4kHz)' : 'Standby';
+        hwBuzzerText.className = r.buzzerActive ? 'text-danger' : '';
+      }
     }
   }
 

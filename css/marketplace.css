@@ -6,15 +6,15 @@
 
 /* --- 1. HERO BANNER & STATS STRIP --- */
 .market-hero-banner {
-  background: linear-gradient(135deg, #064e3b 0%, #0f172a 60%, #1e293b 100%);
+  background: linear-gradient(135deg, #f0fdf4 0%, #ffffff 50%, #ecfdf5 100%);
   border-radius: var(--radius-xl, 16px);
   padding: 28px 32px;
   margin-bottom: 24px;
-  color: #ffffff;
+  color: #0f172a;
   position: relative;
   overflow: hidden;
-  box-shadow: 0 10px 25px -5px rgba(6, 78, 59, 0.25), 0 8px 10px -6px rgba(6, 78, 59, 0.2);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 10px 25px -5px rgba(16, 185, 129, 0.12), 0 8px 10px -6px rgba(16, 185, 129, 0.06);
+  border: 1px solid #bbf7d0;
 }
 
 .market-hero-banner::after {
@@ -24,7 +24,7 @@
   right: -10%;
   width: 380px;
   height: 380px;
-  background: radial-gradient(circle, rgba(52, 211, 153, 0.15) 0%, rgba(52, 211, 153, 0) 70%);
+  background: radial-gradient(circle, rgba(16, 185, 129, 0.12) 0%, rgba(16, 185, 129, 0) 70%);
   border-radius: 50%;
   pointer-events: none;
 }
@@ -34,12 +34,12 @@
   align-items: center;
   gap: 8px;
   padding: 4px 12px;
-  background: rgba(16, 185, 129, 0.2);
-  border: 1px solid rgba(16, 185, 129, 0.4);
+  background: #dcfce7;
+  border: 1px solid #86efac;
   border-radius: 9999px;
   font-size: 11px;
-  font-weight: 600;
-  color: #6ee7b7;
+  font-weight: 700;
+  color: #15803d;
   letter-spacing: 0.02em;
   margin-bottom: 12px;
 }
@@ -63,14 +63,14 @@
   font-size: 26px;
   font-weight: 800;
   letter-spacing: -0.02em;
-  color: #ffffff;
+  color: #064e3b;
   margin-bottom: 8px;
   line-height: 1.25;
 }
 
 .hero-subtitle {
   font-size: 14px;
-  color: #cbd5e1;
+  color: #475569;
   max-width: 720px;
   line-height: 1.5;
   margin-bottom: 20px;
@@ -83,29 +83,42 @@
 }
 
 .hero-stat-card {
-  background: rgba(255, 255, 255, 0.07);
-  backdrop-filter: blur(8px);
-  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: #ffffff;
+  border: 1px solid #bbf7d0;
   padding: 10px 16px;
   border-radius: var(--radius-md, 8px);
   display: flex;
   flex-direction: column;
+  box-shadow: 0 2px 6px rgba(16, 185, 129, 0.06);
 }
 
 .stat-number {
   font-size: 20px;
   font-weight: 800;
-  color: #34d399;
+  color: #059669;
   letter-spacing: -0.01em;
 }
 
 .stat-label {
   font-size: 11px;
-  color: #94a3b8;
+  color: #64748b;
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.05em;
   margin-top: 2px;
+}
+
+.hero-calle-cta-strip {
+  background: #ecfdf5 !important;
+  border: 1px solid #a7f3d0 !important;
+}
+
+.hero-calle-cta-strip strong {
+  color: #064e3b !important;
+}
+
+.hero-calle-cta-strip span {
+  color: #047857 !important;
 }
 
 /* --- 2. CONTROL TOOLBAR & FILTER ROW --- */
@@ -359,9 +372,10 @@
 }
 
 .price-chip.active {
-  background: #064e3b;
+  background: linear-gradient(135deg, #10b981 0%, #059669 100%);
   color: #ffffff;
-  border-color: #064e3b;
+  border-color: #059669;
+  box-shadow: 0 2px 6px rgba(16, 185, 129, 0.25);
 }
 
 .filter-controls-right {
@@ -509,10 +523,10 @@
 }
 
 .cat-pill.active {
-  background-color: #064e3b;
+  background: linear-gradient(135deg, #10b981 0%, #059669 100%);
   color: #ffffff;
-  border-color: #064e3b;
-  box-shadow: 0 4px 10px rgba(6, 78, 59, 0.25);
+  border-color: #059669;
+  box-shadow: 0 4px 12px rgba(16, 185, 129, 0.28);
 }
 
 .cat-count-badge {

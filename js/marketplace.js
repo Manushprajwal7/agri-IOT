@@ -55,6 +55,23 @@ class AgriMarketEngine {
               <span class="stat-label">Field Dispatch</span>
             </div>
           </div>
+
+          <!-- CALL-E Voice Supply Chain Call Initiation Strip -->
+          <div class="hero-calle-cta-strip" style="margin-top: 20px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 14px; background: rgba(0, 0, 0, 0.35); border: 1px solid rgba(255, 255, 255, 0.2); padding: 14px 20px; border-radius: 12px; backdrop-filter: blur(8px);">
+            <div style="display: flex; align-items: center; gap: 14px;">
+              <div style="width: 44px; height: 44px; border-radius: 50%; background: #10b981; display: flex; align-items: center; justify-content: center; color: white; box-shadow: 0 0 16px rgba(16, 185, 129, 0.5);">
+                <svg class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width: 22px; height: 22px;"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+              </div>
+              <div>
+                <strong style="color: #ffffff; font-size: 15px; display: block;">CALL-E AI Voice Supply Chain Agent</strong>
+                <span style="color: #d1fae5; font-size: 13px;">Enquire on seeds, fertilizers, pesticides & tractors via automated phone call with instant booking</span>
+              </div>
+            </div>
+            <button class="btn btn-calle-voice-launch" id="btnHeroInitiateCallE" style="background: #10b981; color: white; font-weight: 700; border: none; padding: 10px 20px; border-radius: 8px; cursor: pointer; display: inline-flex; align-items: center; gap: 8px; box-shadow: 0 4px 14px rgba(16, 185, 129, 0.4); font-size: 14px;">
+              <svg class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width: 18px; height: 18px;"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+              <span>Initiate Call-E Voice Call</span>
+            </button>
+          </div>
         </div>
       </div>
 
@@ -81,6 +98,10 @@ class AgriMarketEngine {
 
           <!-- Action Buttons -->
           <div class="header-action-group">
+            <button class="btn btn-outline" id="btnOpenCallEModal" title="Voice Enquiry & Booking via Phone Call" style="border-color: #10b981; color: #10b981; font-weight: 600; display: inline-flex; align-items: center; gap: 6px;">
+              <svg class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width: 16px; height: 16px;"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+              <span>Call-E Booking</span>
+            </button>
             <button class="btn btn-primary btn-new-listing" id="btnOpenCreateListing">
               ${I.plus || ''} Post Free Listing
             </button>
@@ -253,6 +274,90 @@ class AgriMarketEngine {
 
           <div class="cart-body" id="cartItemsList"></div>
           <div class="cart-footer" id="cartFooter"></div>
+        </div>
+      </div>
+
+      <!-- Interactive CALL-E Voice Supply Chain Booking Modal -->
+      <div class="modal-backdrop" id="callEModalBackdrop" style="display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.7); z-index: 9999; align-items: center; justify-content: center; backdrop-filter: blur(4px);">
+        <div class="modal-dialog" style="max-width: 580px; width: 92%; background: var(--bg-card, #ffffff); border-radius: 16px; border: 1px solid var(--border-color, #e2e8f0); box-shadow: 0 20px 40px rgba(0,0,0,0.3); overflow: hidden; animation: modalPop 0.25s ease-out;">
+          
+          <div class="modal-header" style="background: linear-gradient(135deg, #064e3b 0%, #047857 100%); color: #ffffff; padding: 20px 24px; display: flex; justify-content: space-between; align-items: center;">
+            <div style="display: flex; align-items: center; gap: 12px;">
+              <div style="width: 40px; height: 40px; border-radius: 50%; background: rgba(255,255,255,0.2); display: flex; align-items: center; justify-content: center;">
+                <svg class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width: 20px; height: 20px;"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+              </div>
+              <div>
+                <h3 style="margin: 0; font-size: 18px; font-weight: 700; color: #ffffff;">CALL-E Voice Supply Chain Assistant</h3>
+                <span style="font-size: 12px; color: #a7f3d0;">APMC Mandya Live Gate • Autonomous Phone Booking</span>
+              </div>
+            </div>
+            <button type="button" class="modal-close-btn" id="btnCloseCallEModal" style="background: none; border: none; font-size: 22px; color: #ffffff; cursor: pointer;">✕</button>
+          </div>
+
+          <div class="modal-body" style="padding: 24px; max-height: 75vh; overflow-y: auto;">
+            
+            <div style="background: #f0fdf4; border: 1px solid #bbf7d0; border-radius: 10px; padding: 14px; margin-bottom: 20px;">
+              <strong style="color: #166534; font-size: 13px; display: flex; align-items: center; gap: 6px;">
+                <span>✨ How it works</span>
+              </strong>
+              <p style="font-size: 13px; color: #15803d; margin: 4px 0 0 0; line-height: 1.5;">
+                When you initiate the call, CALL-E dials your phone. Speak naturally to ask about commodity prices & availability. Once you agree, CALL-E books the order and issues a live Booking ID with delivery to Plot 4B Mandya!
+              </p>
+            </div>
+
+            <!-- Target Phone Input Group -->
+            <div class="form-group" style="margin-bottom: 20px;">
+              <label style="display: block; font-weight: 600; font-size: 13px; margin-bottom: 6px;">Farmer's Receiving Phone Number (with Country Code):</label>
+              <div style="display: flex; gap: 8px;">
+                <input type="text" id="callEPhoneInput" class="form-control" placeholder="+919844775528" value="+919844775528" style="font-family: 'JetBrains Mono', monospace; font-size: 15px; font-weight: 600;" />
+                <span id="callEConfigBadge" class="badge badge-success" style="align-self: center; white-space: nowrap; padding: 6px 10px;">● API Configured</span>
+              </div>
+              <span class="text-muted small" style="font-size: 12px; margin-top: 4px; display: block;">Default loaded from your <code>.env</code> file (ALERT_PHONE_NUMBER).</span>
+            </div>
+
+            <!-- Live Commodities Quick Reference -->
+            <div style="margin-bottom: 20px;">
+              <label style="display: block; font-weight: 600; font-size: 13px; margin-bottom: 8px;">Commodities Available in Real-Time for Enquiry & Booking:</label>
+              <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; font-size: 12px;">
+                <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 10px;">
+                  <strong style="color: #0f172a; display: block;">🌱 Seeds</strong>
+                  <span style="color: #334155;">Hybrid Tomato F1 (Arka Rakshak)</span>
+                  <div style="margin-top: 4px; color: #059669; font-weight: 700;">₹450 / packet <span style="font-weight: 400; color: #64748b;">(24 in stock)</span></div>
+                </div>
+                <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 10px;">
+                  <strong style="color: #0f172a; display: block;">🚜 Machinery Rental</strong>
+                  <span style="color: #334155;">Mahindra 575 DI (45 HP)</span>
+                  <div style="margin-top: 4px; color: #059669; font-weight: 700;">₹1,200 / hr <span style="font-weight: 400; color: #64748b;">(2 available today)</span></div>
+                </div>
+                <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 10px;">
+                  <strong style="color: #0f172a; display: block;">🧪 Fertilizers & Manure</strong>
+                  <span style="color: #334155;">Kaveri Vermicompost (50kg)</span>
+                  <div style="margin-top: 4px; color: #059669; font-weight: 700;">₹350 / bag <span style="font-weight: 400; color: #64748b;">(80 bags in stock)</span></div>
+                </div>
+                <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 10px;">
+                  <strong style="color: #0f172a; display: block;">🛡️ Bio-Pesticides</strong>
+                  <span style="color: #334155;">Cold Pressed Neem 10000 PPM</span>
+                  <div style="margin-top: 4px; color: #059669; font-weight: 700;">₹520 / litre <span style="font-weight: 400; color: #64748b;">(45 bottles in stock)</span></div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Call Live Status Display Box -->
+            <div id="callEStatusBox" style="background: #f1f5f9; border-radius: 10px; padding: 14px; text-align: center; border: 1px dashed #cbd5e1; margin-bottom: 20px;">
+              <span id="callEStatusIcon" style="font-size: 22px; display: block; margin-bottom: 4px;">📱</span>
+              <div id="callEStatusTitle" style="font-weight: 600; font-size: 14px; color: #1e293b;">Ready to Place Voice Call</div>
+              <p id="callEStatusDesc" style="font-size: 12px; color: #64748b; margin: 4px 0 0 0;">Click the button below. Your phone will ring in 3-5 seconds.</p>
+            </div>
+
+            <div style="display: flex; gap: 12px;">
+              <button type="button" class="btn btn-outline" id="btnCancelCallE" style="flex: 1;">Close</button>
+              <button type="button" class="btn btn-primary" id="btnTriggerCallE" style="flex: 2; background: #059669; border-color: #059669; font-weight: 700; display: inline-flex; align-items: center; justify-content: center; gap: 8px; font-size: 15px; padding: 12px;">
+                <svg class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width: 18px; height: 18px;"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+                <span id="triggerCallEBtnText">Place Call to My Phone</span>
+              </button>
+            </div>
+
+          </div>
         </div>
       </div>
     `;
@@ -464,10 +569,138 @@ class AgriMarketEngine {
       });
     }
 
+    // CALL-E Voice Modal triggers
+    const heroCallEBtn = document.getElementById('btnHeroInitiateCallE');
+    const headerCallEBtn = document.getElementById('btnOpenCallEModal');
+    const closeCallEBtn = document.getElementById('btnCloseCallEModal');
+    const cancelCallEBtn = document.getElementById('btnCancelCallE');
+    const triggerCallEBtn = document.getElementById('btnTriggerCallE');
+    const callEBackdrop = document.getElementById('callEModalBackdrop');
+
+    if (heroCallEBtn) heroCallEBtn.addEventListener('click', () => this.openCallEModal());
+    if (headerCallEBtn) headerCallEBtn.addEventListener('click', () => this.openCallEModal());
+    if (closeCallEBtn) closeCallEBtn.addEventListener('click', () => this.closeCallEModal());
+    if (cancelCallEBtn) cancelCallEBtn.addEventListener('click', () => this.closeCallEModal());
+    if (triggerCallEBtn) triggerCallEBtn.addEventListener('click', () => this.triggerCallE());
+    if (callEBackdrop) {
+      callEBackdrop.addEventListener('click', (e) => {
+        if (e.target === callEBackdrop) this.closeCallEModal();
+      });
+    }
+
     window.addEventListener('agri:cart-updated', () => {
       this.updateCartBadge();
       this.renderCartDrawerItems();
     });
+  }
+
+  async openCallEModal() {
+    const backdrop = document.getElementById('callEModalBackdrop');
+    if (!backdrop) return;
+    backdrop.style.display = 'flex';
+
+    // Fetch config to populate the phone number
+    try {
+      const res = await fetch('/api/v1/marketplace/call-config');
+      if (res.ok) {
+        const config = await res.json();
+        const phoneInput = document.getElementById('callEPhoneInput');
+        const badge = document.getElementById('callEConfigBadge');
+        if (phoneInput && config.phoneNumber) {
+          phoneInput.value = config.phoneNumber;
+        }
+        if (badge) {
+          if (config.configured) {
+            badge.className = 'badge badge-success';
+            badge.textContent = '● API Key Active';
+          } else {
+            badge.className = 'badge badge-warning';
+            badge.textContent = '● API Key Missing in .env';
+          }
+        }
+      }
+    } catch (e) {
+      console.warn('Could not load call config:', e);
+    }
+  }
+
+  closeCallEModal() {
+    const backdrop = document.getElementById('callEModalBackdrop');
+    if (backdrop) backdrop.style.display = 'none';
+  }
+
+  async triggerCallE() {
+    const phoneInput = document.getElementById('callEPhoneInput');
+    const phone = phoneInput ? phoneInput.value.trim() : '+919844775528';
+    const statusBox = document.getElementById('callEStatusBox');
+    const statusTitle = document.getElementById('callEStatusTitle');
+    const statusDesc = document.getElementById('callEStatusDesc');
+    const statusIcon = document.getElementById('callEStatusIcon');
+    const btn = document.getElementById('btnTriggerCallE');
+    const btnText = document.getElementById('triggerCallEBtnText');
+
+    if (!phone) {
+      alert('Please enter a valid phone number with country code (e.g. +919844775528).');
+      return;
+    }
+
+    if (btn) btn.disabled = true;
+    if (btnText) btnText.textContent = 'Dialing Phone...';
+    if (statusIcon) statusIcon.textContent = '📞';
+    if (statusBox) {
+      statusBox.style.background = '#eff6ff';
+      statusBox.style.borderColor = '#93c5fd';
+    }
+    if (statusTitle) statusTitle.textContent = `Dialing ${phone}...`;
+    if (statusDesc) statusDesc.textContent = 'CALL-E is establishing connection. Your phone will ring in 3-5 seconds!';
+    if (statusBox) statusBox.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+
+    try {
+      const res = await fetch('/api/v1/marketplace/call-farmer', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ phone })
+      });
+
+      const data = await res.json();
+
+      if (res.ok && data.success) {
+        if (statusIcon) statusIcon.textContent = '🎉';
+        if (statusBox) {
+          statusBox.style.background = '#f0fdf4';
+          statusBox.style.borderColor = '#86efac';
+        }
+        if (statusTitle) statusTitle.textContent = 'Call Dispatched Successfully!';
+        if (statusDesc) {
+          statusDesc.innerHTML = `
+            <strong>Call ID:</strong> ${data.callId}<br>
+            <strong>Booking Ref:</strong> ${data.bookingId}<br>
+            Pick up your phone now to enquire and book commodities!
+          `;
+        }
+        if (btnText) btnText.textContent = 'Call Dispatched ✓';
+        if (window.showAgriToast) {
+          window.showAgriToast(`Calling ${phone}! Pick up to book seeds or tractors.`, 'success');
+        }
+      } else {
+        throw new Error(data.error || 'Failed to dispatch call');
+      }
+    } catch (err) {
+      console.error('Call error:', err);
+      if (statusIcon) statusIcon.textContent = '⚠️';
+      if (statusBox) {
+        statusBox.style.background = '#fef2f2';
+        statusBox.style.borderColor = '#fca5a5';
+      }
+      if (statusTitle) statusTitle.textContent = 'Call Initiation Error';
+      if (statusDesc) statusDesc.textContent = err.message;
+      if (btnText) btnText.textContent = 'Retry Call';
+      if (window.showAgriToast) {
+        window.showAgriToast('Call error: ' + err.message, 'danger');
+      }
+    } finally {
+      if (btn) btn.disabled = false;
+    }
   }
 
   async refreshProducts() {
@@ -1054,3 +1287,8 @@ class AgriMarketEngine {
 // Global initialization
 window.AgriMarketEngine = AgriMarketEngine;
 window.agriMarket = new AgriMarketEngine();
+window.openCallEGlobalModal = () => {
+  if (window.agriMarket) {
+    window.agriMarket.openCallEModal();
+  }
+};

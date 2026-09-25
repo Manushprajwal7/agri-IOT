@@ -313,13 +313,13 @@ class AgriApp {
               <div class="alert-icon-col" style="color: var(--status-critical);">${I.alertTriangle || ''}</div>
               <div class="alert-content-col">
                 <div class="alert-title-row">
-                  <h4>High Soil Moisture Warning (89%)</h4>
+                  <h4>High Soil Moisture Warning (>85%)</h4>
                   <span class="badge badge-danger">CRITICAL SPIKE</span>
                   <span class="text-muted small">12 minutes ago</span>
                 </div>
-                <p>Sensor detected severe saturation at Plot 4B (Paddy Nursery). Root rot risk if stagnant water persists for &gt; 4 hours.</p>
+                <p>Sensor detected excess saturation above 85% safety threshold at Plot 4B (Paddy Nursery).</p>
                 <div class="alert-action-box">
-                  <strong>Recommended Agronomic Action:</strong> Shut off main lateral canal intake sluice. Inspect drainage trench at southern border.
+                  <strong>Recommended Agronomic Action:</strong> High water content at the field, consider turning off the water supply immediately.
                 </div>
               </div>
             </div>

@@ -35,9 +35,9 @@
 }
 
 .btn-layer.active {
-  background-color: var(--primary-800);
+  background: linear-gradient(135deg, #10b981 0%, #059669 100%);
   color: #ffffff;
-  box-shadow: var(--shadow-sm);
+  box-shadow: 0 2px 6px rgba(16, 185, 129, 0.25);
 }
 
 .sat-zoom-controls {

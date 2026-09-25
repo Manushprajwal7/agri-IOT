@@ -29,6 +29,8 @@ try {
                         temperature = [double]$jsonObj.temp
                         humidity = [double]$jsonObj.humidity
                         buzzerActive = [bool]$jsonObj.buzzer
+                        highWaterAlert = if ($null -ne $jsonObj.highWaterAlert) { [bool]$jsonObj.highWaterAlert } else { [int]$jsonObj.soilPercent -gt 85 }
+                        alertMsg = if ($jsonObj.alertMsg) { [string]$jsonObj.alertMsg } else { if ([int]$jsonObj.soilPercent -gt 85) { "High water content at the field, consider turning off the water supply" } else { "NORMAL" } }
                         timestamp = (Get-Date).ToString("hh:mm:ss tt")
                         updatedAt = [DateTimeOffset]::UtcNow.ToUnixTimeMilliseconds()
                     } | ConvertTo-Json -Compress

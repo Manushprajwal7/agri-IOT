@@ -59,6 +59,10 @@ bool lastAlarm = false;
 
 int alertPersistenceCount = 0;  // Debounce for buzzer alarms
 
+// High Water Alert Continuous Short-Frequency Buzzer State (> 85% Moisture)
+bool highWaterBuzzerActive = false;
+int lastAlertDisplayMode = -1; // -1: uninit, 0: normal, 1: general alert, 2: high water alert
+
 unsigned long lastSensorRead = 0;
 unsigned long lastHeartbeat = 0;
 bool heartbeatState = false;
@@ -198,7 +202,7 @@ void updateDynamicMetrics(int soil, int rawSoil, float temp, float hum, bool ale
       statusText = "PARCHED SOIL ";
     } else if (soil > SOIL_MAX_THRESHOLD) {
       soilColor = COLOR_RED_ALERT;
-      statusText = "EXCESS WATER ";
+      statusText = "HIGH WATER!  ";
     }
 
     // Number text
@@ -278,19 +282,55 @@ void updateDynamicMetrics(int soil, int rawSoil, float temp, float hum, bool ale
   }
 
   // 4. Update Bottom System Banner
-  if (alert != lastAlarm) {
-    tft.fillRect(68, 206, 236, 22, COLOR_CARD);
-    tft.setTextSize(1);
-    if (alert) {
-      tft.fillRoundRect(68, 205, 155, 24, 4, COLOR_RED_ALERT);
+  int currentAlertMode = 0; // 0 = normal
+  if (soil > SOIL_MAX_THRESHOLD) {
+    currentAlertMode = 2; // High water content alert
+  } else if (alert) {
+    currentAlertMode = 1; // General alert
+  }
+
+  if (currentAlertMode != lastAlertDisplayMode) {
+    if (currentAlertMode == 2) {
+      // High Water Alert Banner
+      tft.fillRoundRect(8, 200, 304, 34, 6, COLOR_RED_ALERT);
+      tft.drawRoundRect(8, 200, 304, 34, 6, COLOR_WHITE);
+
+      tft.setTextColor(COLOR_WHITE);
+      tft.setTextSize(1);
+      tft.setCursor(14, 206);
+      tft.print("HIGH WATER CONTENT AT THE FIELD,");
+
+      tft.setTextColor(COLOR_GOLD);
+      tft.setCursor(14, 219);
+      tft.print("CONSIDER TURNING OFF THE WATER SUPPLY");
+    } else if (currentAlertMode == 1) {
+      // General alert banner
+      tft.fillRoundRect(8, 200, 304, 34, 6, COLOR_CARD);
+      tft.drawRoundRect(8, 200, 304, 34, 6, COLOR_CARD_BORDER);
+
+      tft.setTextColor(COLOR_MUTED);
+      tft.setTextSize(1);
+      tft.setCursor(18, 212);
+      tft.print("STATUS:");
+
+      tft.fillRoundRect(68, 205, 155, 24, 4, COLOR_WARN_ORANGE);
       tft.setTextColor(COLOR_WHITE);
       tft.setCursor(76, 213);
-      tft.print("! WARNING: SPIKE/DRY !");
+      tft.print("! WARNING: CHECK ENV !");
 
-      tft.setTextColor(COLOR_RED_ALERT);
+      tft.setTextColor(COLOR_WARN_ORANGE);
       tft.setCursor(232, 213);
       tft.print("ALARM ON");
     } else {
+      // Normal Standby Banner
+      tft.fillRoundRect(8, 200, 304, 34, 6, COLOR_CARD);
+      tft.drawRoundRect(8, 200, 304, 34, 6, COLOR_CARD_BORDER);
+
+      tft.setTextColor(COLOR_MUTED);
+      tft.setTextSize(1);
+      tft.setCursor(18, 212);
+      tft.print("STATUS:");
+
       tft.fillRoundRect(68, 205, 140, 24, 4, 0x0320);
       tft.setTextColor(COLOR_ACCENT);
       tft.setCursor(76, 213);
@@ -300,6 +340,7 @@ void updateDynamicMetrics(int soil, int rawSoil, float temp, float hum, bool ale
       tft.setCursor(218, 213);
       tft.print("STANDBY");
     }
+    lastAlertDisplayMode = currentAlertMode;
     lastAlarm = alert;
   }
 }
@@ -354,6 +395,15 @@ void loop() {
     tft.fillCircle(232, 16, 4, heartbeatState ? COLOR_ACCENT : 0x0240);
   }
 
+  // Continuous Short-Frequency Buzzer Manager (ONLY active when soil moisture > 85%)
+  if (highWaterBuzzerActive) {
+    // Short frequency rapid beeps: 100ms ON, 100ms OFF (5 Hz rapid pulse)
+    bool beepOn = ((now / 100) % 2 == 0);
+    digitalWrite(BUZZER_PIN, beepOn ? HIGH : LOW);
+  } else {
+    digitalWrite(BUZZER_PIN, LOW);
+  }
+
   // Sensor Sampling Loop every 1000ms
   if (now - lastSensorRead >= 1000) {
     lastSensorRead = now;
@@ -383,11 +433,21 @@ void loop() {
     float hum = dht.readHumidity();
 
     // 5. Alert condition evaluation
+    bool isHighWater = (soilPercent > SOIL_MAX_THRESHOLD); // > 85%
     bool rawAlert = (soilPercent < SOIL_MIN_THRESHOLD || 
-                     soilPercent > SOIL_MAX_THRESHOLD || 
+                     isHighWater || 
                      hum > HUMIDITY_MAX_THRESHOLD);
 
-    // Debounce / Persistence: Must be in alert condition for at least 3 consecutive cycles (3s)
+    // High Soil Moisture (> 85%) trigger logic:
+    // Buzzer is strictly and ONLY enabled when moisture is above 85%
+    if (isHighWater) {
+      highWaterBuzzerActive = true;
+    } else {
+      highWaterBuzzerActive = false;
+      digitalWrite(BUZZER_PIN, LOW);
+    }
+
+    // Debounce / Persistence for visual display alerts only
     if (rawAlert) {
       if (alertPersistenceCount < 3) alertPersistenceCount++;
     } else {
@@ -395,12 +455,8 @@ void loop() {
     }
     bool sustainedAlert = (alertPersistenceCount >= 3);
 
-    // Buzzer control
-    if (sustainedAlert) {
-      digitalWrite(BUZZER_PIN, HIGH);
-      delay(40);
-      digitalWrite(BUZZER_PIN, LOW);
-    } else {
+    // Ensure buzzer is strictly OFF if not in high water state (prevents any beeps for 27% moisture)
+    if (!highWaterBuzzerActive) {
       digitalWrite(BUZZER_PIN, LOW);
     }
 
@@ -417,7 +473,15 @@ void loop() {
     Serial.print(",\"humidity\":");
     if (!isnan(hum)) Serial.print(hum, 1); else Serial.print("null");
     Serial.print(",\"buzzer\":");
-    Serial.print(sustainedAlert ? "true" : "false");
-    Serial.println("}");
+    Serial.print(highWaterBuzzerActive ? "true" : "false");
+    Serial.print(",\"highWaterAlert\":");
+    Serial.print(isHighWater ? "true" : "false");
+    Serial.print(",\"alertMsg\":\"");
+    if (isHighWater) {
+      Serial.print("High water content at the field, consider turning off the water supply");
+    } else {
+      Serial.print("NORMAL");
+    }
+    Serial.println("\"}");
   }
 }

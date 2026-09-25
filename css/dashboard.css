@@ -64,10 +64,10 @@
   border-top: 4px solid var(--primary-600);
 }
 
-#cardMoisture { border-top-color: #2d6a4f; }
+#cardMoisture { border-top-color: #10b981; }
 #cardTemp { border-top-color: #ea580c; }
 #cardHumidity { border-top-color: #0284c7; }
-#cardEnv { border-top-color: #6366f1; }
+#cardEnv { border-top-color: #10b981; }
 
 .kpi-header {
   display: flex;
@@ -128,7 +128,7 @@
   transition: width 0.4s var(--ease-spring);
 }
 
-.fill-moisture { background: linear-gradient(90deg, #52b788, #1b4332); }
+.fill-moisture { background: linear-gradient(90deg, #34d399, #059669); }
 .fill-temp { background: linear-gradient(90deg, #fb923c, #ea580c); }
 .fill-humidity { background: linear-gradient(90deg, #38bdf8, #0284c7); }
 
@@ -214,9 +214,9 @@
 }
 
 .btn-chart-tab.active {
-  background-color: #ffffff;
-  color: var(--text-main);
-  box-shadow: var(--shadow-sm);
+  background-color: #10b981;
+  color: #ffffff;
+  box-shadow: 0 2px 6px rgba(16, 185, 129, 0.25);
 }
 
 .chart-time-filters {

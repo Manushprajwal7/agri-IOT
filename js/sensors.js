@@ -43,6 +43,12 @@ class SensorEngine {
     this.isHardwareLive = false;
     this.hardwareSource = 'INITIALIZING';
     this.timer = null;
+
+    // High Water Alert & Alternating Buzzer State
+    this.isAlternatingBuzzerPlaying = false;
+    this.alternatingBuzzerInterval = null;
+    this.highWaterTriggered = false;
+
     this.init();
   }
 
@@ -191,9 +197,9 @@ class SensorEngine {
     window.dispatchEvent(new CustomEvent('agri:sensor-alert', {
       detail: {
         type: 'HIGH_MOISTURE',
-        title: 'ALERT: HIGH SOIL MOISTURE SPIKE',
+        title: 'ALERT: HIGH SOIL MOISTURE (>85%)',
         value: `${value}%`,
-        message: 'Moisture exceeds 85% safety threshold. Soil saturation detected. Pause active irrigation immediately!',
+        message: 'High water content at the field, consider turning off the water supply.',
         buzzer: true
       }
     }));
@@ -201,6 +207,8 @@ class SensorEngine {
   }
 
   resetToNormal() {
+    this.highWaterTriggered = false;
+    this.stopAlternatingBuzzer();
     this.reading.soilMoisture = 68;
     this.reading.temperature = 28.4;
     this.reading.humidity = 74;
@@ -213,18 +221,17 @@ class SensorEngine {
     let alertActive = false;
     let statusText = 'NORMAL';
     let envStatus = 'Conditions Normal';
+    const isHighWater = this.reading.soilMoisture > this.thresholds.soilMoistureMax;
 
-    if (this.reading.soilMoisture < this.thresholds.soilMoistureMin) {
+    if (isHighWater) {
+      statusText = 'HIGH';
+      envStatus = 'High water content at the field, consider turning off the water supply';
+      alertActive = true;
+    } else if (this.reading.soilMoisture < this.thresholds.soilMoistureMin) {
       statusText = 'LOW';
       envStatus = 'Low Moisture Alert';
       alertActive = true;
-    } else if (this.reading.soilMoisture > this.thresholds.soilMoistureMax) {
-      statusText = 'HIGH';
-      envStatus = 'HIGH MOISTURE SPIKE';
-      alertActive = true;
-    }
-
-    if (this.reading.humidity > this.thresholds.humidityMax) {
+    } else if (this.reading.humidity > this.thresholds.humidityMax) {
       envStatus = 'High Humidity Alert';
       alertActive = true;
     }
@@ -232,13 +239,84 @@ class SensorEngine {
     this.reading.moistureStatus = statusText;
     this.reading.environmentStatus = envStatus;
     this.reading.buzzerActive = alertActive;
+    this.reading.highWaterAlert = isHighWater;
 
-    if (alertActive && this.buzzerAudioEnabled && this.isOnline) {
-      this.playBuzzerBeep();
+    // 10-Second Alternating Buzzer on High Water condition
+    if (isHighWater) {
+      if (!this.highWaterTriggered) {
+        this.highWaterTriggered = true;
+        if (this.buzzerAudioEnabled && this.isOnline) {
+          this.startAlternatingBuzzer(10000);
+        }
+      }
+    } else {
+      this.highWaterTriggered = false;
+      this.stopAlternatingBuzzer();
+      if (alertActive && this.buzzerAudioEnabled && this.isOnline) {
+        this.playBuzzerBeep();
+      }
     }
   }
 
-  // Web Audio API Piezo Buzzer Beep
+  // 10-Second Alternating Piezo Buzzer Sound for High Water Alert
+  startAlternatingBuzzer(durationMs = 10000) {
+    if (!this.buzzerAudioEnabled) return;
+    this.stopAlternatingBuzzer();
+
+    try {
+      const AudioCtxClass = window.AudioContext || window.webkitAudioContext;
+      if (!AudioCtxClass) return;
+      if (!this.audioCtx) this.audioCtx = new AudioCtxClass();
+      if (this.audioCtx.state === 'suspended') this.audioCtx.resume();
+
+      this.isAlternatingBuzzerPlaying = true;
+      const startMs = Date.now();
+
+      const pulseBeep = () => {
+        const elapsed = Date.now() - startMs;
+        if (elapsed >= durationMs || !this.isAlternatingBuzzerPlaying) {
+          this.stopAlternatingBuzzer();
+          this.renderLcdDisplay();
+          return;
+        }
+
+        try {
+          const osc = this.audioCtx.createOscillator();
+          const gain = this.audioCtx.createGain();
+          const isHighTone = Math.floor(elapsed / 250) % 2 === 0;
+
+          osc.type = 'square';
+          // Alternating frequencies: 2400 Hz and 1600 Hz
+          osc.frequency.setValueAtTime(isHighTone ? 2400 : 1600, this.audioCtx.currentTime);
+
+          gain.gain.setValueAtTime(0.08, this.audioCtx.currentTime);
+          gain.gain.exponentialRampToValueAtTime(0.001, this.audioCtx.currentTime + 0.20);
+
+          osc.connect(gain);
+          gain.connect(this.audioCtx.destination);
+
+          osc.start();
+          osc.stop(this.audioCtx.currentTime + 0.22);
+        } catch (e) {}
+      };
+
+      pulseBeep();
+      this.alternatingBuzzerInterval = setInterval(pulseBeep, 250);
+      this.renderLcdDisplay();
+    } catch (err) {
+      console.warn('Buzzer Web Audio API warning:', err);
+    }
+  }
+
+  stopAlternatingBuzzer() {
+    this.isAlternatingBuzzerPlaying = false;
+    if (this.alternatingBuzzerInterval) {
+      clearInterval(this.alternatingBuzzerInterval);
+      this.alternatingBuzzerInterval = null;
+    }
+  }
+
+  // Web Audio API Standard Piezo Buzzer Beep
   playBuzzerBeep() {
     try {
       if (!this.audioCtx) {
@@ -271,9 +349,15 @@ class SensorEngine {
   }
 
   // Render 2.3" ST7789 TFT Color Display Emulator on HTML Canvas (PRD Section 12)
-  renderLcdDisplay(canvasId = 'esp32LcdCanvas') {
-    const canvas = document.getElementById(canvasId);
-    if (!canvas) return;
+  renderLcdDisplay(canvasId) {
+    const ids = canvasId ? [canvasId] : ['esp32LcdCanvas', 'farmMonitorLcdCanvas'];
+    ids.forEach(id => {
+      const canvas = document.getElementById(id);
+      if (canvas) this._drawLcdOnCanvas(canvas);
+    });
+  }
+
+  _drawLcdOnCanvas(canvas) {
     const ctx = canvas.getContext('2d');
     const w = canvas.width;
     const h = canvas.height;
@@ -300,16 +384,17 @@ class SensorEngine {
       return;
     }
 
-    const isHighAlert = this.reading.buzzerActive;
+    const isHighWater = this.reading.soilMoisture > this.thresholds.soilMoistureMax;
+    const isHighAlert = this.reading.buzzerActive || isHighWater;
 
     // Header Bar
-    ctx.fillStyle = isHighAlert ? '#dc2626' : '#15803d';
+    ctx.fillStyle = isHighWater ? '#b91c1c' : (isHighAlert ? '#dc2626' : '#15803d');
     ctx.fillRect(0, 0, w, 32);
 
     ctx.fillStyle = '#ffffff';
-    ctx.font = 'bold 14px "Courier New", monospace';
+    ctx.font = 'bold 13px "Courier New", monospace';
     ctx.textAlign = 'center';
-    ctx.fillText(isHighAlert ? '[!] WARNING [!]' : 'AGRISENSE IOT', w / 2, 22);
+    ctx.fillText(isHighWater ? '[!] HIGH WATER ALERT [!]' : (isHighAlert ? '[!] WARNING [!]' : 'AGRISENSE IOT v2.4'), w / 2, 21);
 
     // Grid divider lines
     ctx.strokeStyle = '#1e293b';
@@ -319,8 +404,38 @@ class SensorEngine {
     ctx.moveTo(10, 140); ctx.lineTo(w - 10, 140);
     ctx.stroke();
 
-    if (isHighAlert) {
+    if (isHighWater) {
+      // High Water Content Alert Screen Mode
+      ctx.textAlign = 'center';
+
+      // Warning subheader
+      ctx.fillStyle = '#fca5a5';
+      ctx.font = 'bold 12px "Courier New", monospace';
+      ctx.fillText('HIGH WATER CONTENT AT THE FIELD', w / 2, 54);
+
+      // Value
+      ctx.fillStyle = '#ffffff';
+      ctx.font = 'bold 30px "Courier New", monospace';
+      ctx.fillText(`${this.reading.soilMoisture}%`, w / 2, 84);
+
+      // Warning and advice text
+      ctx.fillStyle = '#fbbf24';
+      ctx.font = 'bold 11px "Courier New", monospace';
+      ctx.fillText('CONSIDER TURNING OFF', w / 2, 114);
+      ctx.fillText('THE WATER SUPPLY', w / 2, 130);
+
+      // Buzzer indicator
+      const isBuzzing = this.isAlternatingBuzzerPlaying;
+      ctx.fillStyle = isBuzzing ? '#ef4444' : '#94a3b8';
+      ctx.font = 'bold 11px "Courier New", monospace';
+      ctx.fillText(isBuzzing ? '● BUZZER: ALTERNATING (10s)' : 'BUZZER: 10s SOUND COMPLETED', w / 2, 172);
+
+      ctx.fillStyle = '#64748b';
+      ctx.font = '10px "Courier New", monospace';
+      ctx.fillText('STATUS: WATER SUPPLY SHUTOFF NEEDED', w / 2, 202);
+    } else if (isHighAlert) {
       // Alert Screen Mode
+      ctx.textAlign = 'center';
       ctx.fillStyle = '#f87171';
       ctx.font = 'bold 16px "Courier New", monospace';
       ctx.fillText('HIGH MOISTURE', w / 2, 60);

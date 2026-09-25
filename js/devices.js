@@ -31,6 +31,61 @@ class DeviceManager {
 
     this.container.innerHTML = `
       <div class="devices-dashboard-grid">
+        <!-- Physical Hardware & Rover Gallery Card -->
+        <div class="card hardware-gallery-card" style="margin-bottom: 24px; grid-column: 1 / -1;">
+          <div class="card-header-flex">
+            <div style="display: flex; align-items: center; gap: 8px;">
+              <span style="color: var(--primary-700);">${I.cpu || ''}</span>
+              <h4 style="margin: 0; font-size: 16px;">Physical Hardware & Autonomous Field Rover Testbed</h4>
+            </div>
+            <span class="badge badge-accent">Real Prototype</span>
+          </div>
+          <p class="text-muted small" style="margin: 6px 0 16px 0;">
+            Physical lab testbed featuring the ESP32 IoT node with live 2.8" SPI TFT LCD (ILI9341), soil probe, DHT sensor, and the autonomous agricultural field rover with dual TT gear motors and IR tracking array.
+          </p>
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 16px;">
+            <div style="background: var(--bg-surface); border: 1px solid var(--border-subtle); border-radius: 8px; overflow: hidden; display: flex; flex-direction: column;">
+              <div style="height: 180px; overflow: hidden; background: #111; display: flex; align-items: center; justify-content: center;">
+                <img src="assets/images/WhatsApp%20Image%202026-09-25%20at%2012.04.13%20PM.jpeg" alt="ESP32 IoT Node & SPI TFT Display" style="width: 100%; height: 100%; object-fit: cover; transition: transform 0.3s ease; cursor: pointer;" onclick="window.open(this.src, '_blank')" title="Click to view full size" />
+              </div>
+              <div style="padding: 12px; flex: 1;">
+                <h5 style="margin: 0 0 4px 0; font-size: 13px; font-weight: 600;">ESP32 Node & SPI Color TFT</h5>
+                <p class="text-muted small" style="margin: 0; line-height: 1.4; font-size: 12px;">Live telemetry (48% Moisture, 27°C, 67% RH) on ILI9341 display with soil probe and buzzer.</p>
+              </div>
+            </div>
+
+            <div style="background: var(--bg-surface); border: 1px solid var(--border-subtle); border-radius: 8px; overflow: hidden; display: flex; flex-direction: column;">
+              <div style="height: 180px; overflow: hidden; background: #111; display: flex; align-items: center; justify-content: center;">
+                <img src="assets/images/WhatsApp%20Image%202026-09-25%20at%2012.04.14%20PM%20(1).jpeg" alt="Integrated Field Testbed" style="width: 100%; height: 100%; object-fit: cover; transition: transform 0.3s ease; cursor: pointer;" onclick="window.open(this.src, '_blank')" title="Click to view full size" />
+              </div>
+              <div style="padding: 12px; flex: 1;">
+                <h5 style="margin: 0 0 4px 0; font-size: 13px; font-weight: 600;">Integrated Testbed</h5>
+                <p class="text-muted small" style="margin: 0; line-height: 1.4; font-size: 12px;">Combined physical station: fixed soil IoT node alongside autonomous 2WD field rover chassis.</p>
+              </div>
+            </div>
+
+            <div style="background: var(--bg-surface); border: 1px solid var(--border-subtle); border-radius: 8px; overflow: hidden; display: flex; flex-direction: column;">
+              <div style="height: 180px; overflow: hidden; background: #111; display: flex; align-items: center; justify-content: center;">
+                <img src="assets/images/WhatsApp%20Image%202026-09-25%20at%2012.04.14%20PM.jpeg" alt="Field Rover Chassis & Motors" style="width: 100%; height: 100%; object-fit: cover; transition: transform 0.3s ease; cursor: pointer;" onclick="window.open(this.src, '_blank')" title="Click to view full size" />
+              </div>
+              <div style="padding: 12px; flex: 1;">
+                <h5 style="margin: 0 0 4px 0; font-size: 13px; font-weight: 600;">Field Rover Chassis & Drive</h5>
+                <p class="text-muted small" style="margin: 0; line-height: 1.4; font-size: 12px;">Dual-deck acrylic chassis, TT gearmotors, high-traction rubber tread wheels, and H-bridge driver.</p>
+              </div>
+            </div>
+
+            <div style="background: var(--bg-surface); border: 1px solid var(--border-subtle); border-radius: 8px; overflow: hidden; display: flex; flex-direction: column;">
+              <div style="height: 180px; overflow: hidden; background: #111; display: flex; align-items: center; justify-content: center;">
+                <img src="assets/images/WhatsApp%20Image%202026-09-25%20at%2012.04.15%20PM.jpeg" alt="Rover Obstacle & Line Sensor Array" style="width: 100%; height: 100%; object-fit: cover; transition: transform 0.3s ease; cursor: pointer;" onclick="window.open(this.src, '_blank')" title="Click to view full size" />
+              </div>
+              <div style="padding: 12px; flex: 1;">
+                <h5 style="margin: 0 0 4px 0; font-size: 13px; font-weight: 600;">Crop-Row & Obstacle Array</h5>
+                <p class="text-muted small" style="margin: 0; line-height: 1.4; font-size: 12px;">Front dual IR reflectance sensors with trim potentiometers and omnidirectional caster wheel.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
         <!-- Device Overview Card -->
         <div class="card device-info-card">
           <div class="card-header-flex">
@@ -236,10 +291,15 @@ const char* ssid = "Demo_Agri_WiFi";
 const char* password = "AgriPassword123";
 const char* serverEndpoint = "https://agrisense.farm/api/v1/sensors/telemetry";
 
-// THRESHOLDS
+// THRESHOLDS & 10s ALARM STATE
 const int SOIL_MIN_THRESHOLD = 30;
 const int SOIL_MAX_THRESHOLD = 85;
 const float HUMIDITY_MAX_THRESHOLD = 85.0;
+
+bool highWaterTriggered = false;
+bool highWaterBuzzerActive = false;
+unsigned long highWaterStartTime = 0;
+const unsigned long HIGH_WATER_DURATION_MS = 10000; // 10 seconds
 
 void setup() {
   Serial.begin(115200);
@@ -261,6 +321,7 @@ void setup() {
 }
 
 void loop() {
+  unsigned long now = millis();
   int rawSoil = analogRead(SOIL_ADC_PIN);
   int soilMoisture = map(rawSoil, 3200, 1200, 0, 100);
   soilMoisture = constrain(soilMoisture, 0, 100);
@@ -268,27 +329,67 @@ void loop() {
   float temp = dht.readTemperature();
   float humidity = dht.readHumidity();
 
-  bool alert = (soilMoisture > SOIL_MAX_THRESHOLD || soilMoisture < SOIL_MIN_THRESHOLD || humidity > HUMIDITY_MAX_THRESHOLD);
+  bool isHighWater = (soilMoisture > SOIL_MAX_THRESHOLD);
+  bool alert = (isHighWater || soilMoisture < SOIL_MIN_THRESHOLD || humidity > HUMIDITY_MAX_THRESHOLD);
 
-  if (alert) {
-    tone(BUZZER_PIN, 2400, 200);
+  // High Water Alert: 10-second alternating sound trigger
+  if (isHighWater) {
+    if (!highWaterTriggered) {
+      highWaterTriggered = true;
+      highWaterBuzzerActive = true;
+      highWaterStartTime = now;
+    }
   } else {
-    noTone(BUZZER_PIN);
+    highWaterTriggered = false;
+    highWaterBuzzerActive = false;
+    digitalWrite(BUZZER_PIN, LOW);
   }
 
-  tft.fillScreen(alert ? ST77XX_RED : ST77XX_BLACK);
-  tft.setTextColor(ST77XX_WHITE);
-  tft.setTextSize(2);
-  tft.setCursor(20, 20);
-  tft.println(alert ? "WARNING: MOISTURE SPIKE" : "AGRISENSE MONITOR");
-  
-  tft.setTextSize(3);
-  tft.setCursor(20, 70);
-  tft.printf("Soil: %d %%\n", soilMoisture);
-  tft.setCursor(20, 120);
-  tft.printf("Temp: %.1f C\n", temp);
-  tft.setCursor(20, 170);
-  tft.printf("Hum:  %.1f %%\n", humidity);
+  // 10-Second Alternating Buzzer Sound (200ms ON / 200ms OFF)
+  if (highWaterBuzzerActive) {
+    if (now - highWaterStartTime < HIGH_WATER_DURATION_MS) {
+      bool beepState = (((now - highWaterStartTime) / 200) % 2 == 0);
+      digitalWrite(BUZZER_PIN, beepState ? HIGH : LOW);
+    } else {
+      digitalWrite(BUZZER_PIN, LOW);
+      highWaterBuzzerActive = false;
+    }
+  } else {
+    digitalWrite(BUZZER_PIN, LOW);
+  }
+
+  // Display Rendering
+  if (isHighWater) {
+    tft.fillScreen(ST77XX_RED);
+    tft.setTextColor(ST77XX_WHITE);
+    tft.setTextSize(2);
+    tft.setCursor(10, 15);
+    tft.println("! HIGH WATER ALERT !");
+    
+    tft.setTextSize(1);
+    tft.setCursor(10, 45);
+    tft.println("High water content at the field,");
+    tft.setCursor(10, 60);
+    tft.println("consider turning off the water supply");
+
+    tft.setTextSize(4);
+    tft.setCursor(20, 95);
+    tft.printf("Soil: %d%%\n", soilMoisture);
+  } else {
+    tft.fillScreen(alert ? ST77XX_ORANGE : ST77XX_BLACK);
+    tft.setTextColor(ST77XX_WHITE);
+    tft.setTextSize(2);
+    tft.setCursor(20, 20);
+    tft.println(alert ? "WARNING: CHECK ENV" : "AGRISENSE MONITOR");
+    
+    tft.setTextSize(3);
+    tft.setCursor(20, 70);
+    tft.printf("Soil: %d %%\n", soilMoisture);
+    tft.setCursor(20, 120);
+    tft.printf("Temp: %.1f C\n", temp);
+    tft.setCursor(20, 170);
+    tft.printf("Hum:  %.1f %%\n", humidity);
+  }
 
   if (WiFi.status() == WL_CONNECTED) {
     HTTPClient http;
