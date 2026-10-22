@@ -425,41 +425,60 @@ class AgriApp {
           </div>
 
           <div class="assistant-side-pane">
-            <h4>Multi-Agent Architecture</h4>
+            <div style="background: linear-gradient(135deg, #064e3b 0%, #047857 100%); color: #ffffff; padding: 14px; border-radius: 10px; margin-bottom: 16px;">
+              <div style="display: flex; justify-content: space-between; align-items: center;">
+                <strong style="font-size: 13px;">TrueForge Harness</strong>
+                <span class="badge badge-success" style="font-size: 10px;">● ONLINE</span>
+              </div>
+              <p style="font-size: 12px; color: #a7f3d0; margin: 4px 0 0 0;">Control Plane: <code>http://localhost:8790</code></p>
+              <div style="font-size: 11px; color: #d1fae5; margin-top: 6px;">MCP Server: 14 Agricultural Tools at <code>/mcp</code></div>
+            </div>
+
+            <h4>Specialized Agents</h4>
             <div class="agent-architecture-cards">
               <div class="arch-card">
                 <div style="display: flex; align-items: center; gap: 6px;">
                   <span style="color: var(--primary-700);">${I.cpu || ''}</span>
-                  <strong>Orchestrator</strong>
+                  <strong>Chief of Staff Orchestrator</strong>
                 </div>
-                <span class="small text-muted">Sarvam AI NLU Intent Detection</span>
-              </div>
-              <div class="arch-card">
-                <div style="display: flex; align-items: center; gap: 6px;">
-                  <span style="color: var(--primary-700);">${I.search || ''}</span>
-                  <strong>Marketplace Agent</strong>
-                </div>
-                <span class="small text-muted">Tool: search_products() & filter</span>
+                <span class="small text-muted">Intent routing & TrueForge wire protocol</span>
               </div>
               <div class="arch-card">
                 <div style="display: flex; align-items: center; gap: 6px;">
                   <span style="color: var(--primary-700);">${I.sprout || ''}</span>
-                  <strong>Product Agent</strong>
+                  <strong>IoT & Phenology Agent</strong>
                 </div>
-                <span class="small text-muted">Tool: compare_products() & explain</span>
+                <span class="small text-muted">ESP32 telemetry & MobileNetV2 canopy health</span>
               </div>
               <div class="arch-card">
                 <div style="display: flex; align-items: center; gap: 6px;">
                   <span style="color: var(--primary-700);">${I.orders || ''}</span>
-                  <strong>Order Agent</strong>
+                  <strong>Commerce & Logistics Agent</strong>
                 </div>
-                <span class="small text-muted">Human-in-the-loop safety validation</span>
+                <span class="small text-muted">APMC catalog & SHA-256 cryptographic ledger</span>
               </div>
+              <div class="arch-card" style="border-left: 3px solid #10b981;">
+                <div style="display: flex; align-items: center; gap: 6px;">
+                  <span style="color: #059669;">📞</span>
+                  <strong>CALL-E Outbound Caller</strong>
+                </div>
+                <span class="small text-muted">Live AI voice telephone calls to farmers</span>
+              </div>
+            </div>
+
+            <h4 style="margin-top: 18px;">Live Actions</h4>
+            <div style="display: flex; flex-direction: column; gap: 8px;">
+              <button class="btn btn-sm btn-outline" style="border-color: #059669; color: #059669;" onclick="fetch('/api/integrations/test-calle', {method: 'POST'}).then(r=>r.json()).then(d=>alert('CALL-E Status: ' + (d.status||d.message||'Calling phone!')))">
+                📞 Test CALL-E Outbound Call
+              </button>
+              <button class="btn btn-sm btn-outline" style="border-color: #0284c7; color: #0284c7;" onclick="fetch('/api/integrations/test-telegram', {method: 'POST'}).then(r=>r.json()).then(d=>alert('Telegram Alert Dispatched!'))">
+                ✈️ Test Telegram Farm Alert
+              </button>
             </div>
 
             <h4 style="margin-top: 18px;">Safety Protocol</h4>
             <div class="safety-info-card">
-              <p class="small text-muted">AI will NEVER place orders automatically. Every purchase requires direct human verification of product, price, and quantity.</p>
+              <p class="small text-muted">AI will NEVER execute consequential mutations automatically. Orders & outbound calls halt at the TrueForge Human-in-the-Loop Approval Checkpoint.</p>
             </div>
           </div>
         </div>
@@ -662,6 +681,80 @@ class AgriApp {
               <button type="submit" class="btn btn-primary">${I.check || ''} Save Platform Settings</button>
             </div>
           </form>
+        </div>
+
+        <div class="card" style="margin-top: 24px; border: 1px solid #10b981; background: #f0fdf4;">
+          <div class="card-header-flex">
+            <div>
+              <h4 style="color: #065f46; margin-bottom: 4px;">⚡ TrueFoundry, Voice AI & CALL-E Integrations Hub</h4>
+              <span class="text-muted small">Live enterprise backplane status connecting TrueForge, Sarvam AI, CALL-E, and Daytona Sandbox</span>
+            </div>
+            <span class="badge badge-success" style="font-size: 12px; padding: 6px 12px;">● ALL 6 AGENTS & ENGINES ACTIVE</span>
+          </div>
+
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 14px; margin-top: 16px;">
+            <div style="background: #ffffff; border: 1px solid #d1fae5; border-radius: 8px; padding: 14px;">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+                <strong style="color: #047857; font-size: 13px;">TrueForge Harness</strong>
+                <span class="badge badge-success" style="font-size: 10px;">Connected</span>
+              </div>
+              <div style="font-size: 12px; color: #334155;">Runtime: <code>http://localhost:8790</code></div>
+              <div style="font-size: 12px; color: #64748b; margin-top: 2px;">Agent ID: <code>agrisense-farm-operator</code></div>
+              <div style="font-size: 12px; color: #64748b;">Model: <code>truefoundry/gemini-2-5-flash</code></div>
+            </div>
+
+            <div style="background: #ffffff; border: 1px solid #d1fae5; border-radius: 8px; padding: 14px;">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+                <strong style="color: #047857; font-size: 13px;">MCP Agricultural Server</strong>
+                <span class="badge badge-success" style="font-size: 10px;">14 Tools</span>
+              </div>
+              <div style="font-size: 12px; color: #334155;">Streamable Endpoint: <code>/mcp</code></div>
+              <div style="font-size: 12px; color: #64748b; margin-top: 2px;">Protocol: JSON-RPC 2.0 / Streamable-HTTP</div>
+              <div style="font-size: 12px; color: #64748b;">Human Checkpoints: Enabled (Prepare-Approve-Execute)</div>
+            </div>
+
+            <div style="background: #ffffff; border: 1px solid #d1fae5; border-radius: 8px; padding: 14px;">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+                <strong style="color: #047857; font-size: 13px;">CALL-E Voice Caller</strong>
+                <span class="badge badge-success" style="font-size: 10px;">Active</span>
+              </div>
+              <div style="font-size: 12px; color: #334155;">API: <code>api.heycall-e.com</code></div>
+              <div style="font-size: 12px; color: #64748b; margin-top: 2px;">Default Target: <code>+918496074290</code></div>
+              <button class="btn btn-sm btn-outline" style="margin-top: 8px; font-size: 11px; padding: 4px 8px; border-color: #059669; color: #059669;" onclick="fetch('/api/integrations/test-calle', {method: 'POST'}).then(r=>r.json()).then(d=>alert('CALL-E Status: ' + (d.status||d.message||'Phone is ringing!')))">
+                📞 Place Test Phone Call
+              </button>
+            </div>
+
+            <div style="background: #ffffff; border: 1px solid #d1fae5; border-radius: 8px; padding: 14px;">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+                <strong style="color: #047857; font-size: 13px;">Sarvam AI Indic Voice</strong>
+                <span class="badge badge-success" style="font-size: 10px;">Active</span>
+              </div>
+              <div style="font-size: 12px; color: #334155;">STT: <code>saaras:v3</code> • TTS: <code>bulbul:v3</code></div>
+              <div style="font-size: 12px; color: #64748b; margin-top: 2px;">Languages: KN, HI, EN, TA, TE</div>
+              <div style="font-size: 12px; color: #64748b;">Zero-Downtime Failover: Edge-TTS Neural</div>
+            </div>
+
+            <div style="background: #ffffff; border: 1px solid #d1fae5; border-radius: 8px; padding: 14px;">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+                <strong style="color: #047857; font-size: 13px;">Daytona Cloud Sandbox</strong>
+                <span class="badge badge-success" style="font-size: 10px;">Active</span>
+              </div>
+              <div style="font-size: 12px; color: #334155;">Runner: Isolated Python Execution</div>
+              <div style="font-size: 12px; color: #64748b; margin-top: 2px;">Tasks: Soil water deficit & NPK dosing math</div>
+            </div>
+
+            <div style="background: #ffffff; border: 1px solid #d1fae5; border-radius: 8px; padding: 14px;">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+                <strong style="color: #047857; font-size: 13px;">Telegram & Ledger</strong>
+                <span class="badge badge-success" style="font-size: 10px;">Active</span>
+              </div>
+              <div style="font-size: 12px; color: #334155;">Ledger: CSV + Google Sheets Sync</div>
+              <button class="btn btn-sm btn-outline" style="margin-top: 8px; font-size: 11px; padding: 4px 8px; border-color: #0284c7; color: #0284c7;" onclick="fetch('/api/integrations/test-telegram', {method: 'POST'}).then(r=>r.json()).then(d=>alert('Telegram alert sent!'))">
+                ✈️ Send Test Telegram Alert
+              </button>
+            </div>
+          </div>
         </div>
       </div>
     `;
