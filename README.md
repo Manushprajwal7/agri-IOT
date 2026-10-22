@@ -48,26 +48,35 @@ AgriSense & AgriMarket AI connects **physical farm sensing, satellite crop analy
 
 ---
 
-## 🚀 Quick Start (Running Locally)
+## 🚀 Quick Start (Running the Integrated TrueFoundry Platform)
 
-You can run the platform instantly using Node.js or Python without any bundlers or build steps:
+You can run the full-stack platform using the FastAPI Python backend (with TrueForge Agent Harness, Voice AI, and CALL-E) or via Node.js:
 
-### Option 1: Node.js (Recommended)
+### Option 1: TrueFoundry Full-Stack Backend (Recommended)
+```bash
+# 1. Install dependencies
+pip install -r requirements.txt
+
+# 2. Seed database (PostgreSQL or local SQLite)
+python -m db.seed
+
+# 3. Start TrueForge Agent Control Plane (Terminal 1)
+npx @truefoundry/trueforge@latest
+
+# 4. Start the AgriSense API Server & Web UI at port 8000 (Terminal 2)
+python run_server.py
+```
+Open **`http://localhost:8000`** in your browser.
+- **MCP Server Discovery:** `http://localhost:8000/mcp` (14 live agricultural tools)
+- **Agent Task SSE Stream:** `http://localhost:8000/api/agent/task`
+- **Sarvam AI Indic Voice:** Kannada, Hindi, Tamil, Telugu, and English (India)
+- **CALL-E Outbound Caller:** Live telephone dialing to `+918496074290`
+
+### Option 2: Node.js Server
 ```bash
 node server.js
 ```
-The server will automatically bind to an open port (e.g. **`http://localhost:3000`** or **`http://localhost:3001`**).
-
-### Option 2: Python
-```bash
-python -m http.server 8080
-```
-Then open your browser at **`http://localhost:8080`**.
-
-### Option 3: Direct Browser Launch
-Open `index.html` directly in any modern web browser.
-
----
+The server binds to `http://localhost:3000`.
 
 ## 📁 Complete Suite of Standalone Pages
 

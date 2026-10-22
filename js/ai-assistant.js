@@ -1,19 +1,33 @@
 /**
- * AgriSense & AgriMarket AI - Multilingual Agentic AI Voice Assistant
- * Implements Web Speech STT/TTS, Sarvam AI Indic NLU architectural flow,
- * Agentic Orchestrator (Marketplace, Product, Order Agents), and Safe Human-in-the-Loop Confirmation.
- * Uses 100% Vector SVG Icons (Zero Emojis).
- * Matches PRD Sections 30-37, 55-59, 75-77.
+ * AgriSense & AgriMarket AI - TrueFoundry + Sarvam Voice AI + CALL-E Assistant Engine
+ * Connects to live FastAPI / TrueForge SSE stream (/api/agent/task + /api/agent/session/{id}/stream),
+ * Sarvam AI Indic STT (saaras:v3) and TTS (bulbul:v3), CALL-E Outbound Voice Phone Calls,
+ * and TrueForge Human-in-the-Loop Safe Approval Gate.
  */
 
 class AIAssistantEngine {
   constructor() {
     this.currentLanguage = 'en';
     this.isListening = false;
+    this.mediaRecorder = null;
+    this.audioChunks = [];
     this.speechRecognition = null;
     this.agentStepLog = [];
-    this.pendingOrder = null;
+    this.currentSessionId = null;
+    this.currentEventSource = null;
+    this.pendingApprovalAction = null;
     this.initSpeech();
+  }
+
+  getLangCode() {
+    const langCodes = {
+      en: 'en-IN',
+      kn: 'kn-IN',
+      hi: 'hi-IN',
+      ta: 'ta-IN',
+      te: 'te-IN'
+    };
+    return langCodes[this.currentLanguage] || 'en-IN';
   }
 
   initSpeech() {
@@ -35,7 +49,7 @@ class AIAssistantEngine {
       };
 
       this.speechRecognition.onerror = (event) => {
-        console.warn('Speech recognition error:', event.error);
+        console.warn('Speech recognition notice:', event.error);
         this.isListening = false;
         this.updateMicUi(false);
       };
@@ -48,15 +62,9 @@ class AIAssistantEngine {
   }
 
   updateSpeechLanguage() {
-    if (!this.speechRecognition) return;
-    const langCodes = {
-      en: 'en-IN',
-      kn: 'kn-IN',
-      hi: 'hi-IN',
-      ta: 'ta-IN',
-      te: 'te-IN'
-    };
-    this.speechRecognition.lang = langCodes[this.currentLanguage] || 'en-IN';
+    if (this.speechRecognition) {
+      this.speechRecognition.lang = this.getLangCode();
+    }
   }
 
   setLanguage(lang) {
@@ -73,9 +81,9 @@ class AIAssistantEngine {
 
     this.container.innerHTML = `
       <!-- Floating AI Trigger Button -->
-      <button class="floating-ai-trigger" id="floatingAiBtn" title="Open AI Farm Assistant">
-        <span class="ai-sparkle">${I.sparkles || ''}</span>
-        <span class="ai-mic-icon">${I.mic || ''}</span>
+      <button class="floating-ai-trigger" id="floatingAiBtn" title="Open AgriMarket AI Operator">
+        <span class="ai-sparkle">${I.sparkles || '✨'}</span>
+        <span class="ai-mic-icon">${I.mic || '🎙️'}</span>
         <span class="ai-pulse-ring"></span>
       </button>
 
@@ -86,12 +94,12 @@ class AIAssistantEngine {
             <div class="ai-header-title">
               <span class="ai-robot-avatar">${I.bot || ''}</span>
               <div>
-                <h4>AgriMarket AI Voice Assistant</h4>
-                <span class="ai-sub-badge">Sarvam AI Indic NLU • Multi-Agent Orchestrator</span>
+                <h4>AgriSense & AgriMarket AI Operator</h4>
+                <span class="ai-sub-badge">TrueForge Multi-Agent Harness • Sarvam AI • CALL-E</span>
               </div>
             </div>
             <div class="ai-header-actions">
-              <select id="aiLangSelect" class="form-select-sm" style="color: #ffffff; background: rgba(255,255,255,0.15); border-radius: 4px; padding: 4px 8px;">
+              <select id="aiLangSelect" class="form-select-sm" style="color: #ffffff; background: rgba(255,255,255,0.15); border-radius: 4px; padding: 4px 8px; border: 1px solid rgba(255,255,255,0.2);">
                 <option value="en" selected>English (India)</option>
                 <option value="kn">ಕನ್ನಡ (Kannada)</option>
                 <option value="hi">हिन्दी (Hindi)</option>
@@ -102,26 +110,26 @@ class AIAssistantEngine {
             </div>
           </div>
 
-          <!-- Multi-Agent Visual Orchestration Pipeline (PRD Section 35) -->
+          <!-- Multi-Agent Visual Orchestration Pipeline -->
           <div class="ai-orchestration-bar">
-            <div class="agent-node active" id="nodeOrchestrator">
+            <div class="agent-node active" id="nodeOrchestrator" title="Chief of Staff Orchestrator">
               <span class="node-icon">${I.cpu || ''}</span>
               <span class="node-label">Orchestrator</span>
             </div>
             <span class="node-arrow">→</span>
-            <div class="agent-node" id="nodeMarketAgent">
-              <span class="node-icon">${I.search || ''}</span>
-              <span class="node-label">Market Agent</span>
-            </div>
-            <span class="node-arrow">→</span>
-            <div class="agent-node" id="nodeProductAgent">
+            <div class="agent-node" id="nodeCropAgent" title="IoT & Satellite Phenology Agent">
               <span class="node-icon">${I.sprout || ''}</span>
-              <span class="node-label">Product Agent</span>
+              <span class="node-label">Crop Monitor</span>
             </div>
             <span class="node-arrow">→</span>
-            <div class="agent-node" id="nodeOrderAgent">
-              <span class="node-icon">${I.orders || ''}</span>
-              <span class="node-label">Order Agent</span>
+            <div class="agent-node" id="nodeMarketAgent" title="Marketplace & Logistics Agent">
+              <span class="node-icon">${I.search || ''}</span>
+              <span class="node-label">Commerce Agent</span>
+            </div>
+            <span class="node-arrow">→</span>
+            <div class="agent-node" id="nodeCallEAgent" title="CALL-E Outbound Voice Phone Caller">
+              <span class="node-icon">📞</span>
+              <span class="node-label">CALL-E Voice</span>
             </div>
           </div>
 
@@ -130,32 +138,33 @@ class AIAssistantEngine {
             <div class="ai-msg msg-assistant">
               <div class="msg-avatar">${I.bot || ''}</div>
               <div class="msg-bubble">
-                <p><strong>Namaskara!</strong> I am your agricultural AI assistant. You can speak or type in Kannada, Hindi, English, Tamil, or Telugu.</p>
+                <p><strong>Namaskara!</strong> I am your autonomous Agricultural AI Operator powered by <strong>TrueForge</strong> & <strong>Sarvam AI</strong>. You can speak or type in Kannada, Hindi, English, Tamil, or Telugu.</p>
                 <div class="quick-prompts">
-                  <button class="btn-prompt-chip" data-query="I need tomato seeds">"I need tomato seeds"</button>
-                  <button class="btn-prompt-chip" data-query="Show tractor for rent">"Show tractor for rent"</button>
-                  <button class="btn-prompt-chip" data-query="Check my soil moisture">"Check my soil moisture"</button>
-                  <button class="btn-prompt-chip" data-query="Show me the cheapest fertilizer">"Show cheapest fertilizer"</button>
+                  <button class="btn-prompt-chip" data-query="Check my soil moisture">"Check soil moisture"</button>
+                  <button class="btn-prompt-chip" data-query="Call me via CALL-E with today's APMC prices">"Call me via CALL-E"</button>
+                  <button class="btn-prompt-chip" data-query="Show tractor for rent">"Rent Mahindra tractor"</button>
+                  <button class="btn-prompt-chip" data-query="I need tomato seeds">"Order tomato seeds"</button>
+                  <button class="btn-prompt-chip" data-query="What is my crop health?">"Check crop health"</button>
                 </div>
               </div>
             </div>
           </div>
 
-          <!-- Agent Live Activity Log (PRD Section 76) -->
+          <!-- Agent Live Activity Log -->
           <div class="agent-activity-tracker" id="agentActivityTracker">
             <div class="activity-header">
-              <span>Live Agent Tool Activity Feed</span>
+              <span>Live TrueForge Agent Execution Trace</span>
               <span class="activity-status-dot"></span>
             </div>
             <div class="activity-log-items" id="activityLogItems">
-              <div class="log-item">System ready. Awaiting voice query.</div>
+              <div class="log-item">System ready. TrueForge harness & MCP Server active (14 tools).</div>
             </div>
           </div>
 
           <!-- Voice / Text Control Input Bar -->
           <div class="ai-input-bar">
-            <button class="btn-mic-main" id="btnAiMic" title="Click to speak">
-              <span class="mic-svg">${I.mic || ''}</span>
+            <button class="btn-mic-main" id="btnAiMic" title="Click to speak (Sarvam AI Indic STT)">
+              <span class="mic-svg">${I.mic || '🎙️'}</span>
               <span class="mic-ripple"></span>
             </button>
             <input type="text" id="aiTextInput" class="ai-text-input" placeholder="Speak in your language, or type agricultural query..." />
@@ -164,20 +173,28 @@ class AIAssistantEngine {
         </div>
       </div>
 
-      <!-- Human Confirmation Modal (PRD Section 37) -->
+      <!-- TrueForge Human-in-the-Loop Safe Approval Modal -->
       <div class="order-confirm-backdrop" id="orderConfirmModal" style="display: none;">
-        <div class="order-confirm-card">
-          <div class="confirm-header">
-            <h4>Confirm Agricultural Order</h4>
-            <span class="safety-badge">${I.shield || ''} AI Safe Action Verification</span>
+        <div class="order-confirm-card" style="border: 2px solid #059669; box-shadow: 0 20px 40px rgba(0,0,0,0.35);">
+          <div class="confirm-header" style="background: linear-gradient(135deg, #064e3b 0%, #047857 100%); color: #ffffff; padding: 16px 20px; border-radius: 12px 12px 0 0; display: flex; justify-content: space-between; align-items: center;">
+            <div style="display: flex; align-items: center; gap: 10px;">
+              <span style="font-size: 22px;">✋</span>
+              <div>
+                <h4 style="margin: 0; color: #ffffff; font-size: 16px;">TrueForge Human Approval Checkpoint</h4>
+                <span style="font-size: 12px; color: #a7f3d0;">Pre-Execution Financial & Communication Guardrail</span>
+              </div>
+            </div>
+            <span class="safety-badge" style="background: rgba(255,255,255,0.2); color: #ffffff; padding: 4px 10px; border-radius: 20px; font-size: 12px;">Stage 1 Prepared</span>
           </div>
-          <p class="confirm-intro">The AI Assistant prepared this order based on your conversation. Please review before finalizing:</p>
-          
-          <div class="confirm-summary-box" id="confirmSummaryBox"></div>
+          <div style="padding: 20px;">
+            <p class="confirm-intro" id="confirmIntroText" style="font-size: 14px; color: #334155; margin-bottom: 14px;">The AI Agent prepared this real-world action. Your explicit approval is required before execution:</p>
+            
+            <div class="confirm-summary-box" id="confirmSummaryBox" style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 14px; margin-bottom: 16px;"></div>
 
-          <div class="confirm-actions">
-            <button class="btn btn-outline" id="btnCancelOrderConfirm">Cancel</button>
-            <button class="btn btn-primary" id="btnProceedOrderConfirm">${I.check || ''} Confirm & Place Order</button>
+            <div class="confirm-actions" style="display: flex; gap: 12px;">
+              <button class="btn btn-outline" id="btnCancelOrderConfirm" style="flex: 1; border-color: #cbd5e1; color: #475569;">✕ Deny & Cancel</button>
+              <button class="btn btn-primary" id="btnProceedOrderConfirm" style="flex: 2; background: #059669; border-color: #059669; font-weight: 700;">✓ Approve & Execute</button>
+            </div>
           </div>
         </div>
       </div>
@@ -249,30 +266,14 @@ class AIAssistantEngine {
     if (cancelConfirm) {
       cancelConfirm.addEventListener('click', () => {
         confirmModal.style.display = 'none';
-        this.appendAssistantMessage("Order cancelled. Let me know if you would like to explore other agricultural items!");
+        this.sendApprovalDecision('deny');
       });
     }
 
     if (proceedConfirm) {
-      proceedConfirm.addEventListener('click', async () => {
-        if (this.pendingOrder) {
-          const created = await window.agriApi.createOrder(this.pendingOrder);
-          confirmModal.style.display = 'none';
-          this.pendingOrder = null;
-
-          this.appendAssistantMessage(`
-            <strong>Order Placed Successfully!</strong><br>
-            Order ID: <strong class="text-primary">${created.orderId}</strong><br>
-            Total: <strong>₹${created.total.toLocaleString('en-IN')}</strong><br>
-            The seller has been notified for dispatch. You can track it in the <strong>Orders</strong> tab.
-          `);
-
-          this.speakText(`Order placed successfully. Order ID is ${created.orderId}.`);
-
-          if (window.showAgriToast) {
-            window.showAgriToast(`Order ${created.orderId} successfully placed!`, 'success');
-          }
-        }
+      proceedConfirm.addEventListener('click', () => {
+        confirmModal.style.display = 'none';
+        this.sendApprovalDecision('allow');
       });
     }
   }
@@ -289,42 +290,95 @@ class AIAssistantEngine {
 
   toggleVoiceListen() {
     if (this.isListening) {
-      if (this.speechRecognition) this.speechRecognition.stop();
-      this.isListening = false;
-      this.updateMicUi(false);
+      this.stopVoiceListen();
     } else {
-      this.triggerVoiceListen();
+      this.startVoiceListen();
     }
   }
 
-  triggerVoiceListen() {
+  async startVoiceListen() {
+    this.isListening = true;
+    this.updateMicUi(true);
+
+    if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+      try {
+        const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+        this.mediaRecorder = new MediaRecorder(stream);
+        this.audioChunks = [];
+
+        this.mediaRecorder.ondataavailable = (e) => {
+          if (e.data && e.data.size > 0) this.audioChunks.push(e.data);
+        };
+
+        this.mediaRecorder.onstop = async () => {
+          stream.getTracks().forEach(t => t.stop());
+          const audioBlob = new Blob(this.audioChunks, { type: 'audio/wav' });
+          await this.sendAudioToSarvamStt(audioBlob);
+        };
+
+        this.mediaRecorder.start();
+        if (window.showAgriToast) {
+          window.showAgriToast('Listening with Sarvam AI Indic STT...', 'info');
+        }
+        return;
+      } catch (err) {
+        console.warn('Microphone stream error, trying SpeechRecognition:', err.message);
+      }
+    }
+
     if (this.speechRecognition) {
       try {
         this.speechRecognition.start();
-      } catch (e) {
-        this.fallbackSimulatedSpeech();
-      }
-    } else {
-      this.fallbackSimulatedSpeech();
+        return;
+      } catch (e) {}
     }
+
+    this.fallbackSimulatedSpeech();
+  }
+
+  stopVoiceListen() {
+    this.isListening = false;
+    this.updateMicUi(false);
+    if (this.mediaRecorder && this.mediaRecorder.state !== 'inactive') {
+      this.mediaRecorder.stop();
+    }
+    if (this.speechRecognition) {
+      try { this.speechRecognition.stop(); } catch (e) {}
+    }
+  }
+
+  async sendAudioToSarvamStt(audioBlob) {
+    this.logActivity('Processing audio via Sarvam AI saaras:v3...', 'Sarvam AI');
+    try {
+      const formData = new FormData();
+      formData.append('file', audioBlob, 'voice.wav');
+      formData.append('language_code', this.getLangCode());
+
+      const res = await fetch('/api/voice/stt', { method: 'POST', body: formData });
+      const data = await res.json();
+      if (data && data.transcript && data.transcript.trim()) {
+        this.processUserText(data.transcript.trim());
+        return;
+      }
+    } catch (e) {
+      console.warn('Sarvam STT backend request error:', e);
+    }
+    this.fallbackSimulatedSpeech();
   }
 
   fallbackSimulatedSpeech() {
     this.updateMicUi(true);
-    if (window.showAgriToast) {
-      window.showAgriToast("Listening to voice input via Sarvam AI Indic STT...", "info");
-    }
     setTimeout(() => {
       this.updateMicUi(false);
       const demoQueries = [
-        "I need tomato seeds",
-        "Show tractor for rent",
-        "What is the cheapest fertilizer?",
-        "Check my soil moisture"
+        "Call me via CALL-E with APMC prices",
+        "Check my soil moisture",
+        "Rent Mahindra tractor for 4 hours",
+        "I need tomato seeds"
       ];
       const randomQuery = demoQueries[Math.floor(Math.random() * demoQueries.length)];
       this.processUserText(randomQuery);
-    }, 2000);
+    }, 1500);
   }
 
   updateMicUi(listening) {
@@ -352,41 +406,64 @@ class AIAssistantEngine {
   }
 
   appendUserMessage(text) {
-    const stream = document.getElementById('aiChatStream');
-    if (!stream) return;
+    const streams = [document.getElementById('aiChatStream'), document.getElementById('pageChatStream')].filter(Boolean);
     const I = window.AgriIcons || {};
-    const msg = document.createElement('div');
-    msg.className = 'ai-msg msg-user';
-    msg.innerHTML = `
-      <div class="msg-bubble">
-        <p>${text}</p>
-      </div>
-      <div class="msg-avatar">${I.user || ''}</div>
-    `;
-    stream.appendChild(msg);
-    stream.scrollTop = stream.scrollHeight;
+    streams.forEach(stream => {
+      const msg = document.createElement('div');
+      msg.className = 'ai-msg msg-user';
+      msg.innerHTML = `
+        <div class="msg-bubble">
+          <p>${text}</p>
+        </div>
+        <div class="msg-avatar">${I.user || '👤'}</div>
+      `;
+      stream.appendChild(msg);
+      stream.scrollTop = stream.scrollHeight;
+    });
   }
 
   appendAssistantMessage(htmlContent) {
-    const stream = document.getElementById('aiChatStream');
-    if (!stream) return;
+    const streams = [document.getElementById('aiChatStream'), document.getElementById('pageChatStream')].filter(Boolean);
     const I = window.AgriIcons || {};
-    const msg = document.createElement('div');
-    msg.className = 'ai-msg msg-assistant';
-    msg.innerHTML = `
-      <div class="msg-avatar">${I.bot || ''}</div>
-      <div class="msg-bubble">
-        ${htmlContent}
-      </div>
-    `;
-    stream.appendChild(msg);
-    stream.scrollTop = stream.scrollHeight;
+    streams.forEach(stream => {
+      const msg = document.createElement('div');
+      msg.className = 'ai-msg msg-assistant';
+      msg.innerHTML = `
+        <div class="msg-avatar">${I.bot || '🤖'}</div>
+        <div class="msg-bubble">
+          ${htmlContent}
+        </div>
+      `;
+      stream.appendChild(msg);
+      stream.scrollTop = stream.scrollHeight;
+    });
   }
 
-  speakText(text) {
+  async speakText(text) {
+    // 1. Try Sarvam AI bulbul:v3 via backend TTS
+    try {
+      const res = await fetch('/api/voice/tts', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          text: text.replace(/[#*`_]/g, ''),
+          language_code: this.getLangCode()
+        })
+      });
+      const data = await res.json();
+      if (data && data.success && data.audio_base64) {
+        const audio = new Audio(`data:audio/${data.format || 'wav'};base64,${data.audio_base64}`);
+        audio.play();
+        return;
+      }
+    } catch (e) {
+      console.warn('Backend TTS notice, falling back to browser SpeechSynthesis:', e.message);
+    }
+
+    // 2. Fallback: Browser Web Speech API
     if ('speechSynthesis' in window) {
       window.speechSynthesis.cancel();
-      const utterance = new SpeechSynthesisUtterance(text);
+      const utterance = new SpeechSynthesisUtterance(text.replace(/[#*`_]/g, ''));
       utterance.rate = 1.0;
       utterance.pitch = 1.0;
       window.speechSynthesis.speak(utterance);
@@ -395,167 +472,202 @@ class AIAssistantEngine {
 
   async processUserText(text) {
     this.appendUserMessage(text);
-    const q = text.toLowerCase();
-
     this.setAgentNodeActive('nodeOrchestrator');
-    this.logActivity(`Received input: "${text}"`, 'Orchestrator');
-    this.logActivity(`NLU Intent Classification in progress...`, 'Sarvam AI');
+    this.logActivity(`Input received: "${text}"`, 'TrueForge');
 
-    await new Promise(r => setTimeout(r, 400));
+    // Attempt Live Backend Agent Stream (/api/agent/task)
+    try {
+      const res = await fetch('/api/agent/task', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          prompt: text,
+          farmer_id: 'farmer-001',
+          language_code: this.getLangCode()
+        })
+      });
 
-    // INTENT ROUTING
-    if (q.includes('sensor') || q.includes('moisture') || q.includes('temp') || q.includes('humidity')) {
+      if (res.ok) {
+        const data = await res.json();
+        if (data.session_id) {
+          this.currentSessionId = data.session_id;
+          this.connectToAgentSse(data.session_id);
+          return;
+        }
+      }
+    } catch (err) {
+      console.warn('[AI Assistant] Live backend stream unavailable, running local logic:', err.message);
+    }
+
+    // Client-side fallback if backend is unreachable
+    this.runClientSideFallback(text);
+  }
+
+  connectToAgentSse(sessionId) {
+    if (this.currentEventSource) {
+      this.currentEventSource.close();
+    }
+
+    const sse = new EventSource(`/api/agent/session/${sessionId}/stream`);
+    this.currentEventSource = sse;
+
+    sse.onmessage = (e) => {
+      try {
+        const evt = JSON.parse(e.data);
+        this.handleSseEvent(evt);
+      } catch (err) {
+        console.error('SSE parse error:', err);
+      }
+    };
+
+    sse.onerror = (e) => {
+      console.warn('Agent SSE stream ended or error.');
+      sse.close();
+      this.currentEventSource = null;
+    };
+  }
+
+  handleSseEvent(evt) {
+    const type = evt.type;
+
+    if (type === 'thought') {
+      this.logActivity(evt.thought, evt.agent || 'Orchestrator');
+    } else if (type === 'step.start') {
+      this.logActivity(evt.step, evt.agent || 'TrueForge');
+      if (evt.agent === 'agrisense-iot-crop-monitor') this.setAgentNodeActive('nodeCropAgent');
+      else if (evt.agent === 'agrimarket-logistics-agent') this.setAgentNodeActive('nodeMarketAgent');
+      else if (evt.agent === 'agri-procurement-caller') this.setAgentNodeActive('nodeCallEAgent');
+      else this.setAgentNodeActive('nodeOrchestrator');
+    } else if (type === 'tool.call') {
+      this.logActivity(`Invoking MCP Tool: <code>${evt.tool}</code>`, evt.agent || 'ToolEngine');
+    } else if (type === 'tool.result') {
+      this.logActivity(`Tool <code>${evt.tool}</code> returned data`, evt.agent || 'ToolEngine');
+    } else if (type === 'approval_required') {
       this.setAgentNodeActive('nodeOrchestrator');
-      this.logActivity(`Executing tool: get_sensor_status()`, 'SensorAgent');
-      const r = window.sensorEngine ? window.sensorEngine.reading : { soilMoisture: 68, temperature: 28.4, humidity: 74 };
+      this.showApprovalModal(evt);
+    } else if (type === 'turn.complete') {
+      this.setAgentNodeActive('nodeOrchestrator');
+      const formatted = (evt.summary || 'Task completed.')
+        .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+        .replace(/\n/g, '<br>');
+      this.appendAssistantMessage(formatted);
+      this.speakText(evt.summary || '');
+      if (this.currentEventSource) {
+        this.currentEventSource.close();
+        this.currentEventSource = null;
+      }
+    }
+  }
 
-      const reply = `
-        <strong>Real-Time Farm Sensor Status:</strong><br>
-        • <strong>Soil Moisture:</strong> ${r.soilMoisture}% (${r.moistureStatus})<br>
-        • <strong>Temperature:</strong> ${r.temperature}°C<br>
-        • <strong>Humidity:</strong> ${r.humidity}%<br>
-        • <strong>Telemetry Health:</strong> ${r.environmentStatus}<br>
-        Your soil conditions are currently within the optimal agronomical range for Paddy and Tomato crops.
-      `;
-      this.appendAssistantMessage(reply);
-      this.speakText(`Your soil moisture is ${r.soilMoisture} percent, temperature is ${r.temperature} degrees Celsius.`);
+  showApprovalModal(approvalEvt) {
+    this.pendingApprovalAction = approvalEvt;
+    const confirmModal = document.getElementById('orderConfirmModal');
+    const summaryBox = document.getElementById('confirmSummaryBox');
+    const introText = document.getElementById('confirmIntroText');
+
+    if (!confirmModal || !summaryBox) return;
+
+    if (introText) {
+      introText.textContent = `TrueForge stopped before executing: ${approvalEvt.title}. Please review and approve:`;
+    }
+
+    summaryBox.innerHTML = `
+      <div style="margin-bottom: 8px;">
+        <span style="font-size: 12px; color: #64748b; text-transform: uppercase; font-weight: 700;">Action Type:</span>
+        <strong style="color: #059669; display: block; font-size: 15px;">${approvalEvt.action_type}</strong>
+      </div>
+      <div style="margin-bottom: 8px;">
+        <span style="font-size: 12px; color: #64748b; text-transform: uppercase; font-weight: 700;">Description:</span>
+        <div style="color: #1e293b; font-size: 13px; line-height: 1.4;">${approvalEvt.description}</div>
+      </div>
+      ${approvalEvt.phone ? `
+        <div style="margin-bottom: 8px;">
+          <span style="font-size: 12px; color: #64748b; text-transform: uppercase; font-weight: 700;">Target Phone:</span>
+          <strong style="color: #1e293b; font-size: 14px; font-family: monospace;">${approvalEvt.phone}</strong>
+        </div>
+      ` : ''}
+      ${approvalEvt.amount > 0 ? `
+        <div style="margin-top: 10px; padding-top: 8px; border-top: 1px dashed #cbd5e1; display: flex; justify-content: space-between;">
+          <span style="font-weight: 600; color: #334155;">Transaction Value:</span>
+          <strong style="color: #059669; font-size: 16px;">₹${approvalEvt.amount.toLocaleString('en-IN')}</strong>
+        </div>
+      ` : ''}
+    `;
+
+    confirmModal.style.display = 'flex';
+  }
+
+  async sendApprovalDecision(decision) {
+    if (!this.currentSessionId) return;
+    this.logActivity(`Farmer decision: ${decision.toUpperCase()}. Resuming turn...`, 'TrueForge');
+
+    try {
+      const sse = new EventSource(`/api/agent/session/${this.currentSessionId}/approval?decision=${decision}`);
+      sse.onmessage = (e) => {
+        try {
+          const evt = JSON.parse(e.data);
+          this.handleSseEvent(evt);
+        } catch (err) {}
+      };
+      sse.onerror = () => sse.close();
+
+      // Also trigger via POST
+      await fetch(`/api/agent/session/${this.currentSessionId}/approval`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ decision })
+      });
+    } catch (e) {
+      console.warn('Approval decision error:', e);
+    }
+  }
+
+  async runClientSideFallback(text) {
+    const q = text.toLowerCase();
+    this.logActivity(`Analyzing agricultural intent...`, 'Sarvam AI');
+    await new Promise(r => setTimeout(r, 300));
+
+    if (q.includes('call') || q.includes('phone') || q.includes('calle')) {
+      this.setAgentNodeActive('nodeCallEAgent');
+      this.logActivity(`Routing to CALL-E Voice Outbound Caller`, 'CALL-E');
+      const phone = '+918496074290';
+      this.showApprovalModal({
+        action_type: 'CALLE_VOICE_CALL',
+        title: `Outbound AI Voice Call to ${phone}`,
+        description: 'CALL-E will dial your phone immediately to enquire on seeds, fertilizers, and tractor bookings.',
+        phone: phone,
+        amount: 0
+      });
       return;
     }
 
-    if (q.includes('crop') || q.includes('satellite') || q.includes('health')) {
-      this.logActivity(`Executing tool: get_crop_prediction(MobileNetV2)`, 'CropAIAgent');
+    if (q.includes('sensor') || q.includes('moisture') || q.includes('temp')) {
+      this.setAgentNodeActive('nodeCropAgent');
+      this.logActivity('Executing MCP Tool: get_sensor_telemetry()', 'SensorAgent');
+      const r = window.sensorEngine ? window.sensorEngine.reading : { soilMoisture: 68, temperature: 28.4, humidity: 74 };
       const reply = `
-        <strong>Crop Intelligence Diagnostic:</strong><br>
-        • <strong>Crop:</strong> Rice (Paddy) — Day 46 / 120<br>
-        • <strong>Growth Stage:</strong> Vegetative Stage (Active Tillering)<br>
-        • <strong>AI Condition:</strong> Healthy Canopy (87% confidence via MobileNetV2)<br>
-        • <strong>Advisory:</strong> Soil moisture is nominal. Prepare for flowering stage nutrition in 14 days.
+        <strong>Real-Time Farm Sensor Status:</strong><br>
+        • <strong>Soil Moisture:</strong> ${r.soilMoisture}%<br>
+        • <strong>Temperature:</strong> ${r.temperature}°C<br>
+        • <strong>Humidity:</strong> ${r.humidity}%<br>
+        Your soil conditions are currently within the optimal agronomical range for Paddy and Tomato crops.
       `;
       this.appendAssistantMessage(reply);
-      this.speakText(`Your crop is in the vegetative stage and canopy condition is healthy.`);
+      this.speakText(`Soil moisture is ${r.soilMoisture} percent, temperature is ${r.temperature} degrees.`);
       return;
     }
 
     this.setAgentNodeActive('nodeMarketAgent');
-    this.logActivity(`Routing to Marketplace Agent: search_products("${text}")`, 'MarketAgent');
-
-    const products = await window.agriApi.getProducts();
-
-    if (q.includes('tractor') || q.includes('rent') || q.includes('tiller')) {
-      const rentals = products.filter(p => p.type === 'rental');
-      const best = rentals[0];
-
-      this.setAgentNodeActive('nodeProductAgent');
-      this.logActivity(`Comparing ${rentals.length} equipment rental options`, 'ProductAgent');
-      this.logActivity(`Explainability: Verified driver included, nearest location Mandya`, 'Explainability');
-
-      const reply = `
-        I found <strong>${rentals.length} farm machinery rentals</strong> available near your location:<br><br>
-        <strong>1. ${best.name}</strong><br>
-        • <strong>Price:</strong> ₹${best.price} / ${best.unit}<br>
-        • <strong>Owner:</strong> ${best.sellerName} (Rating: ${best.sellerRating} / 5.0)<br>
-        • <strong>Location:</strong> ${best.location}<br>
-        <button class="btn btn-sm btn-primary" onclick="window.aiAssistant.prepareOrder('${best.id}')">
-          Book This Tractor Rental
-        </button>
-      `;
-      this.appendAssistantMessage(reply);
-      this.speakText(`I found ${rentals.length} machinery rentals. Top option is ${best.name} at 1200 rupees per hour.`);
-      return;
-    }
-
-    if (q.includes('cheap') || q.includes('lowest') || q.includes('fertilizer') || q.includes('manure')) {
-      const fertilizers = products.filter(p => p.category === 'Fertilizers' || p.category === 'Manure');
-      fertilizers.sort((a, b) => a.price - b.price);
-      const cheapest = fertilizers[0];
-
-      this.setAgentNodeActive('nodeProductAgent');
-      this.logActivity(`Tool compare_products() identified lowest price: ₹${cheapest.price}`, 'ProductAgent');
-
-      const reply = `
-        The lowest-priced organic nutrition is <strong>${cheapest.name}</strong> at <strong>₹${cheapest.price} per ${cheapest.unit}</strong> from <em>${cheapest.sellerName}</em>.<br>
-        <div class="ai-explain-pill">Explainability: 100% Organic Vermicompost with Trichoderma culture.</div><br>
-        <button class="btn btn-sm btn-primary" onclick="window.aiAssistant.prepareOrder('${cheapest.id}')">
-          Order 1 ${cheapest.unit} (₹${cheapest.price})
-        </button>
-      `;
-      this.appendAssistantMessage(reply);
-      this.speakText(`The lowest priced option is ${cheapest.name} at ${cheapest.price} rupees per bag.`);
-      return;
-    }
-
-    const tomatoSeed = products.find(p => p.id === 'prod-001') || products[0];
-    this.setAgentNodeActive('nodeProductAgent');
-    this.logActivity(`Tool: search_products("tomato seeds") returned 4 matches`, 'MarketAgent');
-    this.logActivity(`Product Agent ranked: Arka Rakshak F1 Hybrid as best suitability`, 'ProductAgent');
-
+    this.logActivity('MCP Tool: get_marketplace_catalog()', 'MarketAgent');
     const reply = `
-      I found top-rated seed listings available near your area.<br>
-      The recommended option is <strong>${tomatoSeed.name}</strong> at <strong>₹${tomatoSeed.price} / ${tomatoSeed.unit}</strong> from <em>${tomatoSeed.sellerName}</em>.<br><br>
-      <div class="ai-explain-pill">
-        • Matches requested crop variety<br>
-        • Resistant to leaf curl virus & wilt<br>
-        • In stock (${tomatoSeed.quantityAvailable} packets available at Mandya depot)
-      </div><br>
-      <button class="btn btn-primary" onclick="window.aiAssistant.prepareOrder('${tomatoSeed.id}')">
-        Order 1 Packet (₹${tomatoSeed.price})
-      </button>
+      I found top-rated commodities at Mandya APMC Yard:<br>
+      • <strong>Hybrid Tomato F1 Seeds:</strong> ₹450 / packet<br>
+      • <strong>Mahindra 575 DI Tractor:</strong> ₹1,200 / hr rental<br>
+      • <strong>Kaveri Vermicompost:</strong> ₹350 / 50kg bag<br><br>
+      Would you like me to book or dial your phone via <strong>CALL-E</strong>?
     `;
     this.appendAssistantMessage(reply);
-    this.speakText(`I found high yield tomato seeds at 450 rupees from Rajesh Farm Supplies. Would you like to order?`);
-  }
-
-  async prepareOrder(productId) {
-    const products = await window.agriApi.getProducts();
-    const p = products.find(i => i.id === productId);
-    if (!p) return;
-
-    this.setAgentNodeActive('nodeOrderAgent');
-    this.logActivity(`Order Agent generated order manifest. Awaiting human confirmation.`, 'OrderAgent');
-
-    this.pendingOrder = {
-      sellerId: p.sellerId,
-      sellerName: p.sellerName,
-      items: [
-        {
-          productId: p.id,
-          name: p.name,
-          quantity: 1,
-          price: p.price,
-          unit: p.unit
-        }
-      ],
-      total: p.price
-    };
-
-    const confirmModal = document.getElementById('orderConfirmModal');
-    const summaryBox = document.getElementById('confirmSummaryBox');
-    if (!confirmModal || !summaryBox) return;
-
-    summaryBox.innerHTML = `
-      <div class="confirm-row">
-        <span>Product:</span>
-        <strong>${p.name}</strong>
-      </div>
-      <div class="confirm-row">
-        <span>Quantity:</span>
-        <strong>1 ${p.unit}</strong>
-      </div>
-      <div class="confirm-row">
-        <span>Price:</span>
-        <strong class="text-primary">₹${p.price.toLocaleString('en-IN')}</strong>
-      </div>
-      <div class="confirm-row">
-        <span>Verified Seller:</span>
-        <strong>${p.sellerName} (${p.location})</strong>
-      </div>
-      <div class="confirm-row">
-        <span>Payment Method:</span>
-        <span class="badge badge-accent">Demo Krishi UPI</span>
-      </div>
-    `;
-
-    confirmModal.style.display = 'flex';
+    this.speakText('I found commodities at Mandya APMC. Would you like me to book or place a call?');
   }
 }
 

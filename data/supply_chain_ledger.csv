@@ -1,0 +1,3 @@
+Timestamp,Action_ID,Action_Type,Reference_No,Commodity,Counterparty,Amount_INR,Status,Verification_Hash
+2026-10-22 16:48:38,act_rental_3e2e7d59,EQUIPMENT_RENTAL,AGRI-ORD-E9ED4B,Mahindra 575 DI Tractor (45 HP),GreenField Agro Equipment,4800.0,CONFIRMED,5971f9857f82a5a7d2d0f479570a9c0bd62006b6de588e4f29150e09b479b8b1
+2026-10-22 16:49:11,act_rental_ace25271,EQUIPMENT_RENTAL,AGRI-ORD-06A98B,Mahindra 575 DI Tractor (45 HP),GreenField Agro Equipment,4800.0,CONFIRMED,7b098ab9ff41364fa3aa99b04acb3d42143743e8ab0a075d6598cff601c13f59
