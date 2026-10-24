@@ -9,23 +9,23 @@
   --primary-900: #0f172a;
   --primary-800: #064e3b;
   --primary-700: #047857;
-  --primary-600: #059669;
-  --primary-500: #10b981;
+  --primary-600: #047857;
+  --primary-500: #059669;
   --primary-400: #34d399;
   --primary-200: #a7f3d0;
   --primary-100: #d1fae5;
   --primary-50:  #f0fdf4;
 
   /* Accent & Warm Neutrals */
-  --accent-amber: #d97706;
+  --accent-amber: #b45309;
   --accent-amber-bg: #fffbeb;
-  --accent-blue: #0284c7;
+  --accent-blue: #0369a1;
   --accent-blue-bg: #f0f9ff;
   --accent-teal: #0d9488;
   --accent-teal-bg: #f0fdfa;
 
   /* Semantic Status Colors (PRD Section 96) */
-  --status-normal: #059669;
+  --status-normal: #047857;
   --status-normal-bg: #f0fdf4;
   --status-normal-border: #a7f3d0;
 
@@ -56,7 +56,7 @@
   --text-light: #ffffff;
 
   /* Typography */
-  --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  --font-sans: 'Outfit', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
   --font-mono: 'JetBrains Mono', 'Fira Code', 'Courier New', monospace;
 
   /* Shadows & Elevation */
@@ -74,7 +74,7 @@
   --radius-xl: 16px;
   --radius-full: 9999px;
 
-  --ease-spring: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 *, *::before, *::after {
@@ -158,12 +158,12 @@ body {
   width: 38px;
   height: 38px;
   border-radius: var(--radius-md);
-  background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+  background: linear-gradient(135deg, #047857 0%, #064e3b 100%);
   display: flex;
   align-items: center;
   justify-content: center;
   color: #ffffff;
-  box-shadow: 0 4px 12px rgba(16, 185, 129, 0.25);
+  box-shadow: var(--shadow-sm);
 }
 
 .brand-icon-wrap .svg-icon {
@@ -180,8 +180,8 @@ body {
 }
 
 .brand-text span {
-  font-size: 11px;
-  color: #10b981;
+  font-size: 12px;
+  color: var(--primary-700);
   font-weight: 600;
   display: block;
 }
@@ -221,14 +221,14 @@ body {
 }
 
 .nav-link:hover .svg-icon {
-  color: #10b981;
+  color: var(--primary-700);
 }
 
 .nav-link.active {
-  background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+  background: linear-gradient(135deg, #047857 0%, #064e3b 100%);
   color: #ffffff;
   font-weight: 600;
-  box-shadow: 0 4px 12px rgba(16, 185, 129, 0.28);
+  box-shadow: var(--shadow-sm);
 }
 
 .nav-link.active .svg-icon {
@@ -266,8 +266,8 @@ body {
   width: 30px;
   height: 30px;
   border-radius: 50%;
-  background-color: #10b981;
-  border: 1px solid #059669;
+  background-color: var(--primary-700);
+  border: 1px solid var(--primary-800);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -281,9 +281,9 @@ body {
 }
 
 .user-meta .user-role {
-  font-size: 10px;
-  color: #059669;
-  font-weight: 500;
+  font-size: 12px;
+  color: var(--primary-700);
+  font-weight: 600;
 }
 
 /* App Main Content */
@@ -369,16 +369,16 @@ body {
 
 /* Demo Tour Sticky Banner (PRD Section 47) */
 .demo-runner-bar {
-  background: linear-gradient(90deg, var(--primary-900) 0%, var(--primary-800) 100%);
-  color: #ffffff;
-  padding: 12px 20px;
+  background: linear-gradient(135deg, #f0fdf4 0%, #ffffff 50%, #ecfdf5 100%);
+  color: #0f172a;
+  padding: 14px 20px;
   display: flex;
   align-items: center;
   justify-content: space-between;
   border-radius: var(--radius-lg);
   margin-bottom: 24px;
-  box-shadow: var(--shadow-md);
-  border: 1px solid rgba(255, 255, 255, 0.12);
+  box-shadow: 0 4px 16px rgba(16, 185, 129, 0.08);
+  border: 1px solid #bbf7d0;
 }
 
 .demo-step-info {
@@ -389,14 +389,15 @@ body {
   display: inline-flex;
   align-items: center;
   gap: 5px;
-  background-color: #ffd166;
-  color: #05140f;
+  background-color: #dcfce7;
+  color: #065f46;
   font-size: 10px;
   font-weight: 800;
-  padding: 2px 7px;
+  padding: 3px 8px;
   border-radius: var(--radius-xs);
   margin-right: 8px;
   letter-spacing: 0.5px;
+  border: 1px solid #86efac;
 }
 
 .demo-badge .svg-icon {
@@ -407,11 +408,12 @@ body {
 .demo-current-step {
   font-weight: 700;
   font-size: 14px;
+  color: #064e3b;
 }
 
 .demo-narrative {
   font-size: 12px;
-  color: #c7eedd;
+  color: #334155;
   margin-top: 3px;
 }
 
@@ -425,14 +427,16 @@ body {
 .step-counter {
   font-family: var(--font-mono);
   font-size: 12px;
-  color: #ffffff;
-  background: rgba(0, 0, 0, 0.3);
+  color: #047857;
+  background: #f0fdf4;
   padding: 4px 10px;
   border-radius: var(--radius-sm);
+  border: 1px solid #86efac;
+  font-weight: 600;
 }
 
 .btn-close-demo {
-  color: #c7eedd;
+  color: #64748b;
   padding: 4px 6px;
   margin-left: 6px;
   display: flex;

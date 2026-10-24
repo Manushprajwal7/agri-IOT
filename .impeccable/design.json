@@ -1,0 +1,83 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-10-18T05:30:00Z",
+  "title": "Design System: AgriSense & AgriMarket",
+  "extensions": {
+    "colorMeta": {
+      "primary": { "role": "primary", "displayName": "Forest Emerald", "canonical": "#047857", "tonalRamp": ["#022c22", "#064e3b", "#065f46", "#047857", "#059669", "#10b981", "#6ee7b7", "#d1fae5"] },
+      "primary-hover": { "role": "primary", "displayName": "Deep Canopy", "canonical": "#065f46", "tonalRamp": ["#022c22", "#064e3b", "#065f46", "#047857", "#059669", "#10b981", "#6ee7b7", "#d1fae5"] },
+      "neutral-bg": { "role": "neutral", "displayName": "Soft Meadow Wash", "canonical": "#f8fafc", "tonalRamp": ["#0f172a", "#1e293b", "#334155", "#64748b", "#94a3b8", "#cbd5e1", "#e2e8f0", "#f8fafc"] },
+      "neutral-surface": { "role": "neutral", "displayName": "Paper Canvas", "canonical": "#ffffff", "tonalRamp": ["#0f172a", "#1e293b", "#334155", "#64748b", "#94a3b8", "#cbd5e1", "#e2e8f0", "#ffffff"] }
+    },
+    "typographyMeta": {
+      "display": { "displayName": "Display", "purpose": "Hero announcements and primary welcome headlines." },
+      "headline": { "displayName": "Headline", "purpose": "Major section titles and analytics charts." },
+      "title": { "displayName": "Title", "purpose": "Card titles and modal headers." },
+      "body": { "displayName": "Body", "purpose": "Descriptions and conversational transcripts." },
+      "label": { "displayName": "Label", "purpose": "Status chips, tags, and telemetry labels." }
+    },
+    "shadows": [
+      { "name": "card-rest", "value": "0 1px 3px rgba(15, 23, 42, 0.06), 0 1px 2px rgba(15, 23, 42, 0.04)", "purpose": "Resting elevation for cards on paper background." },
+      { "name": "card-hover", "value": "0 10px 15px -3px rgba(15, 23, 42, 0.08), 0 4px 6px -4px rgba(15, 23, 42, 0.04)", "purpose": "Hover lift on interactive tiles and products." },
+      { "name": "dialog", "value": "0 20px 25px -5px rgba(15, 23, 42, 0.1), 0 8px 10px -6px rgba(15, 23, 42, 0.04)", "purpose": "Modal dialogs and alerts." }
+    ],
+    "motion": [
+      { "name": "ease-out-expo", "value": "cubic-bezier(0.16, 1, 0.3, 1)", "purpose": "Smooth human deceleration for modals and transitions." }
+    ],
+    "breakpoints": [
+      { "name": "sm", "value": "640px" },
+      { "name": "md", "value": "768px" },
+      { "name": "lg", "value": "1024px" },
+      { "name": "xl", "value": "1280px" }
+    ]
+  },
+  "components": [
+    {
+      "name": "Primary Button",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "Primary action button for key conversions.",
+      "html": "<button class=\"ds-btn-primary\">Explore Farm Intelligence</button>",
+      "css": ".ds-btn-primary { background: linear-gradient(135deg, #047857 0%, #064e3b 100%); color: #ffffff; padding: 10px 20px; font-family: 'Outfit', sans-serif; font-size: 13px; font-weight: 600; border: 1px solid #065f46; border-radius: 8px; box-shadow: 0 1px 3px rgba(15, 23, 42, 0.06); cursor: pointer; transition: all 0.15s ease; } .ds-btn-primary:hover { background: linear-gradient(135deg, #065f46 0%, #022c22 100%); box-shadow: 0 4px 6px -1px rgba(15, 23, 42, 0.08); }"
+    },
+    {
+      "name": "Status Chip",
+      "kind": "chip",
+      "refersTo": "chip-status",
+      "description": "Semantic telemetry status indicator.",
+      "html": "<span class=\"ds-chip-success\">Optimal Moisture</span>",
+      "css": ".ds-chip-success { display: inline-flex; align-items: center; padding: 4px 10px; background-color: #f0fdf4; color: #047857; border: 1px solid #a7f3d0; border-radius: 9999px; font-family: 'Outfit', sans-serif; font-size: 12px; font-weight: 600; letter-spacing: 0.03em; }"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Grounded Agronomist",
+    "overview": "AgriSense & AgriMarket pairs the organic reliability of cultivated soil with the crisp analytical precision of satellite remote sensing and autonomous AI trade. Built for high-sunlight outdoor fieldwork, agricultural trade floors, and desktop research consoles, the interface prioritizes immediate legibility, human craftsmanship, and functional calm over decorative tech tropes.",
+    "keyCharacteristics": [
+      "Luminous White & Emerald Foundations",
+      "Strict Legibility Floor (12px minimum)",
+      "Calibrated Multi-Layer Elevation",
+      "Purposeful Deceleration Motion"
+    ],
+    "rules": [
+      { "name": "The Rarity Rule", "body": "Forest Emerald accent color is reserved for primary actions, active navigation items, and verified trust markers. It covers ≤12% of screen area.", "section": "colors" },
+      { "name": "The Contrast Floor Rule", "body": "Never render green text lighter than #047857 on white or light backgrounds. Neon green (#10b981) is prohibited as text on light surfaces.", "section": "colors" },
+      { "name": "The 12px Absolute Floor", "body": "No functional, readable, or interactive text element anywhere in the user interface shall have a font-size below 12px.", "section": "typography" },
+      { "name": "The Halo Prohibition", "body": "Zero colored glow shadows (box-shadow: 0 0 10px #10b981). Elevation is communicated solely through neutral lighting and crisp 1px borders.", "section": "elevation" }
+    ],
+    "dos": [
+      "Do maintain a strict 12px minimum floor on all functional UI text.",
+      "Do use #047857 or #064e3b for all primary emerald accents on light backgrounds.",
+      "Do use Outfit as the primary typography family across all views.",
+      "Do use exponential deceleration (cubic-bezier(0.16, 1, 0.3, 1)) for micro-interactions.",
+      "Do use multi-layer neutral slate shadows for elevation."
+    ],
+    "donts": [
+      "Don't use #10b981 as text on white or light backgrounds (fails WCAG AA contrast).",
+      "Don't use colored glow shadows (rgba(16, 185, 129, ...)).",
+      "Don't use chunky border-left: 4px / 6px colored side tabs.",
+      "Don't nest cards inside other cards.",
+      "Don't use infinite pulsing animations on static indicators.",
+      "Don't use bouncy or springy animation easing."
+    ]
+  }
+}

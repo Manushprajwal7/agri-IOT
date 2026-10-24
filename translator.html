@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gemma Voice Translator — AgriSense AI & AgriMarket Platform</title>
+  <meta name="description" content="Local On-Device Voice-to-Voice Multilingual Agricultural Translator powered by Google Gemma 4 and Moonshine AI.">
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/dashboard.css">
+  <link rel="stylesheet" href="css/marketplace.css">
+  <link rel="stylesheet" href="css/assistant.css">
+  <link rel="stylesheet" href="css/translator.css">
+  <link rel="stylesheet" href="css/extended.css">
+  <link rel="stylesheet" href="css/responsive.css">
+  <script>window.INITIAL_PAGE_VIEW = "translator";</script>
+</head>
+<body>
+
+  <div class="app-wrapper">
+    <!-- Sidebar Navigation -->
+    <aside class="app-sidebar" id="appSidebar">
+      <div class="sidebar-brand">
+        <div class="brand-icon-wrap">
+          <svg class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 20h10"/><path d="M10 20c5.5-2.5.8-6.4 3-10"/><path d="M9.5 9.4c1.1.8 1.8 2.2 2.3 3.7-2 .4-3.5.4-4.8-.3-1.2-.6-2.3-1.9-3-4.2 2.8-.5 4.4.1 5.5.8z"/><path d="M14.1 6a7 7 0 0 0-1.1 4c1.9-.1 3.3-.6 4.3-1.4 1-1 1.6-2.3 1.7-4.6-2.7.1-4 1-4.9 2z"/></svg>
+        </div>
+        <div class="brand-text">
+          <h1>AgriSense AI</h1>
+          <span>& AgriMarket Platform</span>
+        </div>
+      </div>
+
+      <nav class="sidebar-nav">
+        <a href="dashboard.html#dashboard" class="nav-link" data-nav-view="dashboard">
+          <span class="nav-icon"><svg class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="9" rx="1"/><rect x="14" y="3" width="7" height="5" rx="1"/><rect x="14" y="12" width="7" height="9" rx="1"/><rect x="3" y="16" width="7" height="5" rx="1"/></svg></span>
+          <span data-i18n="navDashboard">1. Dashboard</span>
+        </a>
+        <a href="dashboard.html#farm-monitor" class="nav-link" data-nav-view="farm-monitor">
+          <span class="nav-icon"><svg class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v20"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/><circle cx="12" cy="12" r="3"/><path d="M2 12h2"/><path d="M20 12h2"/></svg></span>
+          <span data-i18n="navFarmMonitor">2. Farm Monitor</span>
+        </a>
+        <a href="crop-intelligence.html" class="nav-link" data-nav-view="crop">
+          <span class="nav-icon"><svg class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 22 16 8"/><path d="M3.47 12.53 5 11l1.53 1.53a3.5 3.5 0 0 1 0 4.94L5 19l-1.53-1.53a3.5 3.5 0 0 1 0-4.94Z"/><path d="M7.47 8.53 9 7l1.53 1.53a3.5 3.5 0 0 1 0 4.94L9 15l-1.53-1.53a3.5 3.5 0 0 1 0-4.94Z"/><path d="M11.47 4.53 13 3l1.53 1.53a3.5 3.5 0 0 1 0 4.94L13 11l-1.53-1.53a3.5 3.5 0 0 1 0-4.94Z"/><path d="M20 2h2v2a4 4 0 0 1-4 4h-2V6a4 4 0 0 1 4-4Z"/><path d="M11.47 16.53 13 15l1.53 1.53a3.5 3.5 0 0 1 0 4.94L13 23l-1.53-1.53a3.5 3.5 0 0 1 0-4.94Z"/></svg></span>
+          <span data-i18n="navCropIntelligence">3. Crop Intelligence</span>
+        </a>
+        <a href="satellite.html" class="nav-link" data-nav-view="satellite">
+          <span class="nav-icon"><svg class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 7 9 3 5 7l4 4"/><path d="m17 11 4 4-4 4-4-4"/><path d="m8 12 4 4 6-6-4-4Z"/><path d="m16 8 3-3"/><path d="M9 21a6 6 0 0 0-6-6"/></svg></span>
+          <span data-i18n="navSatellite">4. Satellite Analysis</span>
+        </a>
+        <a href="alerts.html" class="nav-link" data-nav-view="alerts">
+          <span class="nav-icon"><svg class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 18v-6a5 5 0 1 1 10 0v6"/><path d="M5 21a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-1a2 2 0 0 0-2-2H7a2 2 0 0 0-2 2z"/><path d="M21 12h1"/><path d="M18.5 4.5 19 4"/><path d="M2 12h1"/><path d="M12 2v1"/><path d="m4.929 4.929.707.707"/><path d="M12 12v6"/></svg></span>
+          <span data-i18n="activeAlerts">5. Alerts Center</span>
+        </a>
+        <a href="marketplace.html" class="nav-link" data-nav-view="marketplace">
+          <span class="nav-icon"><svg class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="21" r="1"/><circle cx="19" cy="21" r="1"/><path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"/></svg></span>
+          <span data-i18n="navMarketplace">6. AgriMarket</span>
+        </a>
+        <a href="assistant.html" class="nav-link" data-nav-view="assistant">
+          <span class="nav-icon"><svg class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" x2="12" y1="19" y2="22"/></svg></span>
+          <span data-i18n="navAssistant">7. AI Assistant</span>
+        </a>
+        <a href="translator.html" class="nav-link active" data-nav-view="translator">
+          <span class="nav-icon"><svg class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m5 8 6 6"/><path d="m4 14 6-6 2-3"/><path d="M2 5h12"/><path d="M7 2h1"/><path d="m22 22-5-10-5 10"/><path d="M14 18h6"/></svg></span>
+          <span>8. Gemma Translator</span>
+        </a>
+        <a href="orders.html" class="nav-link" data-nav-view="orders">
+          <span class="nav-icon"><svg class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m7.5 4.27 9 5.15"/><path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z"/><path d="m3.3 7 8.7 5 8.7-5"/><path d="M12 22V12"/></svg></span>
+          <span data-i18n="navOrders">9. Orders & Logistics</span>
+        </a>
+        <a href="devices.html" class="nav-link" data-nav-view="devices">
+          <span class="nav-icon"><svg class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="16" height="16" x="4" y="4" rx="2"/><rect width="6" height="6" x="9" y="9" rx="1"/><path d="M15 2v2"/><path d="M15 20v2"/><path d="M2 15h2"/><path d="M2 9h2"/><path d="M20 15h2"/><path d="M20 9h2"/><path d="M9 2v2"/><path d="M9 20v2"/></svg></span>
+          <span data-i18n="navDevices">10. IoT Devices</span>
+        </a>
+        <a href="settings.html" class="nav-link" data-nav-view="settings">
+          <span class="nav-icon"><svg class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg></span>
+          <span>11. Settings & Profile</span>
+        </a>
+      </nav>
+
+      <div class="sidebar-footer">
+        <div class="sidebar-user-pill" style="cursor: pointer;" onclick="if(window.agriApp) window.agriApp.openRoleSwitcherModal();" title="Click to switch demo role">
+          <div class="user-avatar-badge">
+            <svg class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+          </div>
+          <div class="user-meta">
+            <span class="user-name">Demo Farmer</span>
+            <span class="user-role">Mandya, Karnataka</span>
+          </div>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Main Content Area -->
+    <main class="app-main">
+      <!-- Top Application Header Bar -->
+      <header class="app-topbar">
+        <div class="topbar-left">
+          <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Open menu">
+            <svg class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="4" x2="20" y1="12" y2="12"/><line x1="4" x2="20" y1="6" y2="6"/><line x1="4" x2="20" y1="18" y2="18"/></svg>
+          </button>
+          <div class="device-telemetry-badge">
+            <span class="badge badge-success">● ESP32: ONLINE</span>
+            <span class="text-muted small">Plot 4B (12.4 Ha)</span>
+          </div>
+        </div>
+
+        <div class="topbar-right">
+          <a href="/translator" target="_blank" class="btn btn-secondary btn-sm" style="display: inline-flex; align-items: center; gap: 6px;">
+            <svg class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" x2="21" y1="14" y2="3"/></svg>
+            <span>Open Standalone Kiosk UI</span>
+          </a>
+        </div>
+      </header>
+
+      <!-- Page Content -->
+      <div class="app-content-scroll">
+        <div class="translator-layout">
+
+          <!-- Translator Engine Status Header -->
+          <div class="translator-header">
+            <div class="translator-header-left">
+              <h2>
+                <svg class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m5 8 6 6"/><path d="m4 14 6-6 2-3"/><path d="M2 5h12"/><path d="M7 2h1"/><path d="m22 22-5-10-5 10"/><path d="M14 18h6"/></svg>
+                Gemma On-Device Voice Translator
+              </h2>
+              <p class="text-muted small">
+                Complete, fully offline translation powered by <strong>Google Gemma 4</strong> (<code>gemma4-e2b</code> via LiteRT-LM), Moonshine Speech-to-Text, and Kokoro 24kHz Voice Synthesis. Zero cloud dependencies.
+              </p>
+              <div class="translator-engine-badges">
+                <span class="engine-badge" id="badgeGemmaModel">● Gemma 4: gemma4-e2b (Local)</span>
+                <span class="engine-badge" id="badgeLiteRT">● LiteRT-LM: Port 9379 (Active)</span>
+                <span class="engine-badge badge-offline" id="badgeStt">● Moonshine STT: Ready</span>
+                <span class="engine-badge badge-offline" id="badgeTts">● Kokoro Voice: Ready</span>
+              </div>
+            </div>
+            <div class="translator-header-right">
+              <button class="btn btn-secondary btn-sm" onclick="window.refreshGemmaStatus()">
+                ↻ Refresh Engine Status
+              </button>
+            </div>
+          </div>
+
+          <!-- Mode Selector Tabs -->
+          <div style="display: flex; gap: 10px; border-bottom: 1px solid var(--border-color); padding-bottom: 10px;">
+            <button class="btn btn-primary btn-sm" id="tabIntegrated" onclick="window.switchTranslatorMode('integrated')">
+              App Integrated Translator
+            </button>
+            <button class="btn btn-secondary btn-sm" id="tabKiosk" onclick="window.switchTranslatorMode('kiosk')">
+              Retro Kiosk Appliance View
+            </button>
+          </div>
+
+          <!-- Integrated View Pane -->
+          <div id="paneIntegratedView">
+            <div class="translator-grid">
+              
+              <!-- Source Lane -->
+              <div class="translator-card">
+                <div class="lane-header">
+                  <span class="lane-title">Speaker 1 (Source)</span>
+                  <select id="selSourceLang" class="lang-select-box" onchange="window.handleSourceLangChange(this.value)">
+                    <option value="en" selected>English</option>
+                    <option value="es">Spanish (Español)</option>
+                    <option value="ar">Arabic (العربية)</option>
+                    <option value="hi">Hindi (हिन्दी)</option>
+                    <option value="ja">Japanese (日本語)</option>
+                    <option value="zh">Chinese (中文)</option>
+                    <option value="de">German (Deutsch)</option>
+                  </select>
+                </div>
+                <div class="speech-box">
+                  <textarea id="txtSourceText" class="speech-text-area" placeholder="Hold the mic button below to speak, or type agricultural query here..."></textarea>
+                  <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 8px;">
+                    <span class="text-muted small" id="sttStatusText">Awaiting voice or text input</span>
+                    <button class="btn btn-sm btn-secondary" onclick="window.executeTranslate()">Translate →</button>
+                  </div>
+                </div>
+
+                <!-- Quick Agricultural Phrases -->
+                <div>
+                  <span class="text-muted small" style="font-weight: 600;">Quick Farmer Phrases:</span>
+                  <div class="quick-phrases-bar">
+                    <button class="quick-phrase-chip" onclick="window.setQuickText('What is the current price of hybrid tomato seeds?')">Tomato seeds price?</button>
+                    <button class="quick-phrase-chip" onclick="window.setQuickText('Check soil moisture and temperature for Plot 4B')">Check soil moisture</button>
+                    <button class="quick-phrase-chip" onclick="window.setQuickText('Book the Mahindra tractor for tomorrow morning')">Book Mahindra tractor</button>
+                    <button class="quick-phrase-chip" onclick="window.setQuickText('I need two bags of organic vermicompost delivered')">Need 2 bags vermicompost</button>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Target Translation Lane -->
+              <div class="translator-card">
+                <div class="lane-header">
+                  <span class="lane-title">Speaker 2 (Translation)</span>
+                  <select id="selTargetLang" class="lang-select-box" onchange="window.handleTargetLangChange(this.value)">
+                    <option value="es" selected>Spanish (Español)</option>
+                    <option value="en">English</option>
+                    <option value="ar">Arabic (العربية)</option>
+                    <option value="hi">Hindi (हिन्दी)</option>
+                    <option value="ja">Japanese (日本語)</option>
+                    <option value="zh">Chinese (中文)</option>
+                    <option value="de">German (Deutsch)</option>
+                  </select>
+                </div>
+                <div class="speech-box">
+                  <div id="txtTargetText" style="min-height: 100px; white-space: pre-wrap; font-size: 1.05rem;">— Translation will appear here —</div>
+                  <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 8px;">
+                    <span class="text-muted small" id="metaInfoText">Inference: 0.00s | Tokens: 0</span>
+                    <button class="btn btn-sm btn-primary" id="btnPlayVoice" onclick="window.playCurrentTranslation()" style="display: inline-flex; align-items: center; gap: 4px;">
+                      <svg class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:16px;height:16px;"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"/></svg>
+                      Speak Aloud
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+
+            <!-- Central Microphone Control Bar -->
+            <div class="mic-action-bar" style="margin-top: 24px;">
+              <button class="btn-gemma-mic" id="btnGemmaRecord" onclick="window.toggleMicRecording()" title="Click to start/stop recording">
+                <svg class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width: 28px; height: 28px;"><path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" x2="12" y1="19" y2="22"/></svg>
+              </button>
+              <div style="text-align: left;">
+                <div style="font-weight: 700; font-size: 1rem;" id="gemmaMicStatus">Click to speak</div>
+                <div class="text-muted small">Audio is processed locally by Moonshine & translated by Gemma 4</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Kiosk View Pane (Embedded Full Kiosk) -->
+          <div id="paneKioskView" style="display: none;">
+            <div style="margin-bottom: 12px; display: flex; justify-content: space-between; align-items: center;">
+              <span class="text-muted small">Embedded standalone retro kiosk interface (same as Raspberry Pi hardware appliance):</span>
+              <a href="/translator" target="_blank" class="btn btn-secondary btn-sm">Open in new tab ↗</a>
+            </div>
+            <iframe id="kioskFrame" data-src="/translator" class="kiosk-preview-frame"></iframe>
+          </div>
+
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <!-- Scripts -->
+  <script src="js/icons.js"></script>
+  <script src="js/api.js"></script>
+  <script src="js/gemma-translator.js"></script>
+
+  <script>
+    let currentTranslation = '';
+    let currentTargetLang = 'es';
+    let isRecordingActive = false;
+    let recordTimerInterval = null;
+    let recordSeconds = 0;
+
+    // Mobile sidebar toggle
+    const hamburger = document.getElementById('mobileMenuBtn');
+    const sidebar = document.getElementById('appSidebar');
+    if (hamburger && sidebar) {
+      hamburger.addEventListener('click', () => {
+        sidebar.classList.toggle('open');
+      });
+    }
+
+    window.refreshGemmaStatus = async function() {
+      const status = await window.gemmaTranslator.checkStatus();
+      const badgeGemma = document.getElementById('badgeGemmaModel');
+      const badgeLiteRT = document.getElementById('badgeLiteRT');
+      const badgeStt = document.getElementById('badgeStt');
+      const badgeTts = document.getElementById('badgeTts');
+
+      if (badgeGemma) {
+        badgeGemma.textContent = status.litertOnline ? `● Gemma 4: ${status.activeModel} (Online)` : '○ Gemma 4: Offline';
+        badgeGemma.style.color = status.litertOnline ? '#10b981' : '#ef4444';
+      }
+      if (badgeLiteRT) {
+        badgeLiteRT.textContent = status.litertOnline ? `● LiteRT-LM: Port ${status.litertPort} (Active)` : '○ LiteRT-LM: Offline';
+        badgeLiteRT.style.color = status.litertOnline ? '#10b981' : '#ef4444';
+      }
+      if (badgeStt) {
+        badgeStt.textContent = status.translatorOnline ? '● Moonshine STT: Active' : '○ STT: Offline';
+      }
+      if (badgeTts) {
+        badgeTts.textContent = status.translatorOnline ? '● Kokoro Voice: Active' : '○ TTS: Offline';
+      }
+    };
+
+    window.switchTranslatorMode = function(mode) {
+      const integratedPane = document.getElementById('paneIntegratedView');
+      const kioskPane = document.getElementById('paneKioskView');
+      const tabIntegrated = document.getElementById('tabIntegrated');
+      const tabKiosk = document.getElementById('tabKiosk');
+      const kioskFrame = document.getElementById('kioskFrame');
+
+      if (mode === 'kiosk') {
+        integratedPane.style.display = 'none';
+        kioskPane.style.display = 'block';
+        tabIntegrated.className = 'btn btn-secondary btn-sm';
+        tabKiosk.className = 'btn btn-primary btn-sm';
+        if (kioskFrame && !kioskFrame.src && kioskFrame.dataset.src) {
+          kioskFrame.src = kioskFrame.dataset.src;
+        }
+      } else {
+        integratedPane.style.display = 'block';
+        kioskPane.style.display = 'none';
+        tabIntegrated.className = 'btn btn-primary btn-sm';
+        tabKiosk.className = 'btn btn-secondary btn-sm';
+      }
+    };
+
+    window.handleSourceLangChange = function(val) {
+      window.gemmaTranslator.sourceLang = val;
+    };
+
+    window.handleTargetLangChange = function(val) {
+      window.gemmaTranslator.targetLang = val;
+      currentTargetLang = val;
+    };
+
+    window.setQuickText = function(text) {
+      const input = document.getElementById('txtSourceText');
+      if (input) {
+        input.value = text;
+        window.executeTranslate();
+      }
+    };
+
+    // Robust Toggle-or-Hold Mic Recording
+    window.toggleMicRecording = async function() {
+      if (isRecordingActive) {
+        await window.stopMicRecording();
+      } else {
+        await window.startMicRecording();
+      }
+    };
+
+    window.startMicRecording = async function() {
+      if (isRecordingActive) return;
+      const sttStatus = document.getElementById('sttStatusText');
+      const micStatus = document.getElementById('gemmaMicStatus');
+      const micBtn = document.getElementById('btnGemmaRecord');
+
+      if (micStatus) micStatus.textContent = 'Requesting mic permission...';
+      const started = await window.gemmaTranslator.startRecording();
+      if (!started) {
+        if (micStatus) micStatus.textContent = 'Microphone access failed. Check permissions.';
+        return;
+      }
+
+      isRecordingActive = true;
+      recordSeconds = 0;
+      if (micBtn) micBtn.classList.add('recording-pulse');
+      if (micStatus) micStatus.textContent = 'Listening... Click again to stop & translate';
+      if (sttStatus) sttStatus.textContent = 'Listening to speech...';
+
+      if (recordTimerInterval) clearInterval(recordTimerInterval);
+      recordTimerInterval = setInterval(() => {
+        recordSeconds++;
+        if (micStatus) micStatus.textContent = `Listening (${recordSeconds}s)... Click to stop`;
+        // Safety cutoff at 15 seconds to prevent unbounded buffers
+        if (recordSeconds >= 15) {
+          window.stopMicRecording();
+        }
+      }, 1000);
+    };
+
+    window.stopMicRecording = async function() {
+      if (!isRecordingActive) return;
+      isRecordingActive = false;
+      if (recordTimerInterval) {
+        clearInterval(recordTimerInterval);
+        recordTimerInterval = null;
+      }
+
+      const micBtn = document.getElementById('btnGemmaRecord');
+      const micStatus = document.getElementById('gemmaMicStatus');
+      const sttStatus = document.getElementById('sttStatusText');
+
+      if (micBtn) micBtn.classList.remove('recording-pulse');
+      if (micStatus) micStatus.textContent = 'Processing speech...';
+      if (sttStatus) sttStatus.textContent = 'Transcribing with Moonshine...';
+
+      try {
+        const base64Audio = await window.gemmaTranslator.stopRecording();
+        if (!base64Audio) {
+          if (micStatus) micStatus.textContent = 'No voice detected. Click to speak';
+          if (sttStatus) sttStatus.textContent = 'No audio captured';
+          return;
+        }
+
+        const text = await window.gemmaTranslator.transcribeAudioBase64(base64Audio);
+        const input = document.getElementById('txtSourceText');
+        if (input && text) input.value = text;
+        if (sttStatus) sttStatus.textContent = text ? 'Transcribed' : 'No speech recognized';
+        if (micStatus) micStatus.textContent = 'Click to speak';
+
+        if (text && text.trim()) {
+          await window.executeTranslate();
+        }
+      } catch (err) {
+        if (sttStatus) sttStatus.textContent = 'STT Error: ' + err.message;
+        if (micStatus) micStatus.textContent = 'Click to speak';
+      }
+    };
+
+    window.executeTranslate = async function() {
+      const input = document.getElementById('txtSourceText');
+      const targetDiv = document.getElementById('txtTargetText');
+      const metaSpan = document.getElementById('metaInfoText');
+      const text = input ? input.value.trim() : '';
+
+      if (!text) return;
+      if (targetDiv) targetDiv.textContent = 'Translating with Gemma 4...';
+
+      try {
+        const src = document.getElementById('selSourceLang')?.value || 'en';
+        const tgt = document.getElementById('selTargetLang')?.value || 'es';
+        const result = await window.gemmaTranslator.translateText(text, tgt, src);
+        
+        currentTranslation = result.translation;
+        currentTargetLang = tgt;
+
+        if (targetDiv) targetDiv.textContent = result.translation;
+        if (metaSpan) metaSpan.textContent = `Inference: ${result.duration}s | Tokens: ${result.tokens}`;
+
+        // Attempt automatic synthesized voice playback (isolated from translation state)
+        try {
+          await window.gemmaTranslator.playTTS(result.translation, tgt);
+        } catch (e) {
+          console.warn('Autoplay notice:', e);
+        }
+      } catch (err) {
+        if (targetDiv) targetDiv.textContent = 'Error: ' + err.message;
+      }
+    };
+
+    window.playCurrentTranslation = async function() {
+      if (currentTranslation) {
+        await window.gemmaTranslator.playTTS(currentTranslation, currentTargetLang);
+      }
+    };
+
+    document.addEventListener('DOMContentLoaded', () => {
+      window.refreshGemmaStatus();
+    });
+  </script>
+</body>
+</html>

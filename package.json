@@ -1,0 +1,21 @@
+{
+  "name": "agrisense-iot-agrimarket",
+  "version": "1.0.0",
+  "description": "AgriSense & AgriMarket AI - Connected Smart Agriculture & IoT Platform",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js",
+    "translator": "powershell -ExecutionPolicy Bypass -File ./start_translator.ps1",
+    "bridge": "powershell -ExecutionPolicy Bypass -File ./bridge.ps1"
+  },
+  "keywords": [
+    "agrisense",
+    "iot",
+    "esp32",
+    "agriculture",
+    "smart-farming"
+  ],
+  "author": "",
+  "license": "ISC"
+}

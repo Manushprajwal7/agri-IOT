@@ -23,7 +23,7 @@ class AgriApp {
     this.bindUserAuthSwitcher();
 
     const hash = window.location.hash.replace('#', '') || window.INITIAL_PAGE_VIEW;
-    const validViews = ['dashboard', 'farm-monitor', 'crop', 'satellite', 'alerts', 'marketplace', 'assistant', 'orders', 'devices', 'settings', 'sustainability', 'supplier', 'admin'];
+    const validViews = ['dashboard', 'farm-monitor', 'crop', 'satellite', 'alerts', 'marketplace', 'assistant', 'translator', 'orders', 'devices', 'settings', 'sustainability', 'supplier', 'admin'];
 
     if (hash && validViews.includes(hash)) {
       this.switchView(hash);
@@ -54,6 +54,10 @@ class AgriApp {
   bindGlobalNavigation() {
     document.querySelectorAll('[data-nav-view]').forEach(link => {
       link.addEventListener('click', (e) => {
+        const href = link.getAttribute('href') || '';
+        if (href.endsWith('.html') || href.includes('.html')) {
+          return; // Let browser navigate to target HTML page
+        }
         e.preventDefault();
         const view = e.currentTarget.dataset.navView;
         this.switchView(view);
@@ -149,6 +153,10 @@ class AgriApp {
 
       case 'assistant':
         this.renderAssistantPageView();
+        break;
+
+      case 'translator':
+        window.location.href = 'translator.html';
         break;
 
       case 'orders':

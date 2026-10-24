@@ -18,8 +18,12 @@
     "badge": "Top Seller",
     "likes": 58,
     "verifiedSeller": true,
-    "specs": ["35-40 Tons/Acre", "Triple Disease Resistant", "98% Germination"],
-    "image": "assets/images/tomato_seeds.svg"
+    "specs": [
+      "35-40 Tons/Acre",
+      "Triple Disease Resistant",
+      "98% Germination"
+    ],
+    "image": "assets/images/products/tomato_seeds.jpg"
   },
   {
     "id": "prod-002",
@@ -40,8 +44,12 @@
     "badge": "Available Today",
     "likes": 94,
     "verifiedSeller": true,
-    "specs": ["45 HP Diesel", "Rotavator Included", "Free Field Operator"],
-    "image": "assets/images/tractor.svg"
+    "specs": [
+      "45 HP Diesel",
+      "Rotavator Included",
+      "Free Field Operator"
+    ],
+    "image": "assets/images/products/mahindra_tractor.jpg"
   },
   {
     "id": "prod-003",
@@ -62,8 +70,12 @@
     "badge": "Certified Organic",
     "likes": 41,
     "verifiedSeller": true,
-    "specs": ["N-P-K Organic 2:1:1", "Trichoderma Enriched", "Moisture Retentive"],
-    "image": "assets/images/manure.svg"
+    "specs": [
+      "N-P-K Organic 2:1:1",
+      "Trichoderma Enriched",
+      "Moisture Retentive"
+    ],
+    "image": "assets/images/products/vermicompost.jpg"
   },
   {
     "id": "prod-004",
@@ -84,8 +96,12 @@
     "badge": "Fast Soluble",
     "likes": 33,
     "verifiedSeller": true,
-    "specs": ["100% Water Soluble", "Drip Fertigation", "Vegetative Booster"],
-    "image": "assets/images/fertilizer.svg"
+    "specs": [
+      "100% Water Soluble",
+      "Drip Fertigation",
+      "Vegetative Booster"
+    ],
+    "image": "assets/images/products/npk_fertilizer.jpg"
   },
   {
     "id": "prod-005",
@@ -106,8 +122,12 @@
     "badge": "Verified Rental",
     "likes": 62,
     "verifiedSeller": true,
-    "specs": ["13 HP Rotary", "Wet Paddy Puddling", "Fuel Efficient"],
-    "image": "assets/images/power_tiller.svg"
+    "specs": [
+      "13 HP Rotary",
+      "Wet Paddy Puddling",
+      "Fuel Efficient"
+    ],
+    "image": "assets/images/products/power_tiller.jpg"
   },
   {
     "id": "prod-006",
@@ -128,8 +148,12 @@
     "badge": "Eco-Safe",
     "likes": 50,
     "verifiedSeller": true,
-    "specs": ["10,000 PPM Azadirachtin", "Pollinator Safe", "Zero Chemical Residue"],
-    "image": "assets/images/pesticide.svg"
+    "specs": [
+      "10,000 PPM Azadirachtin",
+      "Pollinator Safe",
+      "Zero Chemical Residue"
+    ],
+    "image": "assets/images/products/neem_oil.jpg"
   },
   {
     "id": "prod-007",
@@ -150,8 +174,12 @@
     "badge": "Water Saver",
     "likes": 77,
     "verifiedSeller": true,
-    "specs": ["1 Acre Full Setup", "60% Water Savings", "Venturi Unit Included"],
-    "image": "assets/images/irrigation.svg"
+    "specs": [
+      "1 Acre Full Setup",
+      "60% Water Savings",
+      "Venturi Unit Included"
+    ],
+    "image": "assets/images/products/drip_irrigation.jpg"
   },
   {
     "id": "prod-008",
@@ -172,8 +200,12 @@
     "badge": "High Pressure",
     "likes": 29,
     "verifiedSeller": false,
-    "specs": ["16 Litre Tank", "12V Li-ion Battery", "4 Hours Continuous Spray"],
-    "image": "assets/images/sprayer.svg"
+    "specs": [
+      "16 Litre Tank",
+      "12V Li-ion Battery",
+      "4 Hours Continuous Spray"
+    ],
+    "image": "assets/images/products/backpack_sprayer.jpg"
   },
   {
     "id": "prod-009",
@@ -194,8 +226,12 @@
     "badge": "Native Heirloom",
     "likes": 88,
     "verifiedSeller": true,
-    "specs": ["Ancient Non-GMO", "Low Gluten Index", "Drought Resilient"],
-    "image": "assets/images/wheat_seeds.svg"
+    "specs": [
+      "Ancient Non-GMO",
+      "Low Gluten Index",
+      "Drought Resilient"
+    ],
+    "image": "assets/images/products/wheat_seeds.jpg"
   },
   {
     "id": "prod-010",
@@ -216,8 +252,12 @@
     "badge": "High Demand",
     "likes": 115,
     "verifiedSeller": true,
-    "specs": ["Rubber Mud Tracks", "Grain Loss < 1.5%", "High Speed Cutting"],
-    "image": "assets/images/harvester.svg"
+    "specs": [
+      "Rubber Mud Tracks",
+      "Grain Loss < 1.5%",
+      "High Speed Cutting"
+    ],
+    "image": "assets/images/products/combine_harvester.jpg"
   },
   {
     "id": "prod-011",
@@ -238,8 +278,12 @@
     "badge": "Govt Certified",
     "likes": 142,
     "verifiedSeller": true,
-    "specs": ["120-130 Days Maturity", "5.5 Tons/Acre Yield", "Submergence Tolerant"],
-    "image": "assets/images/paddy_seeds.svg"
+    "specs": [
+      "120-130 Days Maturity",
+      "5.5 Tons/Acre Yield",
+      "Submergence Tolerant"
+    ],
+    "image": "assets/images/products/paddy_seeds.jpg"
   },
   {
     "id": "prod-012",
@@ -260,8 +304,12 @@
     "badge": "Premium Machine",
     "likes": 128,
     "verifiedSeller": true,
-    "specs": ["50 HP 4-Wheel Drive", "Heavy Cultivator Hitch", "Fuel & Driver Included"],
-    "image": "assets/images/john_deere.svg"
+    "specs": [
+      "50 HP 4-Wheel Drive",
+      "Heavy Cultivator Hitch",
+      "Fuel & Driver Included"
+    ],
+    "image": "assets/images/products/john_deere.jpg"
   },
   {
     "id": "prod-013",
@@ -282,14 +330,18 @@
     "badge": "Labour Saver",
     "likes": 91,
     "verifiedSeller": true,
-    "specs": ["3-4 Acres/Day Capacity", "Uniform Hill Spacing", "Includes Certified Tech"],
-    "image": "assets/images/transplanter.svg"
+    "specs": [
+      "3-4 Acres/Day Capacity",
+      "Uniform Hill Spacing",
+      "Includes Certified Tech"
+    ],
+    "image": "assets/images/products/transplanter.jpg"
   },
   {
     "id": "prod-014",
     "sellerId": "seller-113",
     "sellerName": "AeroKisan Drone Flight Services",
-    "sellerRating": 5.0,
+    "sellerRating": 5,
     "reviewCount": 204,
     "name": "16L AI Precision Drone Spraying Service",
     "category": "Tools",
@@ -304,8 +356,12 @@
     "badge": "AI Precision",
     "likes": 184,
     "verifiedSeller": true,
-    "specs": ["7 Mins/Acre Ultra Fast", "90% Water Savings", "DGCA Certified Pilot"],
-    "image": "assets/images/agri_drone.svg"
+    "specs": [
+      "7 Mins/Acre Ultra Fast",
+      "90% Water Savings",
+      "DGCA Certified Pilot"
+    ],
+    "image": "assets/images/products/agri_drone.jpg"
   },
   {
     "id": "prod-015",
@@ -326,8 +382,12 @@
     "badge": "PM-KUSUM Subsidy",
     "likes": 165,
     "verifiedSeller": true,
-    "specs": ["4.8 kW Mono-PERC", "150m Head Capacity", "5-Year Full Warranty"],
-    "image": "assets/images/solar_pump.svg"
+    "specs": [
+      "4.8 kW Mono-PERC",
+      "150m Head Capacity",
+      "5-Year Full Warranty"
+    ],
+    "image": "assets/images/products/solar_pump.jpg"
   },
   {
     "id": "prod-016",
@@ -348,8 +408,12 @@
     "badge": "High Starch Yield",
     "likes": 56,
     "verifiedSeller": true,
-    "specs": ["95-105 Days Cycle", "High Kernel Weight", "Drought & Heat Hardy"],
-    "image": "assets/images/maize_seeds.svg"
+    "specs": [
+      "95-105 Days Cycle",
+      "High Kernel Weight",
+      "Drought & Heat Hardy"
+    ],
+    "image": "assets/images/products/maize_seeds.jpg"
   },
   {
     "id": "prod-017",
@@ -370,8 +434,12 @@
     "badge": "Pest Resistant",
     "likes": 73,
     "verifiedSeller": true,
-    "specs": ["BG-II Gene Protection", "Refuge Seeds Included", "Long Staple Fiber"],
-    "image": "assets/images/cotton_seeds.svg"
+    "specs": [
+      "BG-II Gene Protection",
+      "Refuge Seeds Included",
+      "Long Staple Fiber"
+    ],
+    "image": "assets/images/products/cotton_seeds.jpg"
   },
   {
     "id": "prod-018",
@@ -392,8 +460,12 @@
     "badge": "25% NPK Saving",
     "likes": 98,
     "verifiedSeller": true,
-    "specs": ["Live Beneficial Bacteria", "Soil Microflora Booster", "Zero Chemical Salt"],
-    "image": "assets/images/bio_npk.svg"
+    "specs": [
+      "Live Beneficial Bacteria",
+      "Soil Microflora Booster",
+      "Zero Chemical Salt"
+    ],
+    "image": "assets/images/products/bio_npk.jpg"
   },
   {
     "id": "prod-019",
@@ -414,8 +486,12 @@
     "badge": "Instant Foliar Uptake",
     "likes": 44,
     "verifiedSeller": true,
-    "specs": ["100% EDTA Chelated", "Prevents Flower Drop", "Rapid Green Response"],
-    "image": "assets/images/micronutrient.svg"
+    "specs": [
+      "100% EDTA Chelated",
+      "Prevents Flower Drop",
+      "Rapid Green Response"
+    ],
+    "image": "assets/images/products/micronutrient.jpg"
   },
   {
     "id": "prod-020",
@@ -436,8 +512,12 @@
     "badge": "IoT Compatible",
     "likes": 139,
     "verifiedSeller": true,
-    "specs": ["5-Second Fast Reading", "Dual Steel Probes", "Backlit Color Screen"],
-    "image": "assets/images/soil_tester.svg"
+    "specs": [
+      "5-Second Fast Reading",
+      "Dual Steel Probes",
+      "Backlit Color Screen"
+    ],
+    "image": "assets/images/products/soil_tester.jpg"
   },
   {
     "id": "prod-021",
@@ -458,8 +538,12 @@
     "badge": "Organic IPM",
     "likes": 61,
     "verifiedSeller": true,
-    "specs": ["20 Traps + 2 Lures", "UV & Rain Resistant", "Early Infestation Alert"],
-    "image": "assets/images/traps.svg"
+    "specs": [
+      "20 Traps + 2 Lures",
+      "UV & Rain Resistant",
+      "Early Infestation Alert"
+    ],
+    "image": "assets/images/products/insect_traps.jpg"
   },
   {
     "id": "prod-022",
@@ -480,8 +564,12 @@
     "badge": "Nematode Buster",
     "likes": 83,
     "verifiedSeller": true,
-    "specs": ["5.5% Organic Nitrogen", "Natural Soil Nematicide", "Controls Root Grubs"],
-    "image": "assets/images/manure.svg"
+    "specs": [
+      "5.5% Organic Nitrogen",
+      "Natural Soil Nematicide",
+      "Controls Root Grubs"
+    ],
+    "image": "assets/images/products/neem_cake.jpg"
   },
   {
     "id": "prod-023",
@@ -502,8 +590,12 @@
     "badge": "Root Protector",
     "likes": 57,
     "verifiedSeller": true,
-    "specs": ["2 x 10^8 CFU/g", "Bio-Fungicide", "Safe for Earthworms"],
-    "image": "assets/images/pesticide.svg"
+    "specs": [
+      "2 x 10^8 CFU/g",
+      "Bio-Fungicide",
+      "Safe for Earthworms"
+    ],
+    "image": "assets/images/products/trichoderma.jpg"
   },
   {
     "id": "prod-024",
@@ -524,7 +616,11 @@
     "badge": "Water Saver",
     "likes": 102,
     "verifiedSeller": true,
-    "specs": ["Dual Laser Transmitter", "25% Water Saving", "Tractor & Operator Ready"],
-    "image": "assets/images/tractor.svg"
+    "specs": [
+      "Dual Laser Transmitter",
+      "25% Water Saving",
+      "Tractor & Operator Ready"
+    ],
+    "image": "assets/images/products/laser_leveler.jpg"
   }
 ]

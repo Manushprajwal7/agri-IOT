@@ -44,43 +44,55 @@ class DeviceManager {
             Physical lab testbed featuring the ESP32 IoT node with live 2.8" SPI TFT LCD (ILI9341), soil probe, DHT sensor, and the autonomous agricultural field rover with dual TT gear motors and IR tracking array.
           </p>
           <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 16px;">
-            <div style="background: var(--bg-surface); border: 1px solid var(--border-subtle); border-radius: 8px; overflow: hidden; display: flex; flex-direction: column;">
-              <div style="height: 180px; overflow: hidden; background: #111; display: flex; align-items: center; justify-content: center;">
-                <img src="assets/images/WhatsApp%20Image%202026-09-25%20at%2012.04.13%20PM.jpeg" alt="ESP32 IoT Node & SPI TFT Display" style="width: 100%; height: 100%; object-fit: cover; transition: transform 0.3s ease; cursor: pointer;" onclick="window.open(this.src, '_blank')" title="Click to view full size" />
+            <div style="background: var(--surface-card); border: 1px solid var(--border-subtle); border-radius: 12px; overflow: hidden; display: flex; flex-direction: column; box-shadow: var(--shadow-sm); transition: transform 0.2s ease, box-shadow 0.2s ease;" onmouseover="this.style.transform='translateY(-3px)'; this.style.boxShadow='var(--shadow-md)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='var(--shadow-sm)'">
+              <div style="height: 220px; overflow: hidden; background: #f1f5f9; display: flex; align-items: center; justify-content: center; border-bottom: 1px solid #e2e8f0;">
+                <img src="assets/images/WhatsApp%20Image%202026-09-25%20at%2012.04.13%20PM.jpeg" alt="ESP32 IoT Node & SPI TFT Display" style="max-width: 100%; max-height: 100%; object-fit: contain; cursor: pointer; transition: transform 0.3s ease;" onclick="window.open(this.src, '_blank')" title="Click to view full size" />
               </div>
-              <div style="padding: 12px; flex: 1;">
-                <h5 style="margin: 0 0 4px 0; font-size: 13px; font-weight: 600;">ESP32 Node & SPI Color TFT</h5>
-                <p class="text-muted small" style="margin: 0; line-height: 1.4; font-size: 12px;">Live telemetry (48% Moisture, 27°C, 67% RH) on ILI9341 display with soil probe and buzzer.</p>
-              </div>
-            </div>
-
-            <div style="background: var(--bg-surface); border: 1px solid var(--border-subtle); border-radius: 8px; overflow: hidden; display: flex; flex-direction: column;">
-              <div style="height: 180px; overflow: hidden; background: #111; display: flex; align-items: center; justify-content: center;">
-                <img src="assets/images/WhatsApp%20Image%202026-09-25%20at%2012.04.14%20PM%20(1).jpeg" alt="Integrated Field Testbed" style="width: 100%; height: 100%; object-fit: cover; transition: transform 0.3s ease; cursor: pointer;" onclick="window.open(this.src, '_blank')" title="Click to view full size" />
-              </div>
-              <div style="padding: 12px; flex: 1;">
-                <h5 style="margin: 0 0 4px 0; font-size: 13px; font-weight: 600;">Integrated Testbed</h5>
-                <p class="text-muted small" style="margin: 0; line-height: 1.4; font-size: 12px;">Combined physical station: fixed soil IoT node alongside autonomous 2WD field rover chassis.</p>
+              <div style="padding: 14px 16px; flex: 1; display: flex; flex-direction: column; justify-content: space-between;">
+                <div>
+                  <span class="badge badge-success" style="margin-bottom: 6px; font-size: 10px;">IoT Sensing Node</span>
+                  <h5 style="margin: 0 0 6px 0; font-size: 14px; font-weight: 700; color: #064e3b;">ESP32 Node & Color SPI TFT</h5>
+                  <p class="text-muted small" style="margin: 0; line-height: 1.45; font-size: 12px;">Live field GUI running AgriSense AI Farm OS v2.4 (48% Moisture, 27°C, 67% RH) with calibrated soil probe & >85% buzzer alarm.</p>
+                </div>
               </div>
             </div>
 
-            <div style="background: var(--bg-surface); border: 1px solid var(--border-subtle); border-radius: 8px; overflow: hidden; display: flex; flex-direction: column;">
-              <div style="height: 180px; overflow: hidden; background: #111; display: flex; align-items: center; justify-content: center;">
-                <img src="assets/images/WhatsApp%20Image%202026-09-25%20at%2012.04.14%20PM.jpeg" alt="Field Rover Chassis & Motors" style="width: 100%; height: 100%; object-fit: cover; transition: transform 0.3s ease; cursor: pointer;" onclick="window.open(this.src, '_blank')" title="Click to view full size" />
+            <div style="background: var(--surface-card); border: 1px solid var(--border-subtle); border-radius: 12px; overflow: hidden; display: flex; flex-direction: column; box-shadow: var(--shadow-sm); transition: transform 0.2s ease, box-shadow 0.2s ease;" onmouseover="this.style.transform='translateY(-3px)'; this.style.boxShadow='var(--shadow-md)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='var(--shadow-sm)'">
+              <div style="height: 220px; overflow: hidden; background: #f1f5f9; display: flex; align-items: center; justify-content: center; border-bottom: 1px solid #e2e8f0;">
+                <img src="assets/images/WhatsApp%20Image%202026-09-25%20at%2012.04.14%20PM%20(1).jpeg" alt="Integrated Field Testbed" style="max-width: 100%; max-height: 100%; object-fit: contain; cursor: pointer; transition: transform 0.3s ease;" onclick="window.open(this.src, '_blank')" title="Click to view full size" />
               </div>
-              <div style="padding: 12px; flex: 1;">
-                <h5 style="margin: 0 0 4px 0; font-size: 13px; font-weight: 600;">Field Rover Chassis & Drive</h5>
-                <p class="text-muted small" style="margin: 0; line-height: 1.4; font-size: 12px;">Dual-deck acrylic chassis, TT gearmotors, high-traction rubber tread wheels, and H-bridge driver.</p>
+              <div style="padding: 14px 16px; flex: 1; display: flex; flex-direction: column; justify-content: space-between;">
+                <div>
+                  <span class="badge badge-accent" style="margin-bottom: 6px; font-size: 10px;">Lab Integration</span>
+                  <h5 style="margin: 0 0 6px 0; font-size: 14px; font-weight: 700; color: #064e3b;">Integrated Cyber-Physical Station</h5>
+                  <p class="text-muted small" style="margin: 0; line-height: 1.45; font-size: 12px;">Fixed microclimate soil sensing station alongside autonomous 2WD field rover chassis, solving spatial-temporal sampling.</p>
+                </div>
               </div>
             </div>
 
-            <div style="background: var(--bg-surface); border: 1px solid var(--border-subtle); border-radius: 8px; overflow: hidden; display: flex; flex-direction: column;">
-              <div style="height: 180px; overflow: hidden; background: #111; display: flex; align-items: center; justify-content: center;">
-                <img src="assets/images/WhatsApp%20Image%202026-09-25%20at%2012.04.15%20PM.jpeg" alt="Rover Obstacle & Line Sensor Array" style="width: 100%; height: 100%; object-fit: cover; transition: transform 0.3s ease; cursor: pointer;" onclick="window.open(this.src, '_blank')" title="Click to view full size" />
+            <div style="background: var(--surface-card); border: 1px solid var(--border-subtle); border-radius: 12px; overflow: hidden; display: flex; flex-direction: column; box-shadow: var(--shadow-sm); transition: transform 0.2s ease, box-shadow 0.2s ease;" onmouseover="this.style.transform='translateY(-3px)'; this.style.boxShadow='var(--shadow-md)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='var(--shadow-sm)'">
+              <div style="height: 220px; overflow: hidden; background: #f1f5f9; display: flex; align-items: center; justify-content: center; border-bottom: 1px solid #e2e8f0;">
+                <img src="assets/images/WhatsApp%20Image%202026-09-25%20at%2012.04.14%20PM.jpeg" alt="Field Rover Chassis & Motors" style="max-width: 100%; max-height: 100%; object-fit: contain; cursor: pointer; transition: transform 0.3s ease;" onclick="window.open(this.src, '_blank')" title="Click to view full size" />
               </div>
-              <div style="padding: 12px; flex: 1;">
-                <h5 style="margin: 0 0 4px 0; font-size: 13px; font-weight: 600;">Crop-Row & Obstacle Array</h5>
-                <p class="text-muted small" style="margin: 0; line-height: 1.4; font-size: 12px;">Front dual IR reflectance sensors with trim potentiometers and omnidirectional caster wheel.</p>
+              <div style="padding: 14px 16px; flex: 1; display: flex; flex-direction: column; justify-content: space-between;">
+                <div>
+                  <span class="badge badge-accent" style="margin-bottom: 6px; font-size: 10px;">Robotic Chassis</span>
+                  <h5 style="margin: 0 0 6px 0; font-size: 14px; font-weight: 700; color: #064e3b;">Field Rover Drive Subsystem</h5>
+                  <p class="text-muted small" style="margin: 0; line-height: 1.45; font-size: 12px;">Dual-deck acrylic chassis, 1:48 TT gearmotors, high-traction rubber tread tires, and H-bridge motor driver.</p>
+                </div>
+              </div>
+            </div>
+
+            <div style="background: var(--surface-card); border: 1px solid var(--border-subtle); border-radius: 12px; overflow: hidden; display: flex; flex-direction: column; box-shadow: var(--shadow-sm); transition: transform 0.2s ease, box-shadow 0.2s ease;" onmouseover="this.style.transform='translateY(-3px)'; this.style.boxShadow='var(--shadow-md)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='var(--shadow-sm)'">
+              <div style="height: 220px; overflow: hidden; background: #f1f5f9; display: flex; align-items: center; justify-content: center; border-bottom: 1px solid #e2e8f0;">
+                <img src="assets/images/WhatsApp%20Image%202026-09-25%20at%2012.04.15%20PM.jpeg" alt="Rover Obstacle & Line Sensor Array" style="max-width: 100%; max-height: 100%; object-fit: contain; cursor: pointer; transition: transform 0.3s ease;" onclick="window.open(this.src, '_blank')" title="Click to view full size" />
+              </div>
+              <div style="padding: 14px 16px; flex: 1; display: flex; flex-direction: column; justify-content: space-between;">
+                <div>
+                  <span class="badge badge-accent" style="margin-bottom: 6px; font-size: 10px;">Optical Guidance</span>
+                  <h5 style="margin: 0 0 6px 0; font-size: 14px; font-weight: 700; color: #064e3b;">Crop-Row & Obstacle Array</h5>
+                  <p class="text-muted small" style="margin: 0; line-height: 1.45; font-size: 12px;">Front TCRT5000 dual IR sensors with sensitivity potentiometers, collision braking, and omnidirectional front caster.</p>
+                </div>
               </div>
             </div>
           </div>

@@ -64,6 +64,10 @@
           <span class="nav-icon"><svg class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" x2="12" y1="19" y2="22"/></svg></span>
           <span data-i18n="navAssistant">7. AI Assistant</span>
         </a>
+        <a href="translator.html" class="nav-link" data-nav-view="translator">
+          <span class="nav-icon"><svg class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m5 8 6 6"/><path d="m4 14 6-6 2-3"/><path d="M2 5h12"/><path d="M7 2h1"/><path d="m22 22-5-10-5 10"/><path d="M14 18h6"/></svg></span>
+          <span>8. Gemma Translator</span>
+        </a>
         <a href="#orders" class="nav-link" data-nav-view="orders">
           <span class="nav-icon"><svg class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m7.5 4.27 9 5.15"/><path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z"/><path d="m3.3 7 8.7 5 8.7-5"/><path d="M12 22V12"/></svg></span>
           <span data-i18n="navOrders">8. Orders & Logistics</span>
@@ -160,13 +164,13 @@
         <!-- VIEW 1: DASHBOARD (PRD Section 8, 9, 15, 16, 88, 89, 98) -->
         <section class="app-view-container" id="view-dashboard">
           <!-- Hero Section (PRD Section 88) -->
-          <div class="card" style="background: linear-gradient(135deg, #081c15 0%, #1b4332 50%, #2d6a4f 100%); color: #ffffff; padding: 28px; margin-bottom: 24px;">
-            <div style="max-width: 800px;">
+          <div class="card hero-welcome-card" style="padding: 28px; margin-bottom: 24px;">
+            <div style="max-width: 820px;">
               <span class="badge badge-accent" style="margin-bottom: 12px;">SMART AGRICULTURE • CONNECTED SUPPLY CHAINS</span>
-              <h2 style="font-size: 26px; font-weight: 800; color: #ffffff; line-height: 1.25; margin-bottom: 10px;">
+              <h2 style="font-size: 26px; font-weight: 800; color: #064e3b; line-height: 1.25; margin-bottom: 10px;">
                 From Physical Farm Sensors to AI-Powered Agricultural Commerce
               </h2>
-              <p style="color: #d8f3dc; font-size: 14px; margin-bottom: 20px; line-height: 1.6;">
+              <p style="color: #334155; font-size: 14px; margin-bottom: 20px; line-height: 1.6;">
                 Connecting ESP32 soil & ambient IoT telemetry with orbital satellite spectral intelligence (MobileNetV2 / CNN) and a voice-first multilingual Indic marketplace.
               </p>
               <div style="display: flex; gap: 12px; flex-wrap: wrap;">
@@ -176,25 +180,25 @@
                 <button class="btn btn-secondary" onclick="window.navigateToView('marketplace')">
                   Open AgriMarket
                 </button>
-                <button class="btn btn-outline" style="background: rgba(255,255,255,0.15); color: #ffffff; border-color: rgba(255,255,255,0.3);" onclick="if(window.aiAssistant) window.aiAssistant.openModal();">
+                <button class="btn btn-outline" onclick="if(window.aiAssistant) window.aiAssistant.openModal();">
                   <svg class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" x2="12" y1="19" y2="22"/></svg> Talk to AI Assistant
                 </button>
               </div>
             </div>
 
             <!-- 3 Core Pillars (PRD Section 98) -->
-            <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 24px; padding-top: 20px; border-top: 1px solid rgba(255,255,255,0.15);">
-              <div>
-                <strong style="color: #ffd166; font-size: 13px;">1. SENSE</strong>
-                <p style="font-size: 12px; color: #d8f3dc; margin-top: 3px;">ESP32 + Capacitive Moisture + DHT22 + 2.3" LCD + Piezo Buzzer</p>
+            <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 24px; padding-top: 20px; border-top: 1px solid #d1fae5;">
+              <div style="background: #ffffff; padding: 14px 16px; border-radius: 8px; border: 1px solid #e2e8f0; box-shadow: 0 1px 3px rgba(0,0,0,0.03);">
+                <strong style="color: #047857; font-size: 13px; font-weight: 700; display: block; margin-bottom: 4px;">1. SENSE</strong>
+                <p style="font-size: 12px; color: #475569; margin: 0; line-height: 1.4;">ESP32 + Capacitive Moisture + DHT22 + 2.3" LCD + Piezo Buzzer</p>
               </div>
-              <div>
-                <strong style="color: #ffd166; font-size: 13px;">2. UNDERSTAND</strong>
-                <p style="font-size: 12px; color: #d8f3dc; margin-top: 3px;">MobileNetV2 + CNN + SpaceNet Satellite Imagery + NDVI Vegetative Index</p>
+              <div style="background: #ffffff; padding: 14px 16px; border-radius: 8px; border: 1px solid #e2e8f0; box-shadow: 0 1px 3px rgba(0,0,0,0.03);">
+                <strong style="color: #047857; font-size: 13px; font-weight: 700; display: block; margin-bottom: 4px;">2. UNDERSTAND</strong>
+                <p style="font-size: 12px; color: #475569; margin: 0; line-height: 1.4;">MobileNetV2 + CNN + SpaceNet Satellite Imagery + NDVI Vegetative Index</p>
               </div>
-              <div>
-                <strong style="color: #ffd166; font-size: 13px;">3. ACT</strong>
-                <p style="font-size: 12px; color: #d8f3dc; margin-top: 3px;">Sarvam AI Indic Voice + Multi-Agent Commerce + Supply Chain Stepper</p>
+              <div style="background: #ffffff; padding: 14px 16px; border-radius: 8px; border: 1px solid #e2e8f0; box-shadow: 0 1px 3px rgba(0,0,0,0.03);">
+                <strong style="color: #047857; font-size: 13px; font-weight: 700; display: block; margin-bottom: 4px;">3. ACT</strong>
+                <p style="font-size: 12px; color: #475569; margin: 0; line-height: 1.4;">Sarvam AI Indic Voice + Multi-Agent Commerce + Supply Chain Stepper</p>
               </div>
             </div>
           </div>

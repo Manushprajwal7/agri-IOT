@@ -15,8 +15,46 @@ const MIME_TYPES = {
   '.jpg': 'image/jpeg',
   '.jpeg': 'image/jpeg',
   '.webp': 'image/webp',
-  '.ico': 'image/x-icon'
+  '.ico': 'image/x-icon',
+  '.woff': 'font/woff',
+  '.woff2': 'font/woff2',
+  '.ttf': 'font/ttf',
+  '.wav': 'audio/wav',
+  '.mp3': 'audio/mpeg'
 };
+
+const TRANSLATOR_PORT = parseInt(process.env.TRANSLATOR_PORT, 10) || 5005;
+const LITERT_PORT = parseInt(process.env.LITERT_PORT, 10) || 9379;
+
+// Generic reverse proxy helper
+function proxyTo(targetPort, req, res) {
+  const options = {
+    hostname: '127.0.0.1',
+    port: targetPort,
+    path: req.url,
+    method: req.method,
+    headers: { ...req.headers, host: `127.0.0.1:${targetPort}` }
+  };
+
+  const proxyReq = http.request(options, proxyRes => {
+    res.writeHead(proxyRes.statusCode, proxyRes.headers);
+    proxyRes.pipe(res);
+  });
+
+  proxyReq.on('error', err => {
+    res.writeHead(502, {
+      'Content-Type': 'application/json',
+      'Access-Control-Allow-Origin': '*'
+    });
+    res.end(JSON.stringify({
+      error: 'Gemma Translation service unavailable',
+      detail: err.message,
+      targetPort: targetPort
+    }));
+  });
+
+  req.pipe(proxyReq);
+}
 
 const TELEMETRY_FILE = path.join(__dirname, 'data', 'live_telemetry.json');
 
@@ -372,6 +410,83 @@ Conversation Guidelines:
       }
     });
     return;
+  }
+
+  // API Route: GET /api/v1/gemma/status
+  if (cleanUrl === '/api/v1/gemma/status' && req.method === 'GET') {
+    Promise.allSettled([
+      fetch(`http://127.0.0.1:${LITERT_PORT}/v1/models`).then(r => r.json()),
+      fetch(`http://127.0.0.1:${TRANSLATOR_PORT}/api/volume`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ action: 'get' })
+      }).then(r => r.json())
+    ]).then(([litertResult, translatorResult]) => {
+      const litertOnline = litertResult.status === 'fulfilled' && Boolean(litertResult.value && litertResult.value.data);
+      const translatorOnline = translatorResult.status === 'fulfilled';
+      const models = litertOnline ? litertResult.value.data.map(m => m.id) : [];
+
+      res.writeHead(200, {
+        'Content-Type': 'application/json',
+        'Access-Control-Allow-Origin': '*'
+      });
+      res.end(JSON.stringify({
+        online: litertOnline && translatorOnline,
+        litertPort: LITERT_PORT,
+        litertOnline: litertOnline,
+        translatorPort: TRANSLATOR_PORT,
+        translatorOnline: translatorOnline,
+        activeModel: models.includes('gemma4-e2b') ? 'gemma4-e2b' : (models[0] || 'offline'),
+        models: models,
+        sttProvider: 'Moonshine (On-Device)',
+        ttsProvider: 'Kokoro / Moonshine Voice (On-Device)',
+        offlineCapable: true
+      }));
+    }).catch(err => {
+      res.writeHead(200, {
+        'Content-Type': 'application/json',
+        'Access-Control-Allow-Origin': '*'
+      });
+      res.end(JSON.stringify({
+        online: false,
+        error: err.message
+      }));
+    });
+    return;
+  }
+
+  // Reverse-proxy Gemma Translator API calls to Python backend
+  if (cleanUrl === '/api/stt' || cleanUrl.startsWith('/api/stt') ||
+      cleanUrl === '/api/tts' || cleanUrl.startsWith('/api/tts') ||
+      cleanUrl === '/proxy' || cleanUrl.startsWith('/proxy') ||
+      cleanUrl === '/api/volume' || cleanUrl.startsWith('/api/volume')) {
+    proxyTo(TRANSLATOR_PORT, req, res);
+    return;
+  }
+
+  // Reverse-proxy direct LLM chat completions to LiteRT-LM
+  if (cleanUrl.startsWith('/api/gemma/v1/')) {
+    req.url = req.url.replace('/api/gemma/v1/', '/v1/');
+    proxyTo(LITERT_PORT, req, res);
+    return;
+  }
+
+  // Serve Gemma Translator Web UI
+  if (cleanUrl === '/translator' || cleanUrl.startsWith('/translator/')) {
+    let subPath = cleanUrl.replace(/^\/translator\/?/, '');
+    if (!subPath || subPath === '') subPath = 'index.html';
+    const distPath = path.join(__dirname, 'gemma_translator', 'frontend', 'dist', subPath);
+    if (fs.existsSync(distPath) && fs.statSync(distPath).isFile()) {
+      const ext = path.extname(distPath).toLowerCase();
+      const cType = MIME_TYPES[ext] || 'application/octet-stream';
+      res.writeHead(200, {
+        'Content-Type': cType,
+        'Cache-Control': 'no-cache',
+        'Access-Control-Allow-Origin': '*'
+      });
+      fs.createReadStream(distPath).pipe(res);
+      return;
+    }
   }
 
   // Static File Serving

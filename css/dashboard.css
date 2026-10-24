@@ -251,9 +251,10 @@
 .lcd-emulator-card {
   display: flex;
   flex-direction: column;
-  background-color: #1e293b;
-  color: #ffffff;
-  border-color: #334155;
+  background-color: var(--surface-card);
+  color: var(--text-main);
+  border: 1px solid var(--border-subtle);
+  border-top: 4px solid #10b981;
 }
 
 .lcd-header {
@@ -266,7 +267,7 @@
 .lcd-header h4 {
   font-size: 14px;
   font-weight: 700;
-  color: #f8fafc;
+  color: #064e3b;
 }
 
 .lcd-canvas-wrapper {

@@ -648,7 +648,8 @@ html_pages = [
     "assistant.html",
     "orders.html",
     "devices.html",
-    "settings.html"
+    "settings.html",
+    "translator.html"
 ]
 
 for page in html_pages:
