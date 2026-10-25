@@ -80,6 +80,16 @@ class AgriApp {
       });
     }
 
+    const callEBtn = document.getElementById('btnTopbarCallE');
+    if (callEBtn) {
+      callEBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        if (window.openCallEGlobalModal) {
+          window.openCallEGlobalModal(true);
+        }
+      });
+    }
+
     window.addEventListener('hashchange', () => {
       const hash = window.location.hash.replace('#', '');
       if (hash && hash !== this.currentView) {

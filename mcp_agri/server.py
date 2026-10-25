@@ -177,12 +177,14 @@ def tool_get_farmer_orders(farmer_id: str = "farmer-001") -> Dict[str, Any]:
                 {
                     "order_id": o.id,
                     "product_name": o.product_name,
+                    "seller_name": o.seller_name or "Mandya APMC Hub (CALL-E AI Voice Desk)",
                     "quantity": o.quantity,
                     "unit": o.unit,
                     "total_price": o.total_price,
                     "status": o.status,
                     "tracking_step": o.tracking_step,
                     "verification_hash": o.verification_hash,
+                    "delivery_location": o.delivery_location or "Plot 4B, Mandya, Karnataka",
                     "created_at": o.created_at.strftime("%Y-%m-%d %H:%M") if o.created_at else ""
                 }
                 for o in orders
@@ -441,6 +443,28 @@ def tool_dispatch_calle_voice_call(action_id: str) -> Dict[str, Any]:
         action.status = "EXECUTED" if call_res.get("success") else "FAILED"
         action.executed_at = datetime.datetime.now(datetime.timezone.utc)
         action.execution_result = call_res
+
+        # Automatically insert confirmed order record into database if call succeeded
+        if call_res.get("success"):
+            try:
+                order = Order(
+                    id=booking_id,
+                    farmer_id="farmer-001",
+                    seller_id="seller-101",
+                    seller_name="Mandya APMC Hub (CALL-E AI Voice Desk)",
+                    product_id="prod-001",
+                    product_name="Hybrid Tomato F1 Seeds / Tractor Rental (CALL-E Voice Booking)",
+                    quantity=1,
+                    unit="order",
+                    total_price=450.0,
+                    status="CONFIRMED",
+                    delivery_location="Plot 4B, Mandya, Karnataka",
+                    verification_hash=call_res.get("call_id", hashlib.sha256(booking_id.encode()).hexdigest()),
+                    tracking_step=1
+                )
+                db.add(order)
+            except Exception as e:
+                print(f"[Order Insert Error] {e}")
 
         # Log to ledger
         append_to_ledger({

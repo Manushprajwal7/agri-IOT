@@ -7,7 +7,7 @@
 
 class AIAssistantEngine {
   constructor() {
-    this.currentLanguage = 'en';
+    this.currentLanguage = localStorage.getItem('agri_voice_lang') || 'hi';
     this.isListening = false;
     this.mediaRecorder = null;
     this.audioChunks = [];
@@ -100,9 +100,9 @@ class AIAssistantEngine {
             </div>
             <div class="ai-header-actions">
               <select id="aiLangSelect" class="form-select-sm" style="color: #ffffff; background: rgba(255,255,255,0.15); border-radius: 4px; padding: 4px 8px; border: 1px solid rgba(255,255,255,0.2);">
-                <option value="en" selected>English (India)</option>
+                <option value="hi" ${this.currentLanguage === "hi" ? "selected" : ""}>🇮🇳 हिन्दी (Hindi)</option>
                 <option value="kn">ಕನ್ನಡ (Kannada)</option>
-                <option value="hi">हिन्दी (Hindi)</option>
+                <option value="en" ${this.currentLanguage === "en" ? "selected" : ""}>English (India)</option>
                 <option value="ta">தமிழ் (Tamil)</option>
                 <option value="te">తెలుగు (Telugu)</option>
               </select>
@@ -297,9 +297,24 @@ class AIAssistantEngine {
   }
 
   async startVoiceListen() {
+    if (window.AgriVoicePlayer) {
+      window.AgriVoicePlayer.stop();
+    }
     this.isListening = true;
     this.updateMicUi(true);
 
+    // Prefer Web Speech Recognition for instant streaming and silence detection
+    if (this.speechRecognition) {
+      try {
+        this.updateSpeechLanguage();
+        this.speechRecognition.start();
+        return;
+      } catch (err) {
+        console.warn('SpeechRecognition active or error:', err.message);
+      }
+    }
+
+    // Fallback: MediaRecorder if SpeechRecognition is unsupported
     if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
       try {
         const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
@@ -317,20 +332,18 @@ class AIAssistantEngine {
         };
 
         this.mediaRecorder.start();
-        if (window.showAgriToast) {
-          window.showAgriToast('Listening with Sarvam AI Indic STT...', 'info');
-        }
+
+        // Safety auto-stop after 4.5s
+        if (this.mediaRecorderTimer) clearTimeout(this.mediaRecorderTimer);
+        this.mediaRecorderTimer = setTimeout(() => {
+          if (this.mediaRecorder && this.mediaRecorder.state === 'recording') {
+            this.mediaRecorder.stop();
+          }
+        }, 4500);
         return;
       } catch (err) {
-        console.warn('Microphone stream error, trying SpeechRecognition:', err.message);
+        console.warn('Microphone stream error:', err.message);
       }
-    }
-
-    if (this.speechRecognition) {
-      try {
-        this.speechRecognition.start();
-        return;
-      } catch (e) {}
     }
 
     this.fallbackSimulatedSpeech();
@@ -440,37 +453,23 @@ class AIAssistantEngine {
   }
 
   async speakText(text) {
-    // 1. Try Sarvam AI bulbul:v3 via backend TTS
-    try {
-      const res = await fetch('/api/voice/tts', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          text: text.replace(/[#*`_]/g, ''),
-          language_code: this.getLangCode()
-        })
-      });
-      const data = await res.json();
-      if (data && data.success && data.audio_base64) {
-        const audio = new Audio(`data:audio/${data.format || 'wav'};base64,${data.audio_base64}`);
-        audio.play();
-        return;
-      }
-    } catch (e) {
-      console.warn('Backend TTS notice, falling back to browser SpeechSynthesis:', e.message);
+    if (window.AgriVoicePlayer) {
+      await window.AgriVoicePlayer.speak(text, this.getLangCode());
+      return;
     }
-
-    // 2. Fallback: Browser Web Speech API
+    // Fallback: Browser Web Speech API
     if ('speechSynthesis' in window) {
       window.speechSynthesis.cancel();
-      const utterance = new SpeechSynthesisUtterance(text.replace(/[#*`_]/g, ''));
-      utterance.rate = 1.0;
-      utterance.pitch = 1.0;
+      const utterance = new SpeechSynthesisUtterance((text || '').replace(/[#*`_]/g, ''));
+      utterance.lang = this.getLangCode();
       window.speechSynthesis.speak(utterance);
     }
   }
 
   async processUserText(text) {
+    if (window.AgriVoicePlayer) {
+      window.AgriVoicePlayer.stop();
+    }
     this.appendUserMessage(text);
     this.setAgentNodeActive('nodeOrchestrator');
     this.logActivity(`Input received: "${text}"`, 'TrueForge');
@@ -483,6 +482,7 @@ class AIAssistantEngine {
         body: JSON.stringify({
           prompt: text,
           farmer_id: 'farmer-001',
+          session_id: this.currentSessionId || undefined,
           language_code: this.getLangCode()
         })
       });

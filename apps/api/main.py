@@ -60,6 +60,7 @@ class CreateTaskRequest(BaseModel):
     farmer_id: str = Field(default="farmer-001")
     prompt: str = Field(..., description="Farmer voice command or text query")
     language_code: Optional[str] = Field(default="en-IN")
+    session_id: Optional[str] = Field(default=None, description="Existing session id for multi-turn continuity")
 
 class ApprovalDecisionRequest(BaseModel):
     decision: str = Field(default="allow", description="'allow' or 'deny'")
@@ -279,7 +280,7 @@ async def mcp_jsonrpc_endpoint(request: Request):
 @app.post("/api/agent/task")
 async def create_agent_task(req: CreateTaskRequest):
     """Initiates an autonomous task turn for the AgriSense agent."""
-    session_id = f"sess_{uuid.uuid4().hex[:8]}"
+    session_id = req.session_id or f"sess_{uuid.uuid4().hex[:8]}"
     session = get_or_create_session(session_id, req.farmer_id)
     session.dialogue_context["last_prompt"] = req.prompt
     session.dialogue_context["language_code"] = req.language_code
@@ -385,8 +386,8 @@ async def voice_text_to_speech(req: TtsRequest):
     if sarvam_key:
         try:
             async with httpx.AsyncClient(timeout=8.0) as client:
-                speaker_map = {"kn-IN": "meera", "hi-IN": "meera", "en-IN": "meera", "ta-IN": "meera", "te-IN": "meera"}
-                speaker = speaker_map.get(lang, "meera")
+                speaker_map = {"kn-IN": "kavya", "hi-IN": "kavya", "en-IN": "kavya", "ta-IN": "kavya", "te-IN": "kavya"}
+                speaker = speaker_map.get(lang, "kavya")
                 resp = await client.post(
                     "https://api.sarvam.ai/text-to-speech",
                     headers={"api-subscription-key": sarvam_key, "Content-Type": "application/json"},
@@ -488,6 +489,45 @@ async def dispatch_calle_farmer_call(request: Request):
     )
 
     if res.get("success"):
+        # Automatically persist the confirmed call booking into the database Order table
+        try:
+            import hashlib
+            db = SessionLocal()
+            hash_seed = f"{booking_id}:farmer-001:calle-voice:{datetime.datetime.now().isoformat()}"
+            v_hash = hashlib.sha256(hash_seed.encode("utf-8")).hexdigest()
+            new_order = Order(
+                id=booking_id,
+                farmer_id="farmer-001",
+                seller_id="seller-101",
+                seller_name="Mandya APMC Hub (CALL-E AI Voice Desk)",
+                product_id="prod-001",
+                product_name="CALL-E Voice Booking: Hybrid Tomato Seeds & Tractor Fleet",
+                quantity=1,
+                unit="booking",
+                total_price=450.0,
+                status="CONFIRMED",
+                delivery_location="Plot 4B, Mandya, Karnataka",
+                verification_hash=v_hash,
+                tracking_step=1
+            )
+            db.add(new_order)
+            db.commit()
+            db.close()
+        except Exception as err:
+            print(f"[Order Record Warning] {err}")
+
+        # Send Telegram alert if configured
+        try:
+            TelegramClient.send_message(
+                f"📞 *CALL-E Outbound Voice Call Dispatched!*\n\n"
+                f"• *Booking Ref:* `{booking_id}`\n"
+                f"• *Dialed Phone:* `{phone}`\n"
+                f"• *Commodity Hub:* Mandya APMC Yard\n"
+                f"• *Status:* Live phone call initiated. Order tracking active in Dashboard!"
+            )
+        except Exception:
+            pass
+
         return {
             "success": True,
             "callId": res.get("call_id"),
@@ -496,9 +536,16 @@ async def dispatch_calle_farmer_call(request: Request):
             "message": f"Voice call dispatched successfully to {phone}. Pick up your phone!"
         }
     else:
+        err_msg = res.get("error", "Call dispatch failed")
+        status_code = 402 if res.get("status") == "INSUFFICIENT_CREDITS" else (400 if "API_KEY" in res.get("status", "") else 500)
         return JSONResponse(
-            status_code=400 if "API_KEY" in res.get("status", "") else 500,
-            content={"success": False, "error": res.get("error", "Call dispatch failed")}
+            status_code=status_code,
+            content={
+                "success": False,
+                "error": err_msg,
+                "status": res.get("status"),
+                "billing_url": res.get("billing_url")
+            }
         )
 
 @app.post("/api/integrations/test-calle")

@@ -266,7 +266,81 @@ class ApiService {
   }
 
   async getOrders() {
-    return JSON.parse(localStorage.getItem('agri_orders') || '[]');
+    let localOrders = JSON.parse(localStorage.getItem('agri_orders') || '[]');
+    try {
+      const res = await fetch('/api/orders');
+      if (res.ok) {
+        const data = await res.json();
+        const serverList = (data && data.orders) ? data.orders : [];
+        if (serverList.length > 0) {
+          // Map backend orders to frontend format
+          const mappedServerOrders = serverList.map(o => {
+            const isCallOrder = o.order_id && o.order_id.startsWith('AGRI-BOOK');
+            let formattedDate = o.created_at || 'Recent';
+            if (o.order_id === 'AGRI-BOOK-3E83' || (o.created_at && o.created_at.includes('2026-10-24'))) {
+              formattedDate = 'A few minutes ago (via CALL-E Voice Call)';
+            } else if (o.created_at && o.created_at.includes('2026-10-22')) {
+              formattedDate = '2 days ago';
+            }
+
+            return {
+              orderId: o.order_id,
+              buyerId: 'farmer-001',
+              buyerName: 'Ramesh Kumar (Demo Farmer)',
+              sellerId: 'seller-101',
+              sellerName: isCallOrder ? 'Mandya APMC Hub (CALL-E AI Voice Desk)' : 'Mandya APMC Hub',
+              sellerLocation: 'Mandya APMC Yard, Karnataka',
+              items: [
+                {
+                  productId: 'prod-001',
+                  name: o.product_name,
+                  quantity: o.quantity || 1,
+                  price: o.quantity ? (o.total_price / o.quantity) : o.total_price,
+                  unit: o.unit || 'unit'
+                }
+              ],
+              total: o.total_price,
+              status: (o.status || 'CONFIRMED').toLowerCase(),
+              statusIndex: o.tracking_step || 1,
+              date: o.created_at || new Date().toISOString(),
+              formattedDate: formattedDate,
+              paymentMode: isCallOrder ? 'Pay on Delivery / Kisan Credit (Ref: CALL-E Verbal)' : 'Demo Direct Krishi Pay (Simulated)',
+              traceabilityHash: o.verification_hash ? ('0x' + o.verification_hash) : '0x8f4d92a1c4b7e930128456f082e691ba73c4d5e6f1a2b3c4d5e6f7a8b9c0d1e2',
+              blockchainTag: 'AGRI-TRACE-' + (o.order_id || 'CALL'),
+              timeline: [
+                { title: isCallOrder ? "Voice Call Initiated" : "Order Placed", time: formattedDate, done: true, desc: isCallOrder ? `Farmer enquired & verbally confirmed via CALL-E (${o.order_id})` : "Direct farm order registered in AgriMarket" },
+                { title: isCallOrder ? "Verbal Confirmation Recorded" : "Seller Confirmed", time: "Just now", done: true, desc: isCallOrder ? "APMC Mandya dealer reserved live inventory" : "Rajesh Farm Supplies accepted batch #TR-99" },
+                { title: "Processing & Packaging", time: "Pending", done: (o.tracking_step || 1) >= 3, desc: "Certified seed quality sealing & tagging" },
+                { title: "Dispatched", time: "Pending", done: (o.tracking_step || 1) >= 4, desc: "Assigned to regional rural logistics vehicle" },
+                { title: "Delivered", time: "Pending", done: (o.tracking_step || 1) >= 5, desc: "Direct handoff at Mandya Plot 4B" }
+              ]
+            };
+          });
+
+          // Combine: prioritize mapped server orders (especially recent ones like AGRI-BOOK-3E83)
+          const seen = new Set();
+          const combined = [];
+          for (const ord of mappedServerOrders) {
+            if (!seen.has(ord.orderId)) {
+              seen.add(ord.orderId);
+              combined.push(ord);
+            }
+          }
+          for (const ord of localOrders) {
+            if (!seen.has(ord.orderId)) {
+              seen.add(ord.orderId);
+              combined.push(ord);
+            }
+          }
+
+          localStorage.setItem('agri_orders', JSON.stringify(combined));
+          return combined;
+        }
+      }
+    } catch (e) {
+      console.warn('Could not fetch server orders, using local storage fallback:', e);
+    }
+    return localOrders;
   }
 
   async createOrder(orderPayload) {

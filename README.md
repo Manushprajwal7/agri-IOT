@@ -116,9 +116,50 @@ The platform includes a built-in **Demo Tour Bar** at the top of the interface:
 
 ## 📸 Physical Hardware & Autonomous Field Rover Prototype
 
-The **AgriSense** physical hardware architecture consists of two complementary cyber-physical systems designed for smart precision agriculture:
-1. **Stationary IoT Edge Sensing Node**: Continuous root-zone soil monitoring, atmospheric microclimate tracking, on-node graphical diagnostics via SPI TFT display, and local audible threshold alerts.
-2. **Autonomous Agricultural Field Rover (Robotic Tractor)**: A mobile ground robotic unit equipped with differential drive locomotion, obstacle avoidance, and crop-row line tracking for autonomous field traversal, mobile inspection, and spot sampling.
+The **AgriSense** cyber-physical hardware deployment features two custom-built, field-tested IoT edge systems designed for smart precision agriculture and hands-free autonomous operation:
+
+1. **Handheld Farm Diagnostics & Voice Terminal Node**:
+   - Continuous root-zone soil telemetry monitoring & atmospheric microclimate tracking.
+   - Onboard 2.3" high-resolution SPI color TFT display running embedded **AGRISENSE AI FARM OS**.
+   - Integrated digital audio amplifier with full-range speaker for local Indic voice alerts and audible buzzer warnings.
+   - Dedicated rechargeable Li-ion battery pack with micro-USB telemetry uplink.
+2. **Autonomous Agricultural Field Rover (Robotic Tractor & Dosing Platform)**:
+   - Heavy-duty perforated aluminum chassis with dual-deck isolation for power and compute electronics.
+   - Differential drive locomotion with high-traction green rubber all-terrain wheels and front omnidirectional ball caster.
+   - Onboard submersible precision micro-dosing pump and transparent tubing for targeted root irrigation and bio-pesticide delivery.
+   - Dual-brain compute architecture pairing Arduino Uno (motor/actuator control) with ESP32 (IoT telemetry & TrueForge agent link).
+
+---
+
+### Figure 1: Handheld IoT Edge Terminal Node & Autonomous Field Rover Workstation
+![AgriSense Handheld Voice Terminal Node & Field Rover Workstation](assets/images/agrisense_handheld_terminal_bench.jpg)
+
+#### Technical Breakdown & Operating Metrics:
+- **Embedded Color TFT Interface (Real-Time Physical Node Output)**:
+  - **Soil Moisture**: `62%` (Optimal root-zone hydration for crop growth)
+  - **Canopy Temperature**: `27.5°C`
+  - **Relative Air Humidity**: `74%`
+- **Integrated Voice & Speaker Subsystem**:
+  - Direct PAM-class audio amplifier breakout powering an onboard magnetic speaker, enabling offline and edge voice synthesis alerts in native Indian languages.
+- **Master Field Station Integration**:
+  - Live serial & Wi-Fi uplink linking the handheld hardware node to the local FastAPI + TrueForge agent control plane on the laptop workstation, synchronizing with the background agricultural rover chassis.
+
+---
+
+### Figure 2: Autonomous Agricultural Field Rover (Robotic Platform) in Outdoor Terrain
+![Autonomous Agricultural Field Rover in Field Environment](assets/images/agrisense_field_rover_outdoor.jpg)
+
+#### Technical Breakdown & Mechanical Architecture:
+- **Perforated Aluminum Industrial Chassis**:
+  - Engineered for rugged agricultural environments, providing flexible component mounting, optimal heat dissipation, and mechanical rigidity across uneven terrain.
+- **Precision Micro-Irrigation & Spot-Dosing Subsystem**:
+  - High-efficiency 5V/12V submersible fluid pump coupled with flexible silicone delivery tubing, allowing the autonomous rover to dispense precise millilitre doses of liquid fertilizer or bio-pesticide directly at the root crown.
+- **High-Traction All-Terrain Mobility**:
+  - Dual high-torque geared DC drive motors coupled to ribbed tread green polymer wheels for high torque on loose dirt, mulch, and asphalt.
+  - Front smooth-pivot steel caster ball providing zero-turning-radius differential mobility for tight crop-row navigation.
+- **Electronics & Control Stack**:
+  - Arduino Uno microcontroller handling low-level motor PWM, relay triggering, and IR furrow/obstacle sensors.
+  - Secondary ESP32 edge node streaming rover telemetry and receiving autonomous mission waypoints from the TrueForge Chief-of-Staff agent harness.
 
 ---
 
