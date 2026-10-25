@@ -46,74 +46,8 @@ AgriSense & AgriMarket AI connects **physical farm sensing, satellite crop analy
          └── 5-Stage Supply Chain Logistics Stepper
 ```
 
----
-
-## 🚀 Quick Start (Running the Integrated TrueFoundry Platform)
-
-You can run the full-stack platform using the FastAPI Python backend (with TrueForge Agent Harness, Voice AI, and CALL-E) or via Node.js:
-
-### Option 1: TrueFoundry Full-Stack Backend (Recommended)
-```bash
-# 1. Install dependencies
-pip install -r requirements.txt
-
-# 2. Seed database (PostgreSQL or local SQLite)
-python -m db.seed
-
-# 3. Start TrueForge Agent Control Plane (Terminal 1)
-npx @truefoundry/trueforge@latest
-
-# 4. Start the AgriSense API Server & Web UI at port 8000 (Terminal 2)
-python run_server.py
-```
-Open **`http://localhost:8000`** in your browser.
-- **MCP Server Discovery:** `http://localhost:8000/mcp` (14 live agricultural tools)
-- **Agent Task SSE Stream:** `http://localhost:8000/api/agent/task`
-- **Sarvam AI Indic Voice:** Kannada, Hindi, Tamil, Telugu, and English (India)
-- **CALL-E Outbound Caller:** Live telephone dialing to `+918496074290`
-
-### Option 2: Node.js Server
-```bash
-node server.js
-```
-The server binds to `http://localhost:3000`.
-
-## 📁 Complete Suite of Standalone Pages
-
-Every section is available as both an instant SPA tab and a standalone `.html` page:
-
-| Page | URL File | Description |
-|---|---|---|
-| **Platform Hub** | [`index.html`](./index.html) | Homepage with Hero, 3 Core Pillars, Architecture Flow, and Demo Tour |
-| **Farm Dashboard** | [`dashboard.html`](./dashboard.html) | Real-time KPI gauges, 2.3" ST7789 LCD color display emulator, dynamic SVG charts |
-| **Crop Intelligence** | [`crop-intelligence.html`](./crop-intelligence.html) | 6-stage phenology cycle (Rice, Tomato, Sugarcane) with AI foliar health prediction |
-| **Satellite Analysis** | [`satellite.html`](./satellite.html) | Orbital parcel viewer with Pan, Zoom, Reset, Optical RGB, NDVI, and MobileNetV2 |
-| **Alerts Center** | [`alerts.html`](./alerts.html) | Environmental warning center with recommended agronomic actions |
-| **AgriMarket** | [`marketplace.html`](./marketplace.html) | Social community marketplace for seeds, fertilizers, tractor rentals, cart, and post listing |
-| **AI Voice Assistant** | [`assistant.html`](./assistant.html) | Full-screen multilingual assistant with Sarvam AI Indic NLU and multi-agent trace |
-| **Orders & Logistics** | [`orders.html`](./orders.html) | 5-stage real-time supply chain tracking stepper and immutable cryptographic verification hash |
-| **IoT Hardware** | [`devices.html`](./devices.html) | ESP32 telemetry packet inspector, buzzer threshold tuning, and complete C++ Arduino firmware |
-| **Settings & Profile** | [`settings.html`](./settings.html) | Farmer identity profile, Sarvam AI API config, MQTT broker settings, and Demo Role Switcher |
 
 ---
-
-## 🏆 2-Minute Hackathon Demo Script (PRD §47 & §91)
-
-The platform includes a built-in **Demo Tour Bar** at the top of the interface:
-
-1. **Show Hardware Sensing Node**: Displays the ESP32-WROOM-32 specifications, pin mappings, and C++ Arduino firmware.
-2. **Live Farm Sensor Monitoring**: View real-time soil moisture (68%), temperature (28.4°C), and humidity (74%) synced to the 2.3" color LCD canvas emulator.
-3. **Trigger Moisture Alert & Buzzer**: Click *"Trigger Moisture Spike"* — soil moisture surges to 89%, the ST7789 display transitions to red warning mode, and the buzzer beeps via the Web Audio API.
-4. **Crop Intelligence**: View the 6-stage phenology cycle for Paddy/Tomato with vegetative stage recommendations.
-5. **Satellite Analysis**: Switch layers between optical RGB, false-color NDVI, and click *"Analyze Satellite Parcel"* to execute MobileNetV2 segmentation.
-6. **AgriMarket Feed**: Browse seeds, vermicompost manure, and tractor rentals.
-7. **Voice Assistant**: Click the floating mic 🎙 and say (or select) *"I need tomato seeds"*.
-8. **Product Agent & Explainability**: The assistant compares prices and presents Arka Rakshak F1 with clear rationale.
-9. **Safe Order Confirmation**: Review the order modal before any purchase is confirmed.
-10. **Track Supply Chain**: View order `AGRI-10245` advancing through Placed → Confirmed → Processing → Dispatched → Delivered.
-
----
-
 ## 📸 Physical Hardware & Autonomous Field Rover Prototype
 
 The **AgriSense** cyber-physical hardware deployment features two custom-built, field-tested IoT edge systems designed for smart precision agriculture and hands-free autonomous operation:
