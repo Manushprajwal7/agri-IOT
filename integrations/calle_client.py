@@ -36,16 +36,16 @@ class CallEClient:
 
         if not task_prompt:
             task_prompt = (
-                f"Call {target_phone} and speak with the farmer as the AgriMarket Supply Chain AI Representative calling from Mandya APMC Yard, Karnataka.\n\n"
-                f"Objective:\n"
-                f"You are the intelligent voice caller for AgriSense & AgriMarket AI platform.\n"
-                f"Enquire about agricultural commodities: seeds, fertilizers, pesticides, and tractor machinery rentals.\n\n"
+                f"Role: You are the AgriMarket Voice Representative calling from Mandya APMC Yard, Karnataka to speak with farmer Ramesh at {target_phone}.\n"
+                f"Goal: Inform the farmer about available inventory and confirm if they want to order seeds, fertilizer, or book a tractor.\n"
                 f"Live Inventory Available at Mandya Hub:\n{commodities_summary}\n\n"
-                f"Guidelines:\n"
-                f"1. Warm Greeting: 'Namaskara! I am your AgriMarket Voice Assistant calling from Mandya APMC. How can I assist your farm today?'\n"
+                f"Instructions:\n"
+                f"1. Warm Greeting: 'Namaskara Ramesh! I am your AgriMarket Voice Assistant calling from Mandya APMC. How can I assist your farm today?'\n"
                 f"2. Quotation: Clearly state exact price in Rupees and available quantities.\n"
                 f"3. Verbal Confirmation: If the farmer agrees to buy or rent, confirm with: 'Booking confirmed! Your order reference is {booking_id}. Scheduled for dispatch to your farm at Plot 4B Mandya. Payment settled upon delivery.'\n"
-                f"4. Politeness: Thank the farmer and wish them a bountiful harvest!"
+                f"4. Politeness: Thank the farmer and wish them a bountiful harvest!\n"
+                f"Success criteria: The farmer answers, hears the inventory options, and confirms or declines the booking.\n"
+                f"Failure criteria: The farmer does not answer, hangs up immediately, or line is busy."
             )
 
         if not api_key:
@@ -69,7 +69,7 @@ class CallEClient:
         }
 
         try:
-            with httpx.Client(timeout=10.0) as client:
+            with httpx.Client(timeout=35.0) as client:
                 resp = client.post(
                     endpoint,
                     headers={
@@ -82,7 +82,8 @@ class CallEClient:
 
                 data = resp.json() if resp.content else {}
 
-                if resp.status_code in (200, 201, 202) or (resp.status_code == 429 and "concurrency" in resp.text.lower()):
+                # 1. Successful Call Initiation
+                if resp.status_code in (200, 201, 202):
                     call_id = data.get("id") or data.get("call_id") or f"calle_{uuid.uuid4().hex[:8]}"
                     print(f"[CALL-E] Live outbound call initiated! ID: {call_id} -> {target_phone}")
                     return {
@@ -95,29 +96,68 @@ class CallEClient:
                         "task_prompt": task_prompt,
                         "response": data
                     }
-                else:
-                    print(f"[CALL-E] API returned {resp.status_code}: {resp.text[:200]}")
-                    error_msg = data.get("message") or data.get("error") or f"HTTP {resp.status_code}"
+
+                # 2. Credit / Balance Exhausted (HTTP 402)
+                if resp.status_code == 402 or "insufficient_balance" in resp.text:
+                    err_msg = (
+                        "Insufficient CALL-E account balance. "
+                        "Please top up credits at https://dashboard.heycall-e.com/account/billing to place phone calls."
+                    )
+                    print(f"[CALL-E Notice] {err_msg}")
                     return {
                         "success": False,
                         "triggered": False,
-                        "status": f"HTTP_{resp.status_code}",
+                        "status": "INSUFFICIENT_CREDITS",
                         "phone": target_phone,
-                        "error": str(error_msg),
+                        "booking_id": booking_id,
+                        "error": err_msg,
+                        "billing_url": "https://dashboard.heycall-e.com/account/billing",
                         "response": data
                     }
+
+                # 3. Concurrency Limit (HTTP 429)
+                if resp.status_code == 429 or "concurrency" in resp.text.lower():
+                    err_msg = (
+                        "CALL-E shared line is at its concurrency limit (1 active call). "
+                        "Please wait 1-2 minutes for the previous task to finish on dashboard.heycall-e.com, then retry."
+                    )
+                    print(f"[CALL-E Notice] {err_msg}")
+                    return {
+                        "success": False,
+                        "triggered": False,
+                        "status": "CONCURRENCY_LIMIT",
+                        "phone": target_phone,
+                        "booking_id": booking_id,
+                        "error": err_msg,
+                        "response": data
+                    }
+
+                # 4. Other API Errors (e.g. 422 prompt validation)
+                print(f"[CALL-E] API returned {resp.status_code}: {resp.text[:200]}")
+                err_detail = data.get("error", {})
+                if isinstance(err_detail, dict):
+                    error_msg = err_detail.get("message") or data.get("message")
+                else:
+                    error_msg = data.get("message") or data.get("error") or f"HTTP {resp.status_code}"
+
+                return {
+                    "success": False,
+                    "triggered": False,
+                    "status": f"HTTP_{resp.status_code}",
+                    "phone": target_phone,
+                    "error": str(error_msg),
+                    "response": data
+                }
+
         except httpx.TimeoutException:
-            # CALL-E connects and holds HTTP socket while dialing phone line
-            call_id = f"calle_dialing_{uuid.uuid4().hex[:6]}"
-            print(f"[CALL-E] Outbound call dialing on {target_phone} ({call_id})")
+            err_msg = "CALL-E connection timed out while establishing phone call gateway. Please retry."
+            print(f"[CALL-E Timeout] {err_msg}")
             return {
-                "success": True,
-                "triggered": True,
-                "status": "LIVE_CALL_DIALING",
-                "call_id": call_id,
-                "booking_id": booking_id,
+                "success": False,
+                "triggered": False,
+                "status": "GATEWAY_TIMEOUT",
                 "phone": target_phone,
-                "message": f"Calling {target_phone}. Phone is ringing!"
+                "error": err_msg
             }
         except Exception as e:
             print(f"[CALL-E Error] {e}")

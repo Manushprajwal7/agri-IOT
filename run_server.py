@@ -31,7 +31,7 @@ def main():
     print(f"[TELEGRAM] Farm Alerts & Ledger: http://localhost:{port}/api/integrations/test-telegram\n")
     print("=" * 65 + "\n")
 
-    uvicorn.run("apps.api.main:app", host="0.0.0.0", port=port, reload=False)
+    uvicorn.run("apps.api.main:app", host="0.0.0.0", port=port, reload=True)
 
 if __name__ == "__main__":
     main()

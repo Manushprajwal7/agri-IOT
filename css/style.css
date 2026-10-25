@@ -297,10 +297,11 @@ body {
 
 /* Sticky App Topbar */
 .app-topbar {
-  height: 60px;
+  min-height: 60px;
+  height: auto;
   background-color: var(--surface-card);
   border-bottom: 1px solid var(--border-subtle);
-  padding: 0 24px;
+  padding: 8px 20px;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -308,12 +309,20 @@ body {
   top: 0;
   z-index: 90;
   box-shadow: var(--shadow-xs);
+  gap: 12px;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+.app-topbar::-webkit-scrollbar {
+  display: none;
 }
 
 .topbar-left {
   display: flex;
   align-items: center;
-  gap: 14px;
+  gap: 12px;
+  flex-shrink: 0;
+  white-space: nowrap;
 }
 
 .mobile-menu-btn {
@@ -326,14 +335,61 @@ body {
 .device-telemetry-badge {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 8px;
   font-size: 12px;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+.device-telemetry-badge .badge,
+.device-telemetry-badge .text-muted {
+  white-space: nowrap;
+  display: inline-block;
 }
 
 .topbar-right {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 8px;
+  flex-shrink: 0;
+  white-space: nowrap;
+}
+.topbar-right > * {
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.sarvam-header-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(16, 185, 129, 0.12);
+  border: 1px solid rgba(16, 185, 129, 0.4);
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-size: 11px;
+  font-weight: 700;
+  color: #065f46;
+  cursor: pointer;
+  white-space: nowrap;
+  flex-shrink: 0;
+  transition: all 0.2s ease;
+}
+.sarvam-header-badge:hover {
+  background: rgba(16, 185, 129, 0.2);
+  border-color: #10b981;
+}
+.sarvam-pulse-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #10b981;
+  box-shadow: 0 0 6px rgba(16, 185, 129, 0.8);
+  animation: pulseRing 1.5s infinite;
+}
+@keyframes pulseRing {
+  0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7); }
+  70% { transform: scale(1.1); box-shadow: 0 0 0 5px rgba(16, 185, 129, 0); }
+  100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); }
 }
 
 .lang-selector-wrap {
